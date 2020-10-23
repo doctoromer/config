@@ -1,0 +1,26 @@
+command -v stow >/dev/null 2>&1 || {
+    echo >&2 Please install stow:
+    echo >&2
+    echo >&2 " " sudo apt install stow
+    echo >&2
+    exit 1
+}
+
+if [[ $# -ne 1 ]]; then
+    echo >&2 Invalid number of arguments!
+    exit 1
+fi
+
+STOW_FLAGS="--target=/ --ignore=DEBIAN -v"
+PACKAGE=omer-config
+
+case "$1" in
+    link)
+        sudo stow $STOW_FLAGS $PACKAGE
+        ;;
+    unlink)
+        sudo stow -D $STOW_FLAGS $PACKAGE
+        ;;
+    *)
+        echo "No such command: $1"
+esac

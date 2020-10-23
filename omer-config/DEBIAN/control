@@ -1,0 +1,9 @@
+Package: omer-config
+Version: 1.0-0
+Section: base
+Priority: optional
+Architecture: all
+Depends:
+Maintainer: Omer Sarig <omer@sarig.co.il>
+Description: Omer's configuration
+ The configuration of omer, ofcourse.

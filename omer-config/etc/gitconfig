@@ -1,0 +1,45 @@
+[user]
+	email = omer@sarig.co.il
+	name = Omer Sarig
+[core]
+	pager = diff-so-fancy | less --tabs=4 -RFX
+	editor = vim
+[color]
+	ui = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[alias]
+	co = checkout --recurse-submodules
+	ds = diff --staged
+	st = status --short
+	ci = commit
+	df = diff
+	glog = log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(cyan)<%an>%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative
+	crnt = rev-parse --abbrev-ref HEAD
+	forward = merge --ff-only
+	in = "!git fetch origin && git log $(git crnt)..origin/$(git crnt)"
+	out = "!git glog --branches --not --remotes=origin"
+	rerere-reset = "!rm -rf $(git rev-parse --show-toplevel)/.git/rr-cache"
+	fresh = clean -f -d -X
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+[rerere]
+	enabled = true
+[push]
+	followTags = true
+	default = current
+[submodule]
+	recurse = true

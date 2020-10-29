@@ -43,3 +43,5 @@
 	default = current
 [submodule]
 	recurse = true
+[diff]
+	ignoreSubmodules = dirty

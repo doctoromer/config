@@ -1,5 +1,5 @@
 set runtimepath^=~/.config/nvim
-set rtp+=/usr/share/doc/example/plugin
+set rtp+=/usr/local/src/fzf
 let &packpath = &runtimepath
 set nocompatible
 

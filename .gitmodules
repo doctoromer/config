@@ -188,3 +188,6 @@
 	path = omer-config/etc/xdg/nvim/bundle/semshi
 	url = https://github.com/numirias/semshi
 	branch = master
+[submodule "fzf"]
+	path = omer-config/usr/local/src/fzf
+	url = https://github.com/junegunn/fzf

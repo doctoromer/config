@@ -17,10 +17,11 @@ PACKAGE=omer-config
 case "$1" in
     link)
         sudo stow $STOW_FLAGS $PACKAGE
+        sudo bash $PACKAGE/DEBIAN/postinst configure
         ;;
     unlink)
         sudo stow -D $STOW_FLAGS $PACKAGE
         ;;
     *)
-        echo "No such command: $1"
+        echo "Usage: $0 link|unlink"
 esac

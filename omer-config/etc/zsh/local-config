@@ -1,0 +1,91 @@
+# zmodload zsh/zprof
+if [[ -z "$PATH" || "$PATH" == "/bin:/usr/bin" ]]
+then
+	export PATH="/usr/local/bin:/usr/bin:/bin:/usr/games"
+fi
+
+export ZSH=/etc/zsh/ohmyzsh
+
+ZSH_THEME="cypher"
+
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=1"
+FZF_BASE="/usr/local/src/fzf"
+
+plugins=(git tmux colored-man-pages vi-mode command-not-found)
+
+source $ZSH/oh-my-zsh.sh
+export FZF_DEFAULT_COMMAND='ag -l --nocolor --nogroup --hidden -g "" --ignore ".git"'
+
+bindkey "^ " autosuggest-accept
+
+export ZSH_TMUX_AUTOSTART=false
+export ZSH_TMUX_AUTOCONNECT=true
+export ZSH_TMUX_AUTOQUIT=true
+export ZSH_TMUX_UNICODE=true
+
+echo "$PATH" | grep -q "$HOME/.local/bin" || export PATH="$PATH:$HOME/.local/bin"
+
+export TERM="xterm-256color"
+export EDITOR="vim"
+
+### Aliases ###
+alias tmux="TERM=screen-256color-bce tmux"
+
+# aliases for system maintenance
+alias depend='sudo apt -f install'
+alias update='sudo apt update'
+alias upgrade='sudo apt -y upgrade'
+alias clean='sudo apt -y autoclean'
+alias autorm='sudo apt -y autoremove'
+alias maintain='update && depend && upgrade && clean && autorm'
+
+# aliases for common programs replacements
+if which batcat > /dev/null; then
+    alias cat=batcat
+elif which cat > /dev/null; then
+    alias cat=bat
+fi
+
+alias ls=exa
+alias ll='exa -alF'
+alias la='exa -a'
+alias l='exa -F'
+alias tree="exa -T --color=always"
+
+most() {
+    case "$1" in
+        mem)
+            ;;
+        cpu)
+            ;;
+        *)
+            echo "Valid parameters: mem, cpu."
+            return
+    esac
+    ps -eo pid,cmd,%mem,%cpu --sort=-%$1 | head
+}
+
+iface() {
+    netstat -i | tail -n +3 | awk '{print $1;}'
+}
+
+netrst() {
+    case "$#" in
+        0)
+            sudo dhclient -r -v; sudo dhclient -v
+            ;;
+        *)
+            for interface in "$@"; do
+                sudo dhclient -r -v $interface && sudo dhclient -v $interface
+            done
+            ;;
+    esac
+}
+
+alias dirsize="du -s -h"
+alias sudo='sudo '
+
+# aliases for paging ag output with colors
+alias less='less -r'
+alias ag='ag --color --group'

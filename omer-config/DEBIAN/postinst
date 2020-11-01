@@ -1,0 +1,14 @@
+#!/bin/bash
+
+ZSHENV_LINE="source /etc/zsh/local-config"
+ZSHENV_PATH="/etc/zsh/zshenv"
+
+echo $*
+case "$1" in
+    configure)
+        nvim --headless -c ":UpdateRemotePlugins" -c ":q"
+        grep -qxF "$ZSHENV_LINE" $ZSHENV_PATH || echo "$ZSHENV_LINE" >> $ZSHENV_PATH
+        ;;
+    *)
+        echo "Unknown postinst command: $1"
+esac

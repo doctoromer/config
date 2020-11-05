@@ -5,8 +5,9 @@ then
 fi
 
 export ZSH=/etc/zsh/ohmyzsh
+export ZSH_CUSTOM=/etc/zsh
 
-ZSH_THEME="cypher"
+ZSH_THEME="kyoshi"
 
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=1"

@@ -1,4 +1,4 @@
-# Mix of cypher and half-life theme
+# Mix of cypher and half-life themes
 #
 # prompt style and colors based on Steve Losh's Prose theme:
 # https://github.com/sjl/oh-my-zsh/blob/master/themes/prose.zsh-theme
@@ -61,31 +61,28 @@ zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
 zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
 
 
-function steeef_preexec {
+function __git_pre_execute {
     case "$2" in
         *git*)
             PR_GIT_UPDATE=1
             ;;
-        *svn*)
-            PR_GIT_UPDATE=1
-            ;;
     esac
 }
-add-zsh-hook preexec steeef_preexec
+add-zsh-hook preexec __git_pre_execute
 
-function steeef_chpwd {
+function __git_change_dir {
     PR_GIT_UPDATE=1
 }
-add-zsh-hook chpwd steeef_chpwd
+add-zsh-hook chpwd __git_change_dir
 
-function steeef_precmd {
-    if [[ -n "$PR_GIT_UPDATE" ]] ; then
+function __git_pre_command {
+    if [[ -e .git ]] ; then
         # check for untracked files or updated submodules, since vcs_info doesn't
         if [[ ! -z $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
             PR_GIT_UPDATE=1
             FMT_BRANCH="${PM_RST} %{$turquoise%}%b%u%c%{$hotpink%} ● ${PR_RST}"
         else
-            FMT_BRANCH="${PM_RST} on %{$turquoise%}%b%u%c${PR_RST}"
+            FMT_BRANCH="${PM_RST} %{$turquoise%}%b%u%c${PR_RST}"
         fi
         zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
 
@@ -93,6 +90,6 @@ function steeef_precmd {
         PR_GIT_UPDATE=
     fi
 }
-add-zsh-hook precmd steeef_precmd
+add-zsh-hook precmd __git_pre_command
 
 PROMPT=$'$vcs_info_msg_0_%{$orange%}%{$reset_color%} %{${fg_bold[red]}%}:: %{${fg[green]}%}%3~ %{${fg[blue]}%}»%{${reset_color}%} '

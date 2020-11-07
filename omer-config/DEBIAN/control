@@ -3,7 +3,7 @@ Version: 1.0-0
 Section: base
 Priority: optional
 Architecture: all
-Depends: neovim, python3-neovim, zsh
+Depends: neovim, python3-neovim, zsh, silversearcher-ag
 Maintainer: Omer Sarig <omer@sarig.co.il>
 Description: Omer's configuration
  The configuration of omer, ofcourse.

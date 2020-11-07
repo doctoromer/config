@@ -13,7 +13,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=1"
 FZF_BASE="/usr/local/src/fzf"
 
-plugins=(git tmux colored-man-pages vi-mode fzf command-not-found)
+plugins=(git tmux colored-man-pages vi-mode fzf command-not-found pip)
 
 source $ZSH/oh-my-zsh.sh
 export FZF_DEFAULT_COMMAND='ag -l --nocolor --nogroup --hidden -g "" --ignore ".git"'

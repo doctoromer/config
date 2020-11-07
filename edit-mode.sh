@@ -1,3 +1,5 @@
+#!/bin/sh
+
 command -v stow >/dev/null 2>&1 || {
     echo >&2 Please install stow:
     echo >&2
@@ -6,7 +8,7 @@ command -v stow >/dev/null 2>&1 || {
     exit 1
 }
 
-if [[ $# -ne 1 ]]; then
+if [ $# -ne 1 ]; then
     echo >&2 Invalid number of arguments!
     exit 1
 fi
@@ -16,6 +18,7 @@ PACKAGE=omer-config
 
 case "$1" in
     link)
+        ./build.sh setup
         sudo stow $STOW_FLAGS $PACKAGE
         sudo bash $PACKAGE/DEBIAN/postinst configure
         ;;

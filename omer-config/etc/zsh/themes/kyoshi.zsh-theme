@@ -1,16 +1,9 @@
-# Mix of cypher and half-life themes
-#
-# prompt style and colors based on Steve Losh's Prose theme:
-# https://github.com/sjl/oh-my-zsh/blob/master/themes/prose.zsh-theme
-#
-# vcs_info modifications from Bart Trojanowski's zsh prompt:
-# http://www.jukie.net/bart/blog/pimping-out-zsh-prompt
-#
-# git untracked files modification from Brian Carper:
-# https://briancarper.net/blog/570/git-info-in-your-zsh-prompt
+# Shameless rip-off of cypher and steeef themes
+
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 function virtualenv_info {
-    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
+    [ $VIRTUAL_ENV ] && echo '('%F{blue}`basename $VIRTUAL_ENV`%f') '
 }
 PR_GIT_UPDATE=1
 
@@ -20,18 +13,18 @@ autoload -U add-zsh-hook
 autoload -Uz vcs_info
 
 #use extended color palette if available
-if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
+if [[ $terminfo[colors] -ge 256 ]]; then
     turquoise="%F{81}"
     orange="%F{166}"
     purple="%F{135}"
     hotpink="%F{161}"
     limegreen="%F{118}"
 else
-    turquoise="$fg[cyan]"
-    orange="$fg[yellow]"
-    purple="$fg[magenta]"
-    hotpink="$fg[red]"
-    limegreen="$fg[green]"
+    turquoise="%F{cyan}"
+    orange="%F{yellow}"
+    purple="%F{magenta}"
+    hotpink="%F{red}"
+    limegreen="%F{green}"
 fi
 
 # enable VCS systems you use
@@ -48,11 +41,11 @@ zstyle ':vcs_info:*:prompt:*' check-for-changes true
 # %a - action (e.g. rebase-i)
 # %R - repository path
 # %S - path in the repository
-PR_RST="%{${reset_color}%}"
-FMT_BRANCH="%{$turquoise%}%b%u%c${PR_RST}"
-FMT_ACTION=" performing a %{$limegreen%}%a${PR_RST}"
-FMT_UNSTAGED="%{$orange%} ●"
-FMT_STAGED="%{$limegreen%} ●"
+PR_RST="%f"
+FMT_BRANCH="(%{$turquoise%}%b %u%c${PR_RST})"
+FMT_ACTION="(%{$limegreen%}%a${PR_RST})"
+FMT_UNSTAGED="%F{yellow}*"
+FMT_STAGED="%{$limegreen%}+"
 
 zstyle ':vcs_info:*:prompt:*' unstagedstr   "${FMT_UNSTAGED}"
 zstyle ':vcs_info:*:prompt:*' stagedstr     "${FMT_STAGED}"
@@ -61,35 +54,43 @@ zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
 zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
 
 
-function __git_pre_execute {
+function kyoshi_preexec {
     case "$2" in
         *git*)
             PR_GIT_UPDATE=1
             ;;
+        *hub*)
+            PR_GIT_UPDATE=1
+            ;;
+        *svn*)
+            PR_GIT_UPDATE=1
+            ;;
     esac
 }
-add-zsh-hook preexec __git_pre_execute
+add-zsh-hook preexec kyoshi_preexec
 
-function __git_change_dir {
+function kyoshi_chpwd {
     PR_GIT_UPDATE=1
 }
-add-zsh-hook chpwd __git_change_dir
+add-zsh-hook chpwd kyoshi_chpwd
 
-function __git_pre_command {
-    if [[ -e .git ]] ; then
+function kyoshi_precmd {
+    if [[ -n "$PR_GIT_UPDATE" ]] ; then
         # check for untracked files or updated submodules, since vcs_info doesn't
-        if [[ ! -z $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+        if git ls-files --other --exclude-standard 2> /dev/null | grep -q "."; then
             PR_GIT_UPDATE=1
-            FMT_BRANCH="${PM_RST} %{$turquoise%}%b%u%c%{$hotpink%} ● ${PR_RST}"
+            FMT_BRANCH="(%{$turquoise%}%b %u%c%{$hotpink%}?${PR_RST})"
         else
-            FMT_BRANCH="${PM_RST} %{$turquoise%}%b%u%c${PR_RST}"
+            FMT_BRANCH="(%{$turquoise%}%b %u%c${PR_RST})"
         fi
-        zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
+        zstyle ':vcs_info:*:prompt:*' formats "${FMT_BRANCH} "
 
         vcs_info 'prompt'
         PR_GIT_UPDATE=
     fi
 }
-add-zsh-hook precmd __git_pre_command
+add-zsh-hook precmd kyoshi_precmd
 
-PROMPT=$'$vcs_info_msg_0_%{$orange%}%{$reset_color%} %{${fg_bold[red]}%}:: %{${fg[green]}%}%3~ %{${fg[blue]}%}»%{${reset_color}%} '
+PROMPT=$'$vcs_info_msg_0_%{$orange%}%{${reset_color}%} %{${fg_bold[red]}%}:: %{${fg[green]}%}%3~ %{${fg[blue]}%}»%{${reset_color}%} '
+
+PROMPT=$'%{$purple%}%n${PR_RST} %{${fg_bold[red]}%}:: %{$limegreen%}%4~${PR_RST} $vcs_info_msg_0_$(virtualenv_info)%{${fg[blue]}%}»%{${reset_color}%} '

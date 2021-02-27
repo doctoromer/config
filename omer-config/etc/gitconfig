@@ -46,3 +46,5 @@
 	recurse = true
 [diff]
 	ignoreSubmodules = dirty
+[pull]
+	rebase = false

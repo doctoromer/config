@@ -44,7 +44,11 @@ case "$1" in
     setup)
         setup
         ;;
+    -h)
+        echo "./build.sh [setup]"
+        ;;
     *)
         setup
         build
+        ;;
 esac

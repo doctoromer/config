@@ -194,3 +194,6 @@
 [submodule "oh-my-zsh"]
 	path = omer-config/etc/zsh/ohmyzsh
 	url = https://github.com/ohmyzsh/ohmyzsh
+[submodule "vim-pasta"]
+	path = omer-config/etc/xdg/nvim/bundle/vim-pasta
+	url = https://github.com/sickill/vim-pasta

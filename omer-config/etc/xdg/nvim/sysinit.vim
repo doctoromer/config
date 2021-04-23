@@ -176,6 +176,12 @@ nmap <silent> gx <Plug>(lcn-references)
 nmap <silent> gs <Plug>(lcn-symbols)
 nmap <silent> = <Plug>((lcn-format))
 
+" Semshi
+let g:semshi#error_sign = v:false
+
+" vim-pasta
+let g:pasta_disabled_filetypes = []
+
 " =============== Mappings ===============
 
 nnoremap ; <Nop>

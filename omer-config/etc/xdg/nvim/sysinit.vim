@@ -114,71 +114,67 @@ xmap <C-Space> <Plug>(neosnippet_expand_target)
 " superTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-" LanguageClient
-let g:LanguageClient_windowLogMessageLevel = "Log"
-let g:LanguageClient_loggingLevel = "DEBUG"
+" LanguageClient-neovim
+let g:LanguageClient_diagnosticsDisplay = {
+\        1: {
+\            "name": "Error",
+\            "texthl": "LanguageClientError",
+\            "signText": "X",
+\            "signTexthl": "LanguageClientErrorSign",
+\            "virtualTexthl": "Error",
+\        },
+\        2: {
+\            "name": "Warning",
+\            "texthl": "LanguageClientWarning",
+\            "signText": "!",
+\            "signTexthl": "LanguageClientWarningSign",
+\            "virtualTexthl": "Todo",
+\        },
+\        3: {
+\            "name": "Information",
+\            "texthl": "LanguageClientInfo",
+\            "signText": "i",
+\            "signTexthl": "LanguageClientInfoSign",
+\            "virtualTexthl": "Todo",
+\        },
+\        4: {
+\            "name": "Hint",
+\            "texthl": "LanguageClientInfo",
+\            "signText": "*",
+\            "signTexthl": "LanguageClientInfoSign",
+\            "virtualTexthl": "Todo",
+\        },
+\    }
+
+let g:LanguageClient_hoverPreview = "auto"
 let g:LanguageClient_useVirtualText = "No"
 
 let g:LanguageClient_serverCommands = {
-      \ 'python': ['pyls'],
-      \ }
+    \ 'python': ['/usr/local/bin/pyls'],
+    \ }
 
-let commands = [
-    \ ['clangd', ['clangd']],
-    \ ['clangd-8', ['clangd-8']],
-    \ ['clangd-6.0', ['clangd-6.0']],
-    \ ['clangd-5.0', ['clangd-5.0']],
-    \ ['clangd-4.0', ['clangd-4.0']],
-    \ ['cquery', ['cquery', '--log-file=/tmp/cq.log']]
-\ ]
+let g:LanguageClient_documentHighlightDisplay = {
+\        1: {
+\            "name": "Text",
+\            "texthl": "SpellCap",
+\        },
+\        2: {
+\            "name": "Read",
+\            "texthl": "SpellLocal",
+\        },
+\        3: {
+\            "name": "Write",
+\            "texthl": "SpellRare",
+\        },
+\    }
 
-for pair in commands
-  if executable(pair[0])
-    let g:LanguageClient_serverCommands.c = pair[1]
-    break
-  endif
-endfor
-
-let g:LanguageClient_loadSettings = 1
-let g:LanguageClient_settingsPath = '/root/.config/nvim/settings.json'
-set completefunc=LanguageClient#complete
-set formatexpr=LanguageClient_textDocument_rangeFormatting()
-
-nnoremap <silent> <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> gr :call LanguageClient#textDocument_rename()<CR>
-nnoremap <silent> gx :call LanguageClient#textDocument_references()<CR>
-nnoremap <silent> gs :call LanguageClient#textDocument_documentSymbol()<CR>
-nnoremap <silent> = :call LanguageClient#textDocument_formatting()<CR>
-
-let g:LanguageClient_diagnosticsDisplay = {
-\    1: {
-\        "name": "Error",
-\        "texthl": "ALEError",
-\        "signText": "X",
-\        "signTexthl": "ALEErrorSign",
-\    },
-\    2: {
-\        "name": "Warning",
-\        "texthl": "ALEWarning",
-\        "signText": "!",
-\        "signTexthl": "ALEWarningSign",
-\    },
-\    3: {
-\        "name": "Information",
-\        "texthl": "ALEInfo",
-\        "signText": "?",
-\        "signTexthl": "ALEInfoSign",
-\    },
-\    4: {
-\        "name": "Hint",
-\        "texthl": "ALEInfo",
-\        "signText": "*",
-\        "signTexthl": "ALEInfoSign",
-\    },
-\}
-let g:LanguageClient_hoverPreview = "auto"
+nmap <F5> <Plug>(lcn-menu)
+nmap <silent>K <Plug>(lcn-hover)
+nmap <silent> gd <Plug>(lcn-definition)
+nmap <silent> gr <Plug>(lcn-rename)
+nmap <silent> gx <Plug>(lcn-references)
+nmap <silent> gs <Plug>(lcn-symbols)
+nmap <silent> = <Plug>((lcn-format))
 
 " =============== Mappings ===============
 

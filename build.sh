@@ -48,7 +48,6 @@ case "$1" in
         echo "./build.sh [setup]"
         ;;
     *)
-        setup
         build
         ;;
 esac

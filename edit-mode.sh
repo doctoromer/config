@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# If stow is not installed, display error message and exit
 command -v stow >/dev/null 2>&1 || {
     echo >&2 Please install stow:
     echo >&2

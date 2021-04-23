@@ -6,7 +6,9 @@ ZSHENV_PATH="/etc/zsh/zshenv"
 echo $*
 case "$1" in
     configure)
+        echo "Updating neovim remote plugins..."
         nvim --headless -c ":UpdateRemotePlugins" -c ":q"
+        echo "Ensure sourcing local-config file during zsh startup..."
         grep -qxF "$ZSHENV_LINE" $ZSHENV_PATH || echo "$ZSHENV_LINE" >> $ZSHENV_PATH
         ;;
     *)

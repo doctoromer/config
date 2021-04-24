@@ -197,3 +197,6 @@
 [submodule "vim-pasta"]
 	path = omer-config/etc/xdg/nvim/bundle/vim-pasta
 	url = https://github.com/sickill/vim-pasta
+[submodule "vim-argwrap"]
+	path = omer-config/etc/xdg/nvim/bundle/vim-argwrap
+	url = https://github.com/foosoft/vim-argwrap

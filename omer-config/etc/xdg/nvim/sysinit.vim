@@ -182,6 +182,9 @@ let g:semshi#error_sign = v:false
 " vim-pasta
 let g:pasta_disabled_filetypes = []
 
+" Argwrap
+nnoremap <silent> gs :ArgWrap<CR>
+
 " =============== Mappings ===============
 
 nnoremap ; <Nop>

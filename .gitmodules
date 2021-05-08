@@ -200,3 +200,6 @@
 [submodule "vim-argwrap"]
 	path = omer-config/etc/xdg/nvim/bundle/vim-argwrap
 	url = https://github.com/foosoft/vim-argwrap
+[submodule "omer-config/etc/xdg/nvim/bundle/diffconflicts"]
+	path = omer-config/etc/xdg/nvim/bundle/diffconflicts
+	url = https://github.com/whiteinge/diffconflicts

@@ -33,10 +33,11 @@
 	fresh = clean -f -d -X
 	fixup = commit --amend --no-edit
 [merge]
-	tool = vimdiff
+	tool = diffconflicts
 	conflictstyle = diff3
 [mergetool]
 	prompt = false
+	keepBackup = false
 [rerere]
 	enabled = true
 [push]
@@ -48,3 +49,6 @@
 	ignoreSubmodules = dirty
 [pull]
 	rebase = false
+[mergetool "diffconflicts"]
+	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
+	trustExitCode = true

@@ -27,7 +27,7 @@ setup() {
     fi
 
     if [ ! -e $DSF_BINARY ]; then
-        wget https://raw.githubusercontent.com/so-fancy/diff-so-fancy/next/third_party/build_fatpack/diff-so-fancy -q -O $DSF_BINARY
+        wget https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy -q -O $DSF_BINARY
         chmod +x $DSF_BINARY
     fi
 }

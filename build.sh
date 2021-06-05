@@ -5,6 +5,7 @@ TARGET_NAME=omer-config
 
 EXA_BINARY=$TARGET_NAME/usr/bin/exa
 DSF_BINARY=$TARGET_NAME/usr/bin/diff-so-fancy
+NVIM_BINARY=$TARGET_NAME/usr/bin/vim
 
 
 setup() {
@@ -29,6 +30,11 @@ setup() {
     if [ ! -e $DSF_BINARY ]; then
         wget https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy -q -O $DSF_BINARY
         chmod +x $DSF_BINARY
+    fi
+
+    if [ ! -e $NVIM_BINARY ]; then
+        wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage -q -O $NVIM_BINARY
+        chmod +x $NVIM_BINARY
     fi
 }
 

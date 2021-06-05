@@ -58,10 +58,6 @@
 [submodule "vim-pathogen"]
 	path = omer-config/etc/xdg/nvim/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen
-[submodule "LanguageClient-neovim"]
-	path = omer-config/etc/xdg/nvim/bundle/LanguageClient-neovim
-	url = https://github.com/autozimu/LanguageClient-neovim
-	branch = next
 [submodule "traces.vim"]
 	path = omer-config/etc/xdg/nvim/bundle/traces.vim
 	url = https://github.com/markonm/traces.vim
@@ -160,10 +156,6 @@
 	path = omer-config/etc/xdg/nvim/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen
 	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/LanguageClient-neovim"]
-	path = omer-config/etc/xdg/nvim/bundle/LanguageClient-neovim
-	url = https://github.com/autozimu/LanguageClient-neovim
-	branch = next
 [submodule "omer-config/etc/xdg/nvim/bundle/traces.vim"]
 	path = omer-config/etc/xdg/nvim/bundle/traces.vim
 	url = https://github.com/markonm/traces.vim

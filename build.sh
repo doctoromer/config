@@ -11,10 +11,6 @@ NVIM_BINARY=$TARGET_NAME/usr/bin/vim
 setup() {
     mkdir -p $BUILD_DIR
 
-    cd omer-config/etc/xdg/nvim/bundle/LanguageClient-neovim
-    ./install.sh
-    cd -
-
     cd omer-config/usr/local/src/fzf
     ./install --bin
     cd -

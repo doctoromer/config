@@ -121,68 +121,6 @@ xmap <C-Space> <Plug>(neosnippet_expand_target)
 " superTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-" LanguageClient-neovim
-let g:LanguageClient_diagnosticsDisplay = {
-\        1: {
-\            "name": "Error",
-\            "texthl": "LanguageClientError",
-\            "signText": "X",
-\            "signTexthl": "LanguageClientErrorSign",
-\            "virtualTexthl": "Error",
-\        },
-\        2: {
-\            "name": "Warning",
-\            "texthl": "LanguageClientWarning",
-\            "signText": "!",
-\            "signTexthl": "LanguageClientWarningSign",
-\            "virtualTexthl": "Todo",
-\        },
-\        3: {
-\            "name": "Information",
-\            "texthl": "LanguageClientInfo",
-\            "signText": "i",
-\            "signTexthl": "LanguageClientInfoSign",
-\            "virtualTexthl": "Todo",
-\        },
-\        4: {
-\            "name": "Hint",
-\            "texthl": "LanguageClientInfo",
-\            "signText": "*",
-\            "signTexthl": "LanguageClientInfoSign",
-\            "virtualTexthl": "Todo",
-\        },
-\    }
-
-let g:LanguageClient_hoverPreview = "auto"
-let g:LanguageClient_useVirtualText = "No"
-
-let g:LanguageClient_serverCommands = {
-    \ 'python': ['/usr/local/bin/pyls'],
-    \ }
-
-let g:LanguageClient_documentHighlightDisplay = {
-\        1: {
-\            "name": "Text",
-\            "texthl": "SpellCap",
-\        },
-\        2: {
-\            "name": "Read",
-\            "texthl": "SpellLocal",
-\        },
-\        3: {
-\            "name": "Write",
-\            "texthl": "SpellRare",
-\        },
-\    }
-
-nmap <F5> <Plug>(lcn-menu)
-nmap <silent>K <Plug>(lcn-hover)
-nmap <silent> gd <Plug>(lcn-definition)
-nmap <silent> gr <Plug>(lcn-rename)
-nmap <silent> gx <Plug>(lcn-references)
-nmap <silent> gs <Plug>(lcn-symbols)
-nmap <silent> = <Plug>((lcn-format))
-
 " Semshi
 let g:semshi#error_sign = v:false
 
@@ -191,6 +129,39 @@ let g:pasta_disabled_filetypes = []
 
 " Argwrap
 nnoremap <silent> gs :ArgWrap<CR>
+
+" =============== LSP ===============
+
+lua << EOF
+local nvim_lsp = require('lspconfig')
+
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  local opts = { noremap=true, silent=true }
+
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', '<leade>gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', 'gx', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap("n", "<leader>gf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+
+end
+
+local servers = { "pyls", "clangd" }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup { on_attach = on_attach }
+end
+EOF
 
 " =============== Mappings ===============
 

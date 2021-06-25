@@ -84,10 +84,6 @@
 	path = omer-config/etc/xdg/nvim/bundle/deoplete.nvim
 	url = https://github.com/Shougo/deoplete.nvim
 	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/fzf.vim"]
-	path = omer-config/etc/xdg/nvim/bundle/fzf.vim
-	url = https://github.com/junegunn/fzf.vim
-	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/indentLine"]
 	path = omer-config/etc/xdg/nvim/bundle/indentLine
 	url = https://github.com/Yggdroot/indentLine
@@ -195,3 +191,15 @@
 [submodule "omer-config/etc/xdg/nvim/bundle/diffconflicts"]
 	path = omer-config/etc/xdg/nvim/bundle/diffconflicts
 	url = https://github.com/whiteinge/diffconflicts
+[submodule "nvim-lspconfig"]
+	path = omer-config/etc/xdg/nvim/bundle/nvim-lspconfig
+	url = https://github.com/neovim/nvim-lspconfig
+[submodule "telescope.nvim"]
+	path = omer-config/etc/xdg/nvim/bundle/telescope.nvim
+	url = https://github.com/nvim-telescope/telescope.nvim
+[submodule "plenary.nvim"]
+	path = omer-config/etc/xdg/nvim/bundle/plenary.nvim
+	url = https://github.com/nvim-lua/plenary.nvim
+[submodule "popup.nvim"]
+	path = omer-config/etc/xdg/nvim/bundle/popup.nvim
+	url = https://github.com/nvim-lua/popup.nvim

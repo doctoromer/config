@@ -68,13 +68,20 @@ execute pathogen#helptags()
 " colorscheme
 colorscheme monokai
 
-" FZF
-nmap <leader>f :Files<CR>
-nmap <Leader>l :BLines<CR>
-nmap <Leader>L :Lines<CR>
-nmap <Leader>a :Ag<CR>
-nmap <Leader>M :Maps<CR>
-nmap <leader>w :Windows<CR>
+" Telescope.nvim
+nnoremap <leader>f <cmd>Telescope find_files<cr>
+nnoremap <leader>a <cmd>Telescope live_grep<cr>
+nnoremap <leader>b <cmd>Telescope buffers<cr>
+nnoremap <leader>h <cmd>Telescope help_tags<cr>
+
+" Treesitter.nvim
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {"c", "cpp", "python", "bash", "html", "java", "json", "lua", "regex", "toml"},
+  ignore_install = {},
+  highlight = { enable = true },
+}
+EOF
 
 " Easymotion
 nmap <Space> <Plug>(easymotion-prefix)

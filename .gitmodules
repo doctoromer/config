@@ -164,10 +164,6 @@
 	path = omer-config/etc/xdg/nvim/bundle/vim-tmux-focus-events
 	url = https://github.com/tmux-plugins/vim-tmux-focus-events
 	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/chromatica.nvim"]
-	path = omer-config/etc/xdg/nvim/bundle/chromatica.nvim
-	url = https://github.com/arakashic/chromatica.nvim
-	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-python-pep8-indent"]
 	path = omer-config/etc/xdg/nvim/bundle/vim-python-pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent
@@ -203,3 +199,6 @@
 [submodule "popup.nvim"]
 	path = omer-config/etc/xdg/nvim/bundle/popup.nvim
 	url = https://github.com/nvim-lua/popup.nvim
+[submodule "nvim-treesitter"]
+	path = omer-config/etc/xdg/nvim/bundle/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter

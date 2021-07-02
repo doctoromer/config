@@ -77,125 +77,125 @@
 	path = omer-config/etc/xdg/nvim/bundle/semshi
 	url = https://github.com/numirias/semshi
 [submodule "omer-config/etc/xdg/nvim/bundle/auto-pairs"]
-	path = omer-config/etc/xdg/nvim/bundle/auto-pairs
+	path = neovim/etc/xdg/nvim/bundle/auto-pairs
 	url = https://github.com/jiangmiao/auto-pairs
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/deoplete.nvim"]
-	path = omer-config/etc/xdg/nvim/bundle/deoplete.nvim
+	path = neovim/etc/xdg/nvim/bundle/deoplete.nvim
 	url = https://github.com/Shougo/deoplete.nvim
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/indentLine"]
-	path = omer-config/etc/xdg/nvim/bundle/indentLine
+	path = neovim/etc/xdg/nvim/bundle/indentLine
 	url = https://github.com/Yggdroot/indentLine
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/lightline.vim"]
-	path = omer-config/etc/xdg/nvim/bundle/lightline.vim
+	path = neovim/etc/xdg/nvim/bundle/lightline.vim
 	url = https://github.com/itchyny/lightline.vim
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/neosnippet.vim"]
-	path = omer-config/etc/xdg/nvim/bundle/neosnippet.vim
+	path = neovim/etc/xdg/nvim/bundle/neosnippet.vim
 	url = https://github.com/Shougo/neosnippet.vim
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/neosnippet-snippets"]
-	path = omer-config/etc/xdg/nvim/bundle/neosnippet-snippets
+	path = neovim/etc/xdg/nvim/bundle/neosnippet-snippets
 	url = https://github.com/Shougo/neosnippet-snippets
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/supertab"]
-	path = omer-config/etc/xdg/nvim/bundle/supertab
+	path = neovim/etc/xdg/nvim/bundle/supertab
 	url = https://github.com/ervandew/supertab
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/targets.vim"]
-	path = omer-config/etc/xdg/nvim/bundle/targets.vim
+	path = neovim/etc/xdg/nvim/bundle/targets.vim
 	url = https://github.com/wellle/targets.vim
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-better-whitespace"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-better-whitespace
+	path = neovim/etc/xdg/nvim/bundle/vim-better-whitespace
 	url = https://github.com/ntpeters/vim-better-whitespace
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-commentary"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-commentary
+	path = neovim/etc/xdg/nvim/bundle/vim-commentary
 	url = https://github.com/tpope/vim-commentary
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-easymotion"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-easymotion
+	path = neovim/etc/xdg/nvim/bundle/vim-easymotion
 	url = https://github.com/easymotion/vim-easymotion
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-highlightedyank"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-highlightedyank
+	path = neovim/etc/xdg/nvim/bundle/vim-highlightedyank
 	url = https://github.com/machakann/vim-highlightedyank
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-indent-object"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-indent-object
+	path = neovim/etc/xdg/nvim/bundle/vim-indent-object
 	url = https://github.com/michaeljsmith/vim-indent-object
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-monokai"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-monokai
+	path = neovim/etc/xdg/nvim/bundle/vim-monokai
 	url = https://github.com/sickill/vim-monokai
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-repeat"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-repeat
+	path = neovim/etc/xdg/nvim/bundle/vim-repeat
 	url = https://github.com/tpope/vim-repeat
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-surround"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-surround
+	path = neovim/etc/xdg/nvim/bundle/vim-surround
 	url = https://github.com/tpope/vim-surround
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-tmux-navigator"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-tmux-navigator
+	path = neovim/etc/xdg/nvim/bundle/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-unimpaired"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-unimpaired
+	path = neovim/etc/xdg/nvim/bundle/vim-unimpaired
 	url = https://github.com/tpope/vim-unimpaired
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/vim-pathogen"]
-	path = omer-config/etc/xdg/nvim/vim-pathogen
+	path = neovim/etc/xdg/nvim/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/traces.vim"]
-	path = omer-config/etc/xdg/nvim/bundle/traces.vim
+	path = neovim/etc/xdg/nvim/bundle/traces.vim
 	url = https://github.com/markonm/traces.vim
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-sleut"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-sleut
+	path = neovim/etc/xdg/nvim/bundle/vim-sleut
 	url = https://github.com/tpope/vim-sleuth
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-tmux-focus-events"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-tmux-focus-events
+	path = neovim/etc/xdg/nvim/bundle/vim-tmux-focus-events
 	url = https://github.com/tmux-plugins/vim-tmux-focus-events
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-python-pep8-indent"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-python-pep8-indent
+	path = neovim/etc/xdg/nvim/bundle/vim-python-pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent
 	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/semshi"]
-	path = omer-config/etc/xdg/nvim/bundle/semshi
+	path = neovim/etc/xdg/nvim/bundle/semshi
 	url = https://github.com/numirias/semshi
 	branch = master
 [submodule "oh-my-zsh"]
-	path = omer-config/etc/zsh/ohmyzsh
+	path = zsh/etc/zsh/ohmyzsh
 	url = https://github.com/ohmyzsh/ohmyzsh
 [submodule "vim-pasta"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-pasta
+	path = neovim/etc/xdg/nvim/bundle/vim-pasta
 	url = https://github.com/sickill/vim-pasta
 [submodule "vim-argwrap"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-argwrap
+	path = neovim/etc/xdg/nvim/bundle/vim-argwrap
 	url = https://github.com/foosoft/vim-argwrap
 [submodule "omer-config/etc/xdg/nvim/bundle/diffconflicts"]
-	path = omer-config/etc/xdg/nvim/bundle/diffconflicts
+	path = neovim/etc/xdg/nvim/bundle/diffconflicts
 	url = https://github.com/whiteinge/diffconflicts
 [submodule "nvim-lspconfig"]
-	path = omer-config/etc/xdg/nvim/bundle/nvim-lspconfig
+	path = neovim/etc/xdg/nvim/bundle/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig
 [submodule "telescope.nvim"]
-	path = omer-config/etc/xdg/nvim/bundle/telescope.nvim
+	path = neovim/etc/xdg/nvim/bundle/telescope.nvim
 	url = https://github.com/nvim-telescope/telescope.nvim
 [submodule "plenary.nvim"]
-	path = omer-config/etc/xdg/nvim/bundle/plenary.nvim
+	path = neovim/etc/xdg/nvim/bundle/plenary.nvim
 	url = https://github.com/nvim-lua/plenary.nvim
 [submodule "popup.nvim"]
-	path = omer-config/etc/xdg/nvim/bundle/popup.nvim
+	path = neovim/etc/xdg/nvim/bundle/popup.nvim
 	url = https://github.com/nvim-lua/popup.nvim
 [submodule "nvim-treesitter"]
-	path = omer-config/etc/xdg/nvim/bundle/nvim-treesitter
+	path = neovim/etc/xdg/nvim/bundle/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter

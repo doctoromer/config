@@ -70,9 +70,9 @@ def write_or_extract_binaries(name, data, base_dir, file_map):
         with tarfile.open(fileobj=io.BytesIO(data), mode="r:gz") as tar_file:
 
             for member in tar_file.getmembers():
-                if name not in file_map:
+                if member.path not in file_map:
                     continue
-                output_path = base_dir / file_map[name]
+                output_path = base_dir / file_map[member.path]
                 if output_path.exists():
                     continue
 

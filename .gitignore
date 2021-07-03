@@ -1,2 +1,1 @@
-*.deb
-omer-config/usr/bin/*
+binaries/*

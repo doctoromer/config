@@ -103,13 +103,13 @@ require('telescope').setup{
 EOF
 
 " Treesitter.nvim
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = {"c", "cpp", "python", "bash", "html", "java", "json", "lua", "regex", "toml"},
-  ignore_install = {},
-  highlight = { enable = true },
-}
-EOF
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   ensure_installed = {"c", "cpp", "python", "bash", "html", "java", "json", "lua", "regex", "toml"},
+"   ignore_install = {},
+"   highlight = { enable = true },
+" }
+" EOF
 
 " Easymotion
 nmap <Space> <Plug>(easymotion-prefix)

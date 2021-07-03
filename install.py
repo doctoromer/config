@@ -23,14 +23,16 @@ BINARIES = {
         "asset_regex": "exa.*linux.*x86_64.*",
         "file_map": {
             "bin/exa": "usr/bin/exa",
-            "man/exa.1": "usr/share/man/man1",
+            "man/exa.1": "usr/share/man/man1/exa.1",
             "completions/exa.zsh": "usr/local/share/zsh/site-functions/exa.zsh"
         }
     },
     "vim": {
         "repo": "neovim/neovim",
         "asset_regex": "nvim.appimage",
-        "file_map": "usr/bin/vim"
+        "file_map": {
+            "nvim.appimage": "usr/bin/vim"
+        }
     }
 }
 
@@ -86,18 +88,29 @@ def write_or_extract_binaries(name, data, base_dir, file_map):
                     output_path.chmod(0o755)
 
     else:
-        output_path = base_dir / file_map
+        output_path = base_dir / file_map[name]
         ensure_dirs(output_path)
         with output_path.open("wb") as output_file:
             output_file.write(data)
             output_path.chmod(0o755)
 
 
-def main():
+def is_download_required(base_dir, name):
+    base_dir = Path(base_dir)
+    for path in BINARIES[name]["file_map"].values():
+        if not (base_dir / path).exists():
+            return True
+    return False
+
+
+def download_binaries(base_dir):
     for name, binary in BINARIES.items():
-        print(f"Downloading {name}")
-        asset_name, asset_data = get_latest_release(binary["repo"], binary["asset_regex"])
-        write_or_extract_binaries(asset_name, asset_data, "temp", BINARIES[name]["file_map"])
+        if is_download_required(base_dir, name):
+            print(f"Downloading {name}")
+            asset_name, asset_data = get_latest_release(binary["repo"], binary["asset_regex"])
+            write_or_extract_binaries(asset_name, asset_data, base_dir, BINARIES[name]["file_map"])
+        else:
+            print(f"Downloading {name} is not required")
 
 
 if __name__ == '__main__':

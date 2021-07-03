@@ -196,6 +196,3 @@
 [submodule "popup.nvim"]
 	path = neovim/etc/xdg/nvim/bundle/popup.nvim
 	url = https://github.com/nvim-lua/popup.nvim
-[submodule "nvim-treesitter"]
-	path = neovim/etc/xdg/nvim/bundle/nvim-treesitter
-	url = https://github.com/nvim-treesitter/nvim-treesitter

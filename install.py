@@ -33,6 +33,13 @@ BINARIES = {
         "file_map": {
             "nvim.appimage": "usr/bin/vim"
         }
+    },
+    "diff-so-fancy": {
+        "repo": "so-fancy/diff-so-fancy",
+        "asset_regex": "diff-so-fancy",
+        "file_map": {
+            "diff-so-fancy": "usr/bin/diff-so-fancy"
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import io
+import logging
 import os
 import re
 import subprocess
@@ -10,6 +11,14 @@ import zipfile
 
 import dploy
 import requests
+
+try:
+    from rich.logging import RichHandler
+except ImportError:
+    RichHandler = None
+
+
+logger = logging.getLogger(__name__)
 
 
 BINARIES = {
@@ -55,6 +64,7 @@ def ensure_dirs(path):
 
 
 def get_latest_release(repo_name, asset_regex):
+    logger.info(f"Reading latest release of {repo_name}")
     with requests.get(f"https://api.github.com/repos/{repo_name}/releases/latest") as response:
         assets = response.json()["assets"]
 
@@ -68,6 +78,7 @@ def write_or_extract_binaries(name, data, base_dir, file_map):
     base_dir = Path(base_dir)
 
     if name.endswith(".tar.gz"):
+        logger.info(f"Extracting tar file: {name}")
         with tarfile.open(fileobj=io.BytesIO(data), mode="r:gz") as tar_file:
 
             for member in tar_file.getmembers():
@@ -84,6 +95,7 @@ def write_or_extract_binaries(name, data, base_dir, file_map):
                     output_path.chmod(0o755)
 
     elif name.endswith(".zip"):
+        logger.info(f"Extracting zip file: {name}")
         with zipfile.ZipFile(io.BytesIO(data), mode="r") as zip_file:
 
             for name in zip_file.namelist():
@@ -100,6 +112,7 @@ def write_or_extract_binaries(name, data, base_dir, file_map):
                     output_path.chmod(0o755)
 
     else:
+        logger.info(f"Saving regular file: {name}")
         output_path = base_dir / file_map[name]
         ensure_dirs(output_path)
         with output_path.open("wb") as output_file:
@@ -118,14 +131,15 @@ def is_download_required(base_dir, name):
 def download_binaries(base_dir):
     for name, binary in BINARIES.items():
         if is_download_required(base_dir, name):
-            print(f"Downloading {name}")
+            logger.info(f"Downloading {name}")
             asset_name, asset_data = get_latest_release(binary["repo"], binary["asset_regex"])
             write_or_extract_binaries(asset_name, asset_data, base_dir, BINARIES[name]["file_map"])
         else:
-            print(f"Downloading {name} is not required")
+            logger.info(f"Downloading {name} is not required")
 
 
 def post_install():
+    logger.info("Updating neovim remote plugins")
     subprocess.check_call("vim --headless -c :UpdateRemotePlugins -c :q".split(" "))
 
 
@@ -154,8 +168,27 @@ def parse_args():
     return parser.parse_args()
 
 
+def configure_logger():
+    FORMAT = "%(message)s"
+    if RichHandler is not None:
+        handler = RichHandler(rich_tracebacks=True, tracebacks_show_locals=True)
+    else:
+        handler = logging.StreamHandler()
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)-15s - %(levelname)s - %(message)s",
+        datefmt="[%X]",
+        handlers=[handler],
+    )
+
+
 def main():
+    configure_logger()
+
     args = parse_args()
+
+    logger.info(f"Executing {args.command} command")
     if args.command == "install":
         if args.packages == "all":
             packages = PACKAGES
@@ -175,8 +208,8 @@ def main():
     elif args.command == "verify":
         pass
     else:
-        print(f"Unknown command: {args.command}")
+        logger.error(f"Unknown command: {args.command}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

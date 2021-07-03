@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import argparse
 import io
 import os
 import re
@@ -42,6 +43,9 @@ BINARIES = {
         }
     }
 }
+
+PACKAGES = ["misc", "neovim", "zsh", "binaries"]
+BINARIES_DIR = "binaries"
 
 
 def ensure_dirs(path):
@@ -118,6 +122,51 @@ def download_binaries(base_dir):
             write_or_extract_binaries(asset_name, asset_data, base_dir, BINARIES[name]["file_map"])
         else:
             print(f"Downloading {name} is not required")
+
+
+def parse_args():
+    subcommands = {
+        "verify": "Verify that essential programs are installed",
+        "download": "Download required files",
+        "install": "Create symlinks to the configuration",
+        "remove": "Remove symlinks to the configuration"
+    }
+    parser = argparse.ArgumentParser()
+    subparsers_parser = parser.add_subparsers()
+    subparsers = {}
+    for subcommand, help_text in subcommands.items():
+        subparsers[subcommand] = subparsers_parser.add_parser(subcommand, help=help_text)
+        subparsers[subcommand].set_defaults(command=subcommand)
+
+    for command in ("install", "remove"):
+        subparsers[command].add_argument(
+            "--packages",
+            "-p",
+            choices=["all"] + PACKAGES,
+            default="all"
+        )
+
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+    if args.command == "install":
+        if args.packages == "all":
+            dploy.stow(PACKAGES, "/")
+        else:
+            dploy.stow(args.packages, "/")
+    elif args.command == "remove":
+        if args.packages == "all":
+            dploy.unstow(PACKAGES, "/")
+        else:
+            dploy.unstow(args.packages, "/")
+    elif args.command == "download":
+        download_binaries(BINARIES_DIR)
+    elif args.command == "verify":
+        pass
+    else:
+        print(f"Unknown command: {args.command}")
 
 
 if __name__ == '__main__':

@@ -3,6 +3,7 @@ import argparse
 import io
 import os
 import re
+import subprocess
 from pathlib import Path
 import tarfile
 import zipfile
@@ -124,6 +125,10 @@ def download_binaries(base_dir):
             print(f"Downloading {name} is not required")
 
 
+def post_install():
+    subprocess.check_call("vim --headless -c :UpdateRemotePlugins -c :q".split(" "))
+
+
 def parse_args():
     subcommands = {
         "verify": "Verify that essential programs are installed",
@@ -153,9 +158,13 @@ def main():
     args = parse_args()
     if args.command == "install":
         if args.packages == "all":
-            dploy.stow(PACKAGES, "/")
+            packages = PACKAGES
         else:
-            dploy.stow(args.packages, "/")
+            packages = args.packages
+        dploy.stow(packages, "/")
+        if "neovim" in packages:
+            post_install()
+
     elif args.command == "remove":
         if args.packages == "all":
             dploy.unstow(PACKAGES, "/")

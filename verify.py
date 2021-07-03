@@ -27,9 +27,10 @@ def check_import(import_name):
 
 
 FEATURES = {
-    "stow": (check_command, ["stow"]),
     "zsh": (check_command, ["zsh"]),
-    "python-neovim": (check_import, ["neovim"])
+    "python-neovim": (check_import, ["neovim"]),
+    "requests": (check_import, ["requests"]),
+    "dploy": (check_import, ["dploy"])
 }
 
 

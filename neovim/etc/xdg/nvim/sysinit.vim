@@ -69,17 +69,20 @@ execute pathogen#helptags()
 " colorscheme
 colorscheme monokai
 
-" Telescope.nvim
-nnoremap <leader>f <cmd>Telescope find_files<cr>
-nnoremap <leader>a <cmd>Telescope live_grep<cr>
-nnoremap <leader>b <cmd>Telescope buffers<cr>
-nnoremap <leader>h <cmd>Telescope help_tags<cr>
-
-nnoremap gx <cmd>Telescope lsp_references<cr>
-nnoremap gd <cmd>Telescope lsp_definitions<cr>
-nnoremap gs <cmd>Telescope lsp_document_symbols<cr>
 
 lua <<EOF
+
+-- Telescope.nvim
+vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>Telescope find_files<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>Telescope live_grep<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>b', '<cmd>Telescope buffers<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>h', '<cmd>Telescope help_tags<cr>', {noremap = true})
+
+vim.api.nvim_set_keymap('n', 'gx', '<cmd>Telescope lsp_references<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', 'gd', '<cmd>Telescope lsp_definitions<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', 'gs', '<cmd>Telescope lsp_document_symbols<cr>', {noremap = true})
+
+
 local actions = require('telescope.actions')
 -- Global remapping
 ------------------------------

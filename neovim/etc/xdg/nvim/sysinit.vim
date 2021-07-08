@@ -1,63 +1,64 @@
-set runtimepath^=~/.config/nvim
-set rtp+=/usr/local/src/fzf
-let &packpath = &runtimepath
-set nocompatible
+lua << EOF
+vim.o.compatible = false
+vim.o.showcmd = true
+vim.o.showmode = true
+vim.o.showmatch = true
+vim.o.nrformats='bin,hex'
+vim.o.wildmenu = true
+vim.o.ttimeoutlen = 0
+vim.o.foldenable = false
+vim.o.lazyredraw = true
+vim.o.backspace = 'indent,eol,start'
+vim.o.clipboard = 'unnamed'
+vim.o.hidden = true
 
-" =============== General ===============
-set showcmd
-set showmode
-set showmatch
+-- =============== Window display ===============
+vim.o.encoding = 'utf-8'
+vim.o.number = true
+vim.o.ruler = true
+vim.o.signcolumn = 'yes'
+vim.o.colorcolumn = '81'
+vim.o.lazyredraw = true
+vim.o.laststatus = 2
+vim.o.completeopt = 'menu'
+
+-- =============== Persistentcy ===============
+vim.o.undofile = true
+vim.o.swapfile = false
+vim.o.autoread = true
+vim.o.autowrite = true
+
+-- =============== Indentation ===============
+vim.o.autoindent = true
+vim.o.smartindent = true
+vim.o.smarttab = true
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
+vim.o.tabstop = 4
+vim.o.expandtab = true
+
+vim.o.wrap = false
+vim.o.linebreak = true
+
+-- =============== Search ===============
+vim.o.incsearch = true
+vim.o.hlsearch = true
+
+-- =============== Windows ===============
+vim.o.splitright = true
+vim.o.splitbelow = true
+
+vim.g.mapleader = ';'
+
+EOF
+
+" =============== Vim only ===============
 syntax on
-set nrformats=bin,hex
-set wildmenu
-set ttimeoutlen=0
-set nofoldenable
-set lazyredraw
-let mapleader=';'
-set backspace=indent,eol,start
-set clipboard=unnamed
-set hidden
-
-" =============== Window display ===============
-set encoding=utf-8
-set number
-set ruler
-set signcolumn=yes
-set colorcolumn=81
-set lazyredraw
-set laststatus=2
-set completeopt=menu
 autocmd VimResized * wincmd =
-
-" =============== Persistentcy ===============
-set undofile
-set noswapfile
-set autoread
-set autowrite
 au FocusGained,BufEnter * :checktime
-
-" =============== Indentation ===============
-set autoindent
-set smartindent
-set smarttab
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
-set expandtab
-
 filetype plugin on
 filetype indent on
 
-set nowrap
-set linebreak
-
-" =============== Search ===============
-set incsearch
-set hlsearch
-
-" =============== Windows ===============
-set splitright
-set splitbelow
 
 " =============== Plugin ===============
 execute pathogen#infect()

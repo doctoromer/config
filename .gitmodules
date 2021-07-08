@@ -80,10 +80,6 @@
 	path = neovim/etc/xdg/nvim/bundle/auto-pairs
 	url = https://github.com/jiangmiao/auto-pairs
 	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/deoplete.nvim"]
-	path = neovim/etc/xdg/nvim/bundle/deoplete.nvim
-	url = https://github.com/Shougo/deoplete.nvim
-	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/indentLine"]
 	path = neovim/etc/xdg/nvim/bundle/indentLine
 	url = https://github.com/Yggdroot/indentLine
@@ -196,3 +192,6 @@
 [submodule "popup.nvim"]
 	path = neovim/etc/xdg/nvim/bundle/popup.nvim
 	url = https://github.com/nvim-lua/popup.nvim
+[submodule "nvim-compe"]
+	path = neovim/etc/xdg/nvim/bundle/nvim-compe
+	url = https://github.com/hrsh7th/nvim-compe

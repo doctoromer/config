@@ -113,10 +113,12 @@ api.nvim_set_keymap('v', '<Space>', '<Plug>(easymotion-prefix)', {})
 
 -- IndentLine
 g.indentLine_char = '│'
+g.indentLine_fileTypeExclude = {'dashboard'}
 
 -- better-whitespace
 g.better_whitespace_enabled = true
 g.strip_whitespace_on_save = false
+g.better_whitespace_filetypes_blacklist = {'dashboard'}
 
 -- vim-tmux-navigator
 g.tmux_navigator_no_mappings = true
@@ -212,3 +214,26 @@ require'compe'.setup {
     luasnip = true;
   };
 }
+
+-- dashboard.nvim
+g.dashboard_default_executive = 'telescope'
+g.dashboard_custom_shortcut = {
+  last_session = '';
+  find_history = '';
+  find_file = '';
+  new_file = '';
+  change_colorscheme = '';
+  find_word = '';
+  book_marks = '';
+}
+
+g.dashboard_custom_shortcut_icon = {
+  last_session = '';
+  find_history = '';
+  find_file = '';
+  new_file = '';
+  change_colorscheme = '';
+  find_word = '';
+  book_marks = '';
+}
+

@@ -206,3 +206,6 @@
 [submodule "onedark.nvim"]
 	path = neovim/etc/xdg/nvim/bundle/onedark.nvim
 	url = https://github.com/navarasu/onedark.nvim
+[submodule "dashboard.nvim"]
+	path = neovim/etc/xdg/nvim/bundle/dashboard-nvim
+	url = https://github.com/glepnir/dashboard-nvim

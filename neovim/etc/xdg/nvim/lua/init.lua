@@ -1,57 +1,62 @@
 -- General
-vim.o.compatible = false
-vim.o.showcmd = true
-vim.o.showmode = true
-vim.o.showmatch = true
-vim.o.nrformats='bin,hex'
-vim.o.wildmenu = true
-vim.o.ttimeoutlen = 0
-vim.o.foldenable = false
-vim.o.lazyredraw = true
-vim.o.backspace = 'indent,eol,start'
-vim.o.clipboard = 'unnamed'
-vim.o.hidden = true
+
+local o = vim.o
+local g = vim.g
+local api = vim.api
+
+o.compatible = false
+o.showcmd = true
+o.showmode = true
+o.showmatch = true
+o.nrformats='bin,hex'
+o.wildmenu = true
+o.ttimeoutlen = 0
+o.foldenable = false
+o.lazyredraw = true
+o.backspace = 'indent,eol,start'
+o.clipboard = 'unnamed'
+o.hidden = true
 
 -- Window display
-vim.o.encoding = 'utf-8'
-vim.o.number = true
-vim.o.ruler = true
-vim.o.signcolumn = 'yes'
-vim.o.colorcolumn = '81'
-vim.o.lazyredraw = true
-vim.o.laststatus = 2
-vim.o.completeopt = 'menu'
+o.encoding = 'utf-8'
+o.number = true
+o.ruler = true
+o.signcolumn = 'yes'
+o.colorcolumn = '81'
+o.lazyredraw = true
+o.laststatus = 2
+o.completeopt = 'menu'
 
 -- Persistentcy
-vim.o.undofile = true
-vim.o.swapfile = false
-vim.o.autoread = true
-vim.o.autowrite = true
+o.undofile = true
+o.swapfile = false
+o.autoread = true
+o.autowrite = true
 
 -- Indentation
-vim.o.autoindent = true
-vim.o.smartindent = true
-vim.o.smarttab = true
-vim.o.shiftwidth = 4
-vim.o.softtabstop = 4
-vim.o.tabstop = 4
-vim.o.expandtab = true
+o.autoindent = true
+o.smartindent = true
+o.smarttab = true
+o.shiftwidth = 4
+o.softtabstop = 4
+o.tabstop = 4
+o.expandtab = true
 
-vim.o.wrap = false
-vim.o.linebreak = true
+o.wrap = false
+o.linebreak = true
 
 -- Search
-vim.o.incsearch = true
-vim.o.hlsearch = true
+o.incsearch = true
+o.hlsearch = true
 
 -- Windows
-vim.o.splitright = true
-vim.o.splitbelow = true
+o.splitright = true
+o.splitbelow = true
 
-vim.g.mapleader = ';'
+g.mapleader = ';'
 
 -- indent-blankline.nvim
-vim.g.indent_blankline_use_treesitter = true
+g.indent_blankline_use_treesitter = true
 
 -- Trouble.nvim
 require("trouble").setup {
@@ -68,18 +73,18 @@ require("trouble").setup {
     },
     use_lsp_diagnostic_signs = false
 }
-vim.api.nvim_set_keymap("n", "<leader>x", "<cmd>Trouble<cr>", {silent = true, noremap = true})
+api.nvim_set_keymap("n", "<leader>x", "<cmd>Trouble<cr>", {silent = true, noremap = true})
 
 -- Telescope.nvim
-vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>Telescope find_files<cr>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>Telescope live_grep<cr>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<leader>b', '<cmd>Telescope buffers<cr>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<leader>h', '<cmd>Telescope help_tags<cr>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<leader>m', '<cmd>Telescope keymaps<cr>', {noremap = true})
+api.nvim_set_keymap('n', '<leader>f', '<cmd>Telescope find_files<cr>', {noremap = true})
+api.nvim_set_keymap('n', '<leader>a', '<cmd>Telescope live_grep<cr>', {noremap = true})
+api.nvim_set_keymap('n', '<leader>b', '<cmd>Telescope buffers<cr>', {noremap = true})
+api.nvim_set_keymap('n', '<leader>h', '<cmd>Telescope help_tags<cr>', {noremap = true})
+api.nvim_set_keymap('n', '<leader>m', '<cmd>Telescope keymaps<cr>', {noremap = true})
 
-vim.api.nvim_set_keymap('n', 'gx', '<cmd>Telescope lsp_references<cr>', {noremap = true})
-vim.api.nvim_set_keymap('n', 'gd', '<cmd>Telescope lsp_definitions<cr>', {noremap = true})
-vim.api.nvim_set_keymap('n', 'gs', '<cmd>Telescope lsp_document_symbols<cr>', {noremap = true})
+api.nvim_set_keymap('n', 'gx', '<cmd>Telescope lsp_references<cr>', {noremap = true})
+api.nvim_set_keymap('n', 'gd', '<cmd>Telescope lsp_definitions<cr>', {noremap = true})
+api.nvim_set_keymap('n', 'gs', '<cmd>Telescope lsp_document_symbols<cr>', {noremap = true})
 
 local actions = require('telescope.actions')
 
@@ -103,31 +108,31 @@ require('telescope').setup {
 }
 
 -- Easymotion
-vim.api.nvim_set_keymap('n', '<Space>', '<Plug>(easymotion-prefix)', {})
-vim.api.nvim_set_keymap('v', '<Space>', '<Plug>(easymotion-prefix)', {})
+api.nvim_set_keymap('n', '<Space>', '<Plug>(easymotion-prefix)', {})
+api.nvim_set_keymap('v', '<Space>', '<Plug>(easymotion-prefix)', {})
 
 -- IndentLine
-vim.g.indentLine_char = '│'
+g.indentLine_char = '│'
 
 -- better-whitespace
-vim.g.better_whitespace_enabled = true
-vim.g.strip_whitespace_on_save = false
+g.better_whitespace_enabled = true
+g.strip_whitespace_on_save = false
 
 -- vim-tmux-navigator
-vim.g.tmux_navigator_no_mappings = true
-vim.api.nvim_set_keymap('n', '<M-h>', '<cmd>TmuxNavigateLeft<cr>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<M-j>', '<cmd>TmuxNavigateDown<cr>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<M-k>', '<cmd>TmuxNavigateUp<cr>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<M-l>', '<cmd>TmuxNavigateRight<cr>', {noremap = true, silent = true})
+g.tmux_navigator_no_mappings = true
+api.nvim_set_keymap('n', '<M-h>', '<cmd>TmuxNavigateLeft<cr>', {noremap = true, silent = true})
+api.nvim_set_keymap('n', '<M-j>', '<cmd>TmuxNavigateDown<cr>', {noremap = true, silent = true})
+api.nvim_set_keymap('n', '<M-k>', '<cmd>TmuxNavigateUp<cr>', {noremap = true, silent = true})
+api.nvim_set_keymap('n', '<M-l>', '<cmd>TmuxNavigateRight<cr>', {noremap = true, silent = true})
 
 -- superTab
-vim.g.SuperTabDefaultCompletionType = "<c-n>"
+g.SuperTabDefaultCompletionType = "<c-n>"
 
 -- vim-pasta
-vim.g.pasta_disabled_filetypes = {}
+g.pasta_disabled_filetypes = {}
 
 -- Argwrap
-vim.api.nvim_set_keymap('n', 'ga', '<cmd>ArgWrap<cr>', {noremap = true, silent = true})
+api.nvim_set_keymap('n', 'ga', '<cmd>ArgWrap<cr>', {noremap = true, silent = true})
 
 -- Treesitter.nvim
 require'nvim-treesitter.configs'.setup {
@@ -137,7 +142,7 @@ require'nvim-treesitter.configs'.setup {
 }
 
 -- Semshi
-vim.g['semshi#error_sign'] = false
+g['semshi#error_sign'] = false
 
 -- nvim-lspconfig
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -149,8 +154,8 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 local nvim_lsp = require('lspconfig')
 
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  local function buf_set_keymap(...) api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) api.nvim_buf_set_option(bufnr, ...) end
 
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -192,7 +197,7 @@ require'compe'.setup {
     winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
     max_width = 120,
     min_width = 60,
-    max_height = math.floor(vim.o.lines * 0.3),
+    max_height = math.floor(o.lines * 0.3),
     min_height = 1,
   };
 

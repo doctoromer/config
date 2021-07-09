@@ -20,6 +20,8 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
+SOURCE_CODE_ASSET = "SOURCE_CODE_ASSET.zip"
+
 
 BINARIES = {
     "fzf": {
@@ -27,6 +29,14 @@ BINARIES = {
         "asset_regex": "fzf.*linux.*amd64.*",
         "file_map": {
             "fzf": "usr/bin/fzf"
+        }
+    },
+    "fzf-completion": {
+        "repo": "junegunn/fzf",
+        "asset_regex": SOURCE_CODE_ASSET,
+        "file_map": {
+            "shell/completion.zsh": "usr/local/share/zsh/site-functions/fzf-completion.zsh",
+            "shell/key-bindings.zsh": "usr/local/share/zsh/site-functions/fzf-key-bindings.zsh"
         }
     },
     "exa": {
@@ -66,9 +76,13 @@ def ensure_dirs(path):
 def get_latest_release(repo_name, asset_regex):
     logger.info(f"Reading latest release of {repo_name}")
     with requests.get(f"https://api.github.com/repos/{repo_name}/releases/latest") as response:
-        assets = response.json()["assets"]
+        response_data = response.json()
 
-    for asset in assets:
+    if asset_regex == SOURCE_CODE_ASSET:
+        with requests.get(response_data["zipball_url"]) as response:
+            return SOURCE_CODE_ASSET, response.content
+
+    for asset in response_data["assets"]:
         if re.match(asset_regex, asset["name"]):
             with requests.get(asset["browser_download_url"]) as response:
                 return asset["name"], response.content
@@ -98,14 +112,19 @@ def write_or_extract_binaries(name, data, base_dir, file_map):
         logger.info(f"Extracting zip file: {name}")
         with zipfile.ZipFile(io.BytesIO(data), mode="r") as zip_file:
 
-            for name in zip_file.namelist():
-                if name not in file_map:
+            for entry_name in zip_file.namelist():
+                original_entry_name = entry_name
+                if name == SOURCE_CODE_ASSET:
+                    entry_name = os.sep.join(Path(entry_name).parts[1:])
+
+                if entry_name not in file_map:
                     continue
-                output_path = base_dir / file_map[name]
+
+                output_path = base_dir / file_map[entry_name]
                 if output_path.exists():
                     continue
 
-                extracted_data = zip_file.read(name)
+                extracted_data = zip_file.read(original_entry_name)
                 ensure_dirs(output_path)
                 with output_path.open("wb") as output_file:
                     output_file.write(extracted_data)

@@ -71,6 +71,8 @@ colorscheme monokai
 
 
 lua <<EOF
+vim.g.indent_blankline_use_treesitter = true
+
 -- Trouble.nvim
 require("trouble").setup {
     icons = false,
@@ -119,64 +121,53 @@ require('telescope').setup {
     },
   }
 }
+
+-- Easymotion
+vim.api.nvim_set_keymap('n', '<Space>', '<Plug>(easymotion-prefix)', {})
+vim.api.nvim_set_keymap('v', '<Space>', '<Plug>(easymotion-prefix)', {})
+
+-- IndentLine
+vim.g.indentLine_char = '│'
+-- better-whitespace
+vim.g.better_whitespace_enabled = true
+vim.g.strip_whitespace_on_save = false
+
+-- vim-tmux-navigator
+vim.g.tmux_navigator_no_mappings = true
+vim.api.nvim_set_keymap('n', '<M-h>', '<cmd>TmuxNavigateLeft<cr>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<M-j>', '<cmd>TmuxNavigateDown<cr>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<M-k>', '<cmd>TmuxNavigateUp<cr>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<M-l>', '<cmd>TmuxNavigateRight<cr>', {noremap = true, silent = true})
+
+-- superTab
+vim.g.SuperTabDefaultCompletionType = "<c-n>"
+
+-- vim-pasta
+vim.g.pasta_disabled_filetypes = {}
+
+-- Argwrap
+vim.api.nvim_set_keymap('n', 'ga', '<cmd>ArgWrap<cr>', {noremap = true, silent = true})
+
+-- Treesitter.nvim
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {"c", "cpp", "python", "bash", "html", "java", "json", "lua", "regex", "toml"},
+  ignore_install = {},
+  highlight = { enable = true },
+}
+
 EOF
-
-" Treesitter.nvim
-" lua <<EOF
-" require'nvim-treesitter.configs'.setup {
-"   ensure_installed = {"c", "cpp", "python", "bash", "html", "java", "json", "lua", "regex", "toml"},
-"   ignore_install = {},
-"   highlight = { enable = true },
-" }
-" EOF
-
-" Easymotion
-nmap <Space> <Plug>(easymotion-prefix)
-vmap <Space> <Plug>(easymotion-prefix)
-
-" IndentLine
-let g:indentLine_char = '│'
-let g:indentLine_enabled = 1
-autocmd FileType help IndentLinesDisable
-autocmd FileType json IndentLinesDisable
-
-" better-whitespace
-let g:better_whitespace_enabled = 1
-let g:strip_whitespace_on_save = 0
-
-" Highlighted-yank
-let g:highlightedyank_highlight_duration = -1
-
-" vim-tmux-navigator
-let g:tmux_navigator_no_mappings = 1
-
-if exists('$TMUX')
-    nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
-    nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
-    nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
-    nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
-endif
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
 
 " neosnippet
 imap <C-Space> <Plug>(neosnippet_expand_or_jump)
 smap <C-Space> <Plug>(neosnippet_expand_or_jump)
 xmap <C-Space> <Plug>(neosnippet_expand_target)
 
-" superTab
-let g:SuperTabDefaultCompletionType = "<c-n>"
-
 " Semshi
 let g:semshi#error_sign = v:false
 
-" vim-pasta
-let g:pasta_disabled_filetypes = []
-
-" Argwrap
-nnoremap <silent> ga :ArgWrap<CR>
-
+" IndentLine
+autocmd FileType help IndentLinesDisable
+autocmd FileType json IndentLinesDisable
 
 lua << EOF
 

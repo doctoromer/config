@@ -80,10 +80,6 @@
 	path = neovim/etc/xdg/nvim/bundle/auto-pairs
 	url = https://github.com/jiangmiao/auto-pairs
 	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/indentLine"]
-	path = neovim/etc/xdg/nvim/bundle/indentLine
-	url = https://github.com/Yggdroot/indentLine
-	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/lightline.vim"]
 	path = neovim/etc/xdg/nvim/bundle/lightline.vim
 	url = https://github.com/itchyny/lightline.vim
@@ -201,3 +197,9 @@
 [submodule "nvim-web-devicons"]
 	path = neovim/etc/xdg/nvim/bundle/nvim-web-devicons
 	url = https://github.com/kyazdani42/nvim-web-devicons
+[submodule "indent-blankline.nvim"]
+	path = neovim/etc/xdg/nvim/bundle/indent-blankline.nvim
+	url = https://github.com/lukas-reineke/indent-blankline.nvim
+[submodule "nvim-treesitter"]
+	path = neovim/etc/xdg/nvim/bundle/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter

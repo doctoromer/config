@@ -71,6 +71,22 @@ colorscheme monokai
 
 
 lua <<EOF
+-- Trouble.nvim
+require("trouble").setup {
+    icons = false,
+    fold_open = "v",
+    fold_closed = ">",
+    indent_lines = false,
+    signs = {
+        error = "error",
+        warning = "warn",
+        hint = "hint",
+        information = "info",
+        other = "other"
+    },
+    use_lsp_diagnostic_signs = false
+}
+vim.api.nvim_set_keymap("n", "<leader>x", "<cmd>Trouble<cr>", {silent = true, noremap = true})
 
 -- Telescope.nvim
 vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>Telescope find_files<cr>', {noremap = true})
@@ -82,11 +98,10 @@ vim.api.nvim_set_keymap('n', 'gx', '<cmd>Telescope lsp_references<cr>', {noremap
 vim.api.nvim_set_keymap('n', 'gd', '<cmd>Telescope lsp_definitions<cr>', {noremap = true})
 vim.api.nvim_set_keymap('n', 'gs', '<cmd>Telescope lsp_document_symbols<cr>', {noremap = true})
 
-
 local actions = require('telescope.actions')
 -- Global remapping
 ------------------------------
-require('telescope').setup{
+require('telescope').setup {
   defaults = {
     mappings = {
       i = {

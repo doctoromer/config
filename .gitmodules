@@ -195,3 +195,9 @@
 [submodule "nvim-compe"]
 	path = neovim/etc/xdg/nvim/bundle/nvim-compe
 	url = https://github.com/hrsh7th/nvim-compe
+[submodule "trouble.nvim"]
+	path = neovim/etc/xdg/nvim/bundle/trouble.nvim
+	url = https://github.com/folke/trouble.nvim
+[submodule "nvim-web-devicons"]
+	path = neovim/etc/xdg/nvim/bundle/nvim-web-devicons
+	url = https://github.com/kyazdani42/nvim-web-devicons

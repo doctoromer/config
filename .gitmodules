@@ -203,3 +203,6 @@
 [submodule "nvim-treesitter"]
 	path = neovim/etc/xdg/nvim/bundle/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter
+[submodule "onedark.nvim"]
+	path = neovim/etc/xdg/nvim/bundle/onedark.nvim
+	url = https://github.com/navarasu/onedark.nvim

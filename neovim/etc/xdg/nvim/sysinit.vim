@@ -15,7 +15,8 @@ filetype indent on
 " =============== Plugins configurations ===============
 
 " colorscheme
-colorscheme monokai
+let g:onedark_style = 'darker'
+colorscheme onedark
 
 
 " neosnippet

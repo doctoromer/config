@@ -55,9 +55,6 @@ o.splitbelow = true
 
 g.mapleader = ';'
 
--- indent-blankline.nvim
-g.indent_blankline_use_treesitter = true
-
 -- Trouble.nvim
 require("trouble").setup {
     icons = false,
@@ -78,6 +75,7 @@ api.nvim_set_keymap("n", "<leader>x", "<cmd>Trouble<cr>", {silent = true, norema
 -- Telescope.nvim
 api.nvim_set_keymap('n', '<leader>f', '<cmd>Telescope find_files<cr>', {noremap = true})
 api.nvim_set_keymap('n', '<leader>a', '<cmd>Telescope live_grep<cr>', {noremap = true})
+api.nvim_set_keymap('n', '<leader>l', '<cmd>Telescope current_buffer_fuzzy_find<cr>', {noremap = true})
 api.nvim_set_keymap('n', '<leader>b', '<cmd>Telescope buffers<cr>', {noremap = true})
 api.nvim_set_keymap('n', '<leader>h', '<cmd>Telescope help_tags<cr>', {noremap = true})
 api.nvim_set_keymap('n', '<leader>m', '<cmd>Telescope keymaps<cr>', {noremap = true})
@@ -111,9 +109,10 @@ require('telescope').setup {
 api.nvim_set_keymap('n', '<Space>', '<Plug>(easymotion-prefix)', {})
 api.nvim_set_keymap('v', '<Space>', '<Plug>(easymotion-prefix)', {})
 
--- IndentLine
+-- indent-blankline.nvim
+g.indentLine_fileTypeExclude = {'dashboard', 'help'}
+g.indent_blankline_use_treesitter = true
 g.indentLine_char = '│'
-g.indentLine_fileTypeExclude = {'dashboard'}
 
 -- better-whitespace
 g.better_whitespace_enabled = true
@@ -137,7 +136,7 @@ g.pasta_disabled_filetypes = {}
 api.nvim_set_keymap('n', 'ga', '<cmd>ArgWrap<cr>', {noremap = true, silent = true})
 
 -- Treesitter.nvim
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
   ensure_installed = {"c", "cpp", "python", "bash", "html", "java", "json", "lua", "regex", "toml"},
   ignore_install = {},
   highlight = { enable = true },
@@ -181,7 +180,7 @@ for _, lsp in ipairs(servers) do
 end
 
 -- nvim-compe
-require'compe'.setup {
+require('compe').setup {
   enabled = true;
   autocomplete = true;
   debug = false;

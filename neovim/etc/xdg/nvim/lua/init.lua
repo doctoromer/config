@@ -260,3 +260,35 @@ g.dashboard_custom_header = {
 }
 
 g.dashboard_custom_footer = {'Get up or get lost 🙃'}
+
+-- =============== Mappings ===============
+
+api.nvim_set_keymap('n', ';', '<nop>', {noremap = true})
+api.nvim_set_keymap('n', '\\', ';', {noremap = true})
+
+-- Stay in visual mode after indent or unindent
+api.nvim_set_keymap('v', '>', '>gv', {})
+api.nvim_set_keymap('v', '<', '<gv', {})
+
+-- Disable bad keys
+api.nvim_set_keymap('n', '<home>', '<nop>', {})
+api.nvim_set_keymap('n', '<end>', '<nop>', {})
+api.nvim_set_keymap('n', '<del>', '<nop>', {})
+api.nvim_set_keymap('n', '<insert>', '<nop>', {})
+api.nvim_set_keymap('n', '<left>', '<nop>', {})
+api.nvim_set_keymap('n', '<down>', '<nop>', {})
+api.nvim_set_keymap('n', '<up>', '<nop>', {})
+api.nvim_set_keymap('n', '<right>', '<nop>', {})
+
+-- Tabs
+api.nvim_set_keymap('n', '<leader>tt', '<cmd>tabnew<cr>', {noremap = true, silent = true})
+api.nvim_set_keymap('n', 'gb', '<cmd>tabprevious<cr>', {noremap = true, silent = true})
+api.nvim_set_keymap('n', 'gf', '<cmd>-tabmove<cr>', {noremap = true, silent = true})
+api.nvim_set_keymap('n', 'gh', '<cmd>+tabmove<cr>', {noremap = true, silent = true})
+
+-- Horizontal scroll
+api.nvim_set_keymap('n', 'zl', 'zL', {noremap = true})
+api.nvim_set_keymap('n', 'zh', 'zH', {noremap = true})
+
+-- Other
+api.nvim_set_keymap('n', 'Y', 'y$', {noremap = true})

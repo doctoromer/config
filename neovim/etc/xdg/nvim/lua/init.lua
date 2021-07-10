@@ -88,6 +88,15 @@ local actions = require('telescope.actions')
 
 require('telescope').setup {
     defaults = {
+        vimgrep_arguments = {
+            'ag',
+            '--nocolor',
+            '--noheading',
+            '--filename',
+            '--numbers',
+            '--column',
+            '--smart-case'
+        },
         mappings = {
             i = {
                 ["<C-j>"] = actions.move_selection_next,

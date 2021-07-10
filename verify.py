@@ -27,8 +27,9 @@ def check_import(import_name):
 
 
 FEATURES = {
+    "ag": (check_command, ["ag"]),
     "zsh": (check_command, ["zsh"]),
-    "python-neovim": (check_import, ["neovim"]),
+    "python-neovim": (check_import, ["neovim.api"]),
     "requests": (check_import, ["requests"]),
     "dploy": (check_import, ["dploy"])
 }

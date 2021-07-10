@@ -17,6 +17,8 @@ try:
 except ImportError:
     RichHandler = None
 
+import verify
+
 
 logger = logging.getLogger(__name__)
 
@@ -249,8 +251,10 @@ def main():
             dploy.unstow(args.packages, "/")
     elif args.command == "download":
         download_binaries(BINARIES, BINARIES_DIR)
+        subprocess.check_call("git submodule init".split(" "))
+        subprocess.check_call("git submodule update".split(" "))
     elif args.command == "verify":
-        pass
+        verify.verify_environment()
     else:
         logger.error(f"Unknown command: {args.command}")
 

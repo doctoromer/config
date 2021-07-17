@@ -4,39 +4,28 @@ local o = vim.o
 local g = vim.g
 local api = vim.api
 
-o.compatible = false
-o.showcmd = true
 o.showmode = true
 o.showmatch = true
-o.nrformats='bin,hex'
-o.wildmenu = true
 o.ttimeoutlen = 0
 o.foldenable = false
 o.lazyredraw = true
-o.backspace = 'indent,eol,start'
 o.clipboard = 'unnamed'
 o.hidden = true
 
 -- Window display
-o.encoding = 'utf-8'
 o.number = true
-o.ruler = true
 o.signcolumn = 'yes'
 o.colorcolumn = '81'
 o.lazyredraw = true
-o.laststatus = 2
 o.completeopt = 'menu'
 
 -- Persistentcy
 o.undofile = true
 o.swapfile = false
-o.autoread = true
 o.autowrite = true
 
 -- Indentation
-o.autoindent = true
 o.smartindent = true
-o.smarttab = true
 o.shiftwidth = 4
 o.softtabstop = 4
 o.tabstop = 4
@@ -44,10 +33,6 @@ o.expandtab = true
 
 o.wrap = false
 o.linebreak = true
-
--- Search
-o.incsearch = true
-o.hlsearch = true
 
 -- Windows
 o.splitright = true
@@ -151,9 +136,6 @@ require('nvim-treesitter.configs').setup {
   highlight = { enable = true },
 }
 
--- Semshi
-g['semshi#error_sign'] = false
-
 -- nvim-lspconfig
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -172,7 +154,7 @@ local on_attach = function(client, bufnr)
     local opts = { noremap=true, silent=true }
 
     buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_set_keymap('n', '<leade>gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    buf_set_keymap('n', '<leader>gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)

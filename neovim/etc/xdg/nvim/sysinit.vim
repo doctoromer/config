@@ -5,11 +5,8 @@ execute pathogen#helptags()
 lua require("init")
 
 " =============== Vim only ===============
-syntax on
 autocmd VimResized * wincmd =
 au FocusGained,BufEnter * :checktime
-filetype plugin on
-filetype indent on
 
 " =============== Plugins configurations ===============
 

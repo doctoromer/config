@@ -215,7 +215,6 @@ def parse_args():
 
 
 def configure_logger():
-    FORMAT = "%(message)s"
     if RichHandler is not None:
         handler = RichHandler(rich_tracebacks=True, tracebacks_show_locals=True)
     else:
@@ -241,8 +240,8 @@ def main():
         else:
             packages = args.packages
         dploy.stow(packages, "/")
-        if "neovim" in packages:
-            post_install()
+        # if "neovim" in packages:
+        #     post_install()
 
     elif args.command == "remove":
         if args.packages == "all":

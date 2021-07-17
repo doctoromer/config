@@ -120,10 +120,6 @@
 	path = neovim/etc/xdg/nvim/bundle/vim-indent-object
 	url = https://github.com/michaeljsmith/vim-indent-object
 	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/vim-monokai"]
-	path = neovim/etc/xdg/nvim/bundle/vim-monokai
-	url = https://github.com/sickill/vim-monokai
-	branch = master
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-repeat"]
 	path = neovim/etc/xdg/nvim/bundle/vim-repeat
 	url = https://github.com/tpope/vim-repeat
@@ -159,10 +155,6 @@
 [submodule "omer-config/etc/xdg/nvim/bundle/vim-python-pep8-indent"]
 	path = neovim/etc/xdg/nvim/bundle/vim-python-pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/semshi"]
-	path = neovim/etc/xdg/nvim/bundle/semshi
-	url = https://github.com/numirias/semshi
 	branch = master
 [submodule "oh-my-zsh"]
 	path = zsh/etc/zsh/ohmyzsh

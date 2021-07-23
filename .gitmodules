@@ -201,3 +201,6 @@
 [submodule "dashboard.nvim"]
 	path = neovim/etc/xdg/nvim/bundle/dashboard-nvim
 	url = https://github.com/glepnir/dashboard-nvim
+[submodule "nvim-treesitter-context"]
+	path = neovim/etc/xdg/nvim/bundle/nvim-treesitter-context
+	url = https://github.com/romgrk/nvim-treesitter-context

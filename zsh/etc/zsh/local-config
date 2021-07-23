@@ -29,11 +29,9 @@ export ZSH_TMUX_UNICODE=true
 
 echo "$PATH" | grep -q "$HOME/.local/bin" || export PATH="$PATH:$HOME/.local/bin"
 
-export TERM="xterm-256color"
 export EDITOR="vim"
 
 ### Aliases ###
-alias tmux="TERM=screen-256color-bce tmux"
 
 # aliases for system maintenance
 alias depend='sudo apt -f install'

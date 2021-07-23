@@ -254,6 +254,8 @@ g.dashboard_custom_footer = {'Get in or get lost 🙃'}
 -- treesitter-context.config
 require'treesitter-context.config'.setup{ enable = true }
 
+require "lsp_signature".setup()
+
 -- =============== Mappings ===============
 
 api.nvim_set_keymap('n', ';', '<nop>', {noremap = true})

@@ -204,3 +204,6 @@
 [submodule "nvim-treesitter-context"]
 	path = neovim/etc/xdg/nvim/bundle/nvim-treesitter-context
 	url = https://github.com/romgrk/nvim-treesitter-context
+[submodule "lsp_signature.nvim"]
+	path = neovim/etc/xdg/nvim/bundle/lsp_signature.nvim
+	url = https://github.com/ray-x/lsp_signature.nvim

@@ -255,6 +255,7 @@ g.dashboard_custom_footer = {'Get in or get lost 🙃'}
 require'treesitter-context.config'.setup{ enable = true }
 
 require "lsp_signature".setup()
+require('gitsigns').setup()
 
 -- =============== Mappings ===============
 

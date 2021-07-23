@@ -207,3 +207,6 @@
 [submodule "lsp_signature.nvim"]
 	path = neovim/etc/xdg/nvim/bundle/lsp_signature.nvim
 	url = https://github.com/ray-x/lsp_signature.nvim
+[submodule "gitsigns.nvim"]
+	path = neovim/etc/xdg/nvim/bundle/gitsigns.nvim
+	url = https://github.com/lewis6991/gitsigns.nvim

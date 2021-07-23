@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import io
+import json
 import logging
 import os
 import re
@@ -24,47 +25,9 @@ logger = logging.getLogger(__name__)
 
 SOURCE_CODE_ASSET = "SOURCE_CODE_ASSET.zip"
 
+with open("binaries.json", "r") as binaries_file:
+    BINARIES = json.load(binaries_file)
 
-BINARIES = {
-    "fzf": {
-        "repo": "junegunn/fzf",
-        "asset_regex": "fzf.*linux.*amd64.*",
-        "file_map": {
-            "fzf": "usr/bin/fzf"
-        }
-    },
-    "fzf-completion": {
-        "repo": "junegunn/fzf",
-        "asset_regex": SOURCE_CODE_ASSET,
-        "file_map": {
-            "shell/completion.zsh": "usr/local/share/zsh/site-functions/fzf-completion.zsh",
-            "shell/key-bindings.zsh": "usr/local/share/zsh/site-functions/fzf-key-bindings.zsh"
-        }
-    },
-    "exa": {
-        "repo": "ogham/exa",
-        "asset_regex": "exa.*linux.*x86_64.*",
-        "file_map": {
-            "bin/exa": "usr/bin/exa",
-            "man/exa.1": "usr/share/man/man1/exa.1",
-            "completions/exa.zsh": "usr/local/share/zsh/site-functions/exa.zsh"
-        }
-    },
-    "vim": {
-        "repo": "neovim/neovim",
-        "asset_regex": "nvim.appimage",
-        "file_map": {
-            "nvim.appimage": "usr/bin/vim"
-        }
-    },
-    "diff-so-fancy": {
-        "repo": "so-fancy/diff-so-fancy",
-        "asset_regex": "diff-so-fancy",
-        "file_map": {
-            "diff-so-fancy": "usr/bin/diff-so-fancy"
-        }
-    }
-}
 
 PACKAGES = ["misc", "neovim", "zsh", "binaries"]
 BINARIES_DIR = "binaries"

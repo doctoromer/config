@@ -1,161 +1,63 @@
 [submodule "auto-pairs"]
-	path = omer-config/etc/xdg/nvim/bundle/auto-pairs
-	url = https://github.com/jiangmiao/auto-pairs
-[submodule "deoplete.nvim"]
-	path = omer-config/etc/xdg/nvim/bundle/deoplete.nvim
-	url = https://github.com/Shougo/deoplete.nvim
-[submodule "fzf.vim"]
-	path = omer-config/etc/xdg/nvim/bundle/fzf.vim
-	url = https://github.com/junegunn/fzf.vim
-[submodule "indentLine"]
-	path = omer-config/etc/xdg/nvim/bundle/indentLine
-	url = https://github.com/Yggdroot/indentLine
-[submodule "lightline.vim"]
-	path = omer-config/etc/xdg/nvim/bundle/lightline.vim
-	url = https://github.com/itchyny/lightline.vim
-[submodule "neosnippet.vim"]
-	path = omer-config/etc/xdg/nvim/bundle/neosnippet.vim
-	url = https://github.com/Shougo/neosnippet.vim
-[submodule "neosnippet-snippets"]
-	path = omer-config/etc/xdg/nvim/bundle/neosnippet-snippets
-	url = https://github.com/Shougo/neosnippet-snippets
-[submodule "supertab"]
-	path = omer-config/etc/xdg/nvim/bundle/supertab
-	url = https://github.com/ervandew/supertab
-[submodule "targets.vim"]
-	path = omer-config/etc/xdg/nvim/bundle/targets.vim
-	url = https://github.com/wellle/targets.vim
-[submodule "vim-better-whitespace"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-better-whitespace
-	url = https://github.com/ntpeters/vim-better-whitespace
-[submodule "vim-commentary"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-commentary
-	url = https://github.com/tpope/vim-commentary
-[submodule "vim-easymotion"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-easymotion
-	url = https://github.com/easymotion/vim-easymotion
-[submodule "vim-highlightedyank"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-highlightedyank
-	url = https://github.com/machakann/vim-highlightedyank
-[submodule "vim-indent-object"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-indent-object
-	url = https://github.com/michaeljsmith/vim-indent-object
-[submodule "vim-monokai"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-monokai
-	url = https://github.com/sickill/vim-monokai
-[submodule "vim-repeat"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-repeat
-	url = https://github.com/tpope/vim-repeat
-[submodule "vim-surround"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-surround
-	url = https://github.com/tpope/vim-surround
-[submodule "vim-tmux-navigator"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-tmux-navigator
-	url = https://github.com/christoomey/vim-tmux-navigator
-[submodule "vim-unimpaired"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-unimpaired
-	url = https://github.com/tpope/vim-unimpaired
-[submodule "vim-pathogen"]
-	path = omer-config/etc/xdg/nvim/vim-pathogen
-	url = https://github.com/tpope/vim-pathogen
-[submodule "traces.vim"]
-	path = omer-config/etc/xdg/nvim/bundle/traces.vim
-	url = https://github.com/markonm/traces.vim
-[submodule "vim-sleuth"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-sleut
-	url = https://github.com/tpope/vim-sleuth
-[submodule "vim-tmux-focus-events"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-tmux-focus-events
-	url = https://github.com/tmux-plugins/vim-tmux-focus-events
-[submodule "chromatica.nvim"]
-	path = omer-config/etc/xdg/nvim/bundle/chromatica.nvim
-	url = https://github.com/arakashic/chromatica.nvim
-[submodule "vim-python-pep8-indent"]
-	path = omer-config/etc/xdg/nvim/bundle/vim-python-pep8-indent
-	url = https://github.com/Vimjas/vim-python-pep8-indent
-[submodule "semshi"]
-	path = omer-config/etc/xdg/nvim/bundle/semshi
-	url = https://github.com/numirias/semshi
-[submodule "omer-config/etc/xdg/nvim/bundle/auto-pairs"]
 	path = neovim/etc/xdg/nvim/bundle/auto-pairs
 	url = https://github.com/jiangmiao/auto-pairs
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/lightline.vim"]
+[submodule "lightline.vim"]
 	path = neovim/etc/xdg/nvim/bundle/lightline.vim
 	url = https://github.com/itchyny/lightline.vim
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/neosnippet.vim"]
+[submodule "neosnippet.vim"]
 	path = neovim/etc/xdg/nvim/bundle/neosnippet.vim
 	url = https://github.com/Shougo/neosnippet.vim
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/neosnippet-snippets"]
+[submodule "neosnippet-snippets"]
 	path = neovim/etc/xdg/nvim/bundle/neosnippet-snippets
 	url = https://github.com/Shougo/neosnippet-snippets
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/supertab"]
+[submodule "supertab"]
 	path = neovim/etc/xdg/nvim/bundle/supertab
 	url = https://github.com/ervandew/supertab
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/targets.vim"]
+[submodule "targets.vim"]
 	path = neovim/etc/xdg/nvim/bundle/targets.vim
 	url = https://github.com/wellle/targets.vim
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/vim-better-whitespace"]
+[submodule "vim-better-whitespace"]
 	path = neovim/etc/xdg/nvim/bundle/vim-better-whitespace
 	url = https://github.com/ntpeters/vim-better-whitespace
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/vim-commentary"]
+[submodule "vim-commentary"]
 	path = neovim/etc/xdg/nvim/bundle/vim-commentary
 	url = https://github.com/tpope/vim-commentary
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/vim-easymotion"]
+[submodule "vim-easymotion"]
 	path = neovim/etc/xdg/nvim/bundle/vim-easymotion
 	url = https://github.com/easymotion/vim-easymotion
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/vim-highlightedyank"]
+[submodule "vim-highlightedyank"]
 	path = neovim/etc/xdg/nvim/bundle/vim-highlightedyank
 	url = https://github.com/machakann/vim-highlightedyank
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/vim-indent-object"]
+[submodule "vim-indent-object"]
 	path = neovim/etc/xdg/nvim/bundle/vim-indent-object
 	url = https://github.com/michaeljsmith/vim-indent-object
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/vim-repeat"]
+[submodule "vim-repeat"]
 	path = neovim/etc/xdg/nvim/bundle/vim-repeat
 	url = https://github.com/tpope/vim-repeat
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/vim-surround"]
+[submodule "vim-surround"]
 	path = neovim/etc/xdg/nvim/bundle/vim-surround
 	url = https://github.com/tpope/vim-surround
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/vim-tmux-navigator"]
+[submodule "vim-tmux-navigator"]
 	path = neovim/etc/xdg/nvim/bundle/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/vim-unimpaired"]
+[submodule "vim-unimpaired"]
 	path = neovim/etc/xdg/nvim/bundle/vim-unimpaired
 	url = https://github.com/tpope/vim-unimpaired
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/vim-pathogen"]
+[submodule "vim-pathogen"]
 	path = neovim/etc/xdg/nvim/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/traces.vim"]
+[submodule "traces.vim"]
 	path = neovim/etc/xdg/nvim/bundle/traces.vim
 	url = https://github.com/markonm/traces.vim
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/vim-sleut"]
+[submodule "vim-sleut"]
 	path = neovim/etc/xdg/nvim/bundle/vim-sleut
 	url = https://github.com/tpope/vim-sleuth
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/vim-tmux-focus-events"]
+[submodule "vim-tmux-focus-events"]
 	path = neovim/etc/xdg/nvim/bundle/vim-tmux-focus-events
 	url = https://github.com/tmux-plugins/vim-tmux-focus-events
-	branch = master
-[submodule "omer-config/etc/xdg/nvim/bundle/vim-python-pep8-indent"]
+[submodule "vim-python-pep8-indent"]
 	path = neovim/etc/xdg/nvim/bundle/vim-python-pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent
-	branch = master
 [submodule "oh-my-zsh"]
 	path = zsh/etc/zsh/ohmyzsh
 	url = https://github.com/ohmyzsh/ohmyzsh
@@ -165,7 +67,7 @@
 [submodule "vim-argwrap"]
 	path = neovim/etc/xdg/nvim/bundle/vim-argwrap
 	url = https://github.com/foosoft/vim-argwrap
-[submodule "omer-config/etc/xdg/nvim/bundle/diffconflicts"]
+[submodule "diffconflicts"]
 	path = neovim/etc/xdg/nvim/bundle/diffconflicts
 	url = https://github.com/whiteinge/diffconflicts
 [submodule "nvim-lspconfig"]

@@ -29,7 +29,7 @@ def check_import(import_name):
 FEATURES = {
     "ag": (check_command, ["ag"]),
     "zsh": (check_command, ["zsh"]),
-    "pyls": (check_command, ["pyls"]),
+    "pylsp": (check_command, ["pylsp"]),
     "clangd": (check_command, ["clangd"]),
     "python-neovim": (check_import, ["neovim.api"]),
     "requests": (check_import, ["requests"]),

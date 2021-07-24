@@ -52,9 +52,6 @@
 [submodule "vim-sleut"]
 	path = neovim/etc/xdg/nvim/bundle/vim-sleut
 	url = https://github.com/tpope/vim-sleuth
-[submodule "vim-tmux-focus-events"]
-	path = neovim/etc/xdg/nvim/bundle/vim-tmux-focus-events
-	url = https://github.com/tmux-plugins/vim-tmux-focus-events
 [submodule "vim-python-pep8-indent"]
 	path = neovim/etc/xdg/nvim/bundle/vim-python-pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent

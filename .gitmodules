@@ -109,3 +109,6 @@
 [submodule "gitsigns.nvim"]
 	path = neovim/etc/xdg/nvim/bundle/gitsigns.nvim
 	url = https://github.com/lewis6991/gitsigns.nvim
+[submodule "nvim-lightbulb"]
+	path = neovim/etc/xdg/nvim/bundle/nvim-lightbulb
+	url = https://github.com/kosayoda/nvim-lightbulb

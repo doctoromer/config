@@ -143,6 +143,20 @@ def download_binaries(binaries, base_dir):
             logger.info(f"Downloading {name} is not required")
 
 
+def download_vim_plugins():
+    xdg_base_path = Path(__file__).parent / Path("neovim", "etc", "xdg")
+    xdg_base_path = xdg_base_path.absolute()
+
+    env = dict(os.environ)
+    env["XDG_CONFIG_HOME"] = str(xdg_base_path)
+
+    logger.info("Downloading neovim plugins")
+    subprocess.check_call(
+        ["binaries/usr/bin/vim", "--headless", "-c", "autocmd User PackerComplete quitall", "-c", "PackerSync"],
+        env=env
+    )
+
+
 def post_install():
     """
     Executing post-install tasks.
@@ -213,8 +227,7 @@ def main():
             dploy.unstow(args.packages, "/")
     elif args.command == "download":
         download_binaries(BINARIES, BINARIES_DIR)
-        subprocess.check_call("git submodule init".split(" "))
-        subprocess.check_call("git submodule update".split(" "))
+        download_vim_plugins()
     elif args.command == "verify":
         verify.verify_environment()
     else:

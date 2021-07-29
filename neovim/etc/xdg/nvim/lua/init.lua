@@ -1,5 +1,3 @@
-vim.fn['pathogen#infect']()
-vim.fn['pathogen#helptags']()
 
 vim.cmd [[
     autocmd VimResized * wincmd =
@@ -16,4 +14,5 @@ vim.cmd [[
 
 require('config')
 require('keybind')
+require('plugins')
 require('plugins_config')

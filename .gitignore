@@ -1,2 +1,4 @@
 binaries/*
 __pycache__
+neovim/etc/xdg/nvim/plugin/packer_compiled.lua
+neovim/etc/xdg/nvim/pack

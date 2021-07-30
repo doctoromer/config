@@ -182,6 +182,7 @@ def parse_args():
         "remove": "Remove symlinks to the configuration"
     }
     parser = argparse.ArgumentParser()
+    parser.add_argument("-v", action="store_true", default=False, dest="verbose")
     subparsers_parser = parser.add_subparsers()
     subparsers = {}
     for subcommand, help_text in subcommands.items():
@@ -199,14 +200,14 @@ def parse_args():
     return parser.parse_args()
 
 
-def configure_logger():
+def configure_logger(verbose):
     if RichHandler is not None:
         handler = RichHandler(rich_tracebacks=True, tracebacks_show_locals=True)
     else:
         handler = logging.StreamHandler()
 
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.DEBUG if verbose else logging.INFO,
         format="%(asctime)-15s - %(levelname)s - %(message)s",
         datefmt="[%X]",
         handlers=[handler],
@@ -214,8 +215,8 @@ def configure_logger():
 
 
 def main():
-    configure_logger()
     args = parse_args()
+    configure_logger(args.verbose)
 
     logger.info(f"Executing {args.command} command")
 

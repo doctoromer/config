@@ -144,6 +144,7 @@ def download_binaries(binaries, base_dir):
 
 
 def download_vim_plugins():
+    """ Download vim plugins using packer.nvim """
     xdg_base_path = Path(__file__).parent / Path("neovim", "etc", "xdg")
     xdg_base_path = xdg_base_path.absolute()
 
@@ -155,15 +156,6 @@ def download_vim_plugins():
         ["binaries/usr/bin/vim", "--headless", "-c", "autocmd User PackerComplete quitall", "-c", "PackerSync"],
         env=env
     )
-
-
-def post_install():
-    """
-    Executing post-install tasks.
-    Currently, only updating remote plugins in vim.
-    """
-    logger.info("Updating neovim remote plugins")
-    subprocess.check_call("vim --headless -c :UpdateRemotePlugins -c :q".split(" "))
 
 
 def parse_args():
@@ -217,8 +209,6 @@ def main():
         else:
             packages = args.packages
         dploy.stow(packages, "/")
-        # if "neovim" in packages:
-        #     post_install()
 
     elif args.command == "remove":
         if args.packages == "all":

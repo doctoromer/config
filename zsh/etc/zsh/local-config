@@ -4,6 +4,9 @@ then
 	export PATH="/usr/local/bin:/usr/bin:/bin:/usr/games"
 fi
 
+echo "$PATH" | grep -q "$HOME/.local/bin" || export PATH="$PATH:$HOME/.local/bin"
+
+
 export ZSH=/etc/zsh/ohmyzsh
 export ZSH_CUSTOM=/etc/zsh
 
@@ -12,7 +15,7 @@ ZSH_THEME="kyoshi"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=1"
 
-plugins=(git tmux colored-man-pages vi-mode command-not-found)
+plugins=(git colored-man-pages vi-mode command-not-found)
 
 source $ZSH/oh-my-zsh.sh
 export FZF_DEFAULT_COMMAND='ag -l --nocolor --nogroup --hidden -g "" --ignore ".git"'
@@ -21,13 +24,6 @@ source /usr/local/share/zsh/site-functions/fzf-completion.zsh
 source /usr/local/share/zsh/site-functions/fzf-key-bindings.zsh
 
 bindkey "^ " autosuggest-accept
-
-export ZSH_TMUX_AUTOSTART=false
-export ZSH_TMUX_AUTOCONNECT=true
-export ZSH_TMUX_AUTOQUIT=true
-export ZSH_TMUX_UNICODE=true
-
-echo "$PATH" | grep -q "$HOME/.local/bin" || export PATH="$PATH:$HOME/.local/bin"
 
 export EDITOR="vim"
 

@@ -59,15 +59,33 @@ def get_latest_release(repo_name, asset_regex):
                 return asset["name"], response.content
 
 
+def match_file_map_entry(base_dir, entry_name, file_map):
+    """ Search an entry in the file map that matches the entry in the received archive """
+    matches = [
+        match for match in (re.match(pattern, entry_name) for pattern in file_map)
+        if match is not None
+    ]
+
+    if len(matches) == 0:
+        return None
+    elif len(matches) == 1:
+        file_pattern = matches[0].re.pattern
+        output_path = base_dir / file_map[file_pattern]
+    else:
+        raise ValueError("Too many matches in file map")
+
+    return output_path
+
+
 def _extract_tarball(name, data, base_dir, file_map):
     logger.info(f"Extracting tar file: {name}")
 
     with tarfile.open(fileobj=io.BytesIO(data), mode="r:gz") as tar_file:
         for member in tar_file.getmembers():
-            if member.path not in file_map:
-                continue
-            output_path = base_dir / file_map[member.path]
-            if output_path.exists():
+
+            output_path = match_file_map_entry(base_dir, member.path, file_map)
+
+            if output_path is None or output_path.exists():
                 continue
 
             extracted_file = tar_file.extractfile(member)
@@ -84,14 +102,12 @@ def _extract_zip(name, data, base_dir, file_map):
 
         for entry_name in zip_file.namelist():
             original_entry_name = entry_name
+
             if name == SOURCE_CODE_ASSET:
                 entry_name = os.sep.join(Path(entry_name).parts[1:])
 
-            if entry_name not in file_map:
-                continue
-
-            output_path = base_dir / file_map[entry_name]
-            if output_path.exists():
+            output_path = match_file_map_entry(base_dir, entry_name, file_map)
+            if output_path is None or output_path.exists():
                 continue
 
             extracted_data = zip_file.read(original_entry_name)

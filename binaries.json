@@ -36,5 +36,14 @@
         "file_map": {
             "diff-so-fancy": "usr/bin/diff-so-fancy"
         }
+    },
+    "bat": {
+        "repo": "sharkdp/bat",
+        "asset_regex": "bat-.*-x86_64-unknown-linux-gnu\\.tar\\.gz",
+        "file_map": {
+            "[^/]*/bat$": "usr/bin/bat",
+            "[^/]*/bat.1": "usr/share/man/man1/exa.1",
+            "[^/]*/autocomplete/bat.zsh": "usr/local/share/zsh/site-functions/bat.zsh"
+        }
     }
 }

@@ -49,12 +49,13 @@ require('telescope').setup {
 -- indent-blankline.nvim
 g.indentLine_fileTypeExclude = {'dashboard', 'help'}
 g.indent_blankline_use_treesitter = true
+g.indent_blankline_show_first_indent_level = false
 g.indentLine_char = '│'
 
 -- better-whitespace
 g.better_whitespace_enabled = true
 g.strip_whitespace_on_save = false
-g.better_whitespace_filetypes_blacklist = {'dashboard', 'help'}
+g.better_whitespace_filetypes_blacklist = {'dashboard', 'help', 'markdown'}
 
 -- vim-tmux-navigator
 g.tmux_navigator_no_mappings = true
@@ -174,3 +175,5 @@ require 'lsp_signature'.setup()
 require('gitsigns').setup()
 
 vim.cmd("autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()")
+
+g.lightline = { colorscheme = "one" }

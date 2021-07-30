@@ -14,6 +14,9 @@ packer.init {
 }
 
 return packer.startup(function()
+  -- Packer.nvim
+  use "wbthomason/packer.nvim"
+
   -- LSP
   use "folke/trouble.nvim"
   use "neovim/nvim-lspconfig"

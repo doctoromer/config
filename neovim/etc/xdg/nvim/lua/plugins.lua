@@ -1,7 +1,7 @@
-fn = vim.fn
+local fn = vim.fn
 
-packer = require("packer")
-util = require("packer.util")
+local packer = require("packer")
+local util = require("packer.util")
 
 local script_directory = fn.fnamemodify(vim.call("resolve", fn.expand("<sfile>:p")), ":h")
 
@@ -44,6 +44,10 @@ return packer.startup(function()
     "nvim-treesitter/nvim-treesitter",
     -- run = ":TSUpdate",
     config = plugins_config.treesitter
+  }
+  use {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "0.5-compat"
   }
 
   -- Completion and searching

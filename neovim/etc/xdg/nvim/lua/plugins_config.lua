@@ -82,6 +82,16 @@ function M.treesitter()
     ensure_installed = {'c', 'cpp', 'python', 'bash', 'html', 'java', 'json', 'lua', 'regex', 'toml'},
     ignore_install = {},
     highlight = { enable = true },
+    incremental_selection = {
+      enable = true,
+      keymaps = {
+        init_selection = "<C-n>",
+        node_incremental = "<C-n>",
+        scope_incremental = "<C-s>",
+        node_decremental = "<C-r>",
+      },
+    },
+
   }
 end
 
@@ -203,6 +213,27 @@ end
 function M.onedark()
   g.onedark_style = "darker"
   vim.cmd "colorscheme onedark"
+end
+
+function M.treesitter_textobjects()
+  require("nvim-treesitter.configs").setup {
+    textobjects = {
+      select = {
+        enable = true,
+        lookahead = true,
+
+        keymaps = {
+          -- You can use the capture groups defined in textobjects.scm
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["aF"] = "@function.outer",
+          ["iF"] = "@function.inner",
+          ["ac"] = "@class.outer",
+          ["ic"] = "@class.inner",
+        }
+      }
+    }
+  }
 end
 
 return M

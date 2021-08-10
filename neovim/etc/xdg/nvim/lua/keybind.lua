@@ -81,3 +81,4 @@ map('n', 'zh', 'zH')
 
 -- Other
 map('n', 'Y', 'y$')
+map('n', '<c-l>', '<cmd>noh<cr>')

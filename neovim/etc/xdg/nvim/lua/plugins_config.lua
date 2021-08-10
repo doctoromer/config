@@ -1,7 +1,6 @@
-g = vim.g
-
 local M = {}
 
+g = vim.g
 
 function M.trouble()
   require('trouble').setup {
@@ -187,7 +186,7 @@ function M.dashboard()
       ''
   }
 
-  g.dashboard_custom_footer = {'Get lost 🙃'}
+  g.dashboard_custom_footer = {'🙃'}
 end
 
 function M.treesitter_context()
@@ -221,13 +220,9 @@ function M.treesitter_textobjects()
       select = {
         enable = true,
         lookahead = true,
-
         keymaps = {
-          -- You can use the capture groups defined in textobjects.scm
           ["af"] = "@function.outer",
           ["if"] = "@function.inner",
-          ["aF"] = "@function.outer",
-          ["iF"] = "@function.inner",
           ["ac"] = "@class.outer",
           ["ic"] = "@class.inner",
         }

@@ -47,7 +47,8 @@ return packer.startup(function()
   }
   use {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    branch = "0.5-compat"
+    branch = "0.5-compat",
+    config = plugins_config.treesitter_textobjects
   }
 
   -- Completion and searching

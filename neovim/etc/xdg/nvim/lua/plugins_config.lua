@@ -231,4 +231,37 @@ function M.treesitter_textobjects()
   }
 end
 
+function M.nvim_dap()
+  local dap = require('dap')
+  dap.adapters.python = {
+    type = 'executable',
+    command = '/usr/bin/python3',
+    args = {'-m', 'debugpy.adapter'}
+  }
+  dap.configurations.python = {
+    {
+      type = 'python',
+      request = 'launch',
+      name = "Launch file",
+      program = "${file}",
+      pythonPath = function()
+        local cwd = vim.fn.getcwd()
+        if vim.fn.executable(cwd .. '/venv/bin/python3') == 1 then
+          return cwd .. '/venv/bin/python3'
+        elseif vim.fn.executable(cwd .. '/.venv/bin/python3') == 1 then
+          return cwd .. '/.venv/bin/python3'
+        else
+          return '/usr/bin/python3'
+        end
+      end
+    },
+  }
+  vim.fn.sign_define('DapBreakpoint', {text='🔴', texthl='', linehl='', numhl=''})
+  vim.fn.sign_define('DapStopped', {text='🔵', texthl='', linehl='', numhl=''})
+end
+
+function M.nvim_dap_ui()
+  require("dapui").setup()
+end
+
 return M

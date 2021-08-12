@@ -51,6 +51,18 @@ map('i', '<C-Space>', '<Plug>(neosnippet_expand_or_jump)', {})
 map('s', '<C-Space>', '<Plug>(neosnippet_expand_or_jump)', {})
 map('x', '<C-Space>', '<Plug>(neosnippet_expand_target)', {})
 
+-- nvim-dap
+map('n', '<F5>', '<cmd>lua require"dap".continue()<CR>')
+map('n', '<F8>', '<cmd>lua require"dap".step_over()<CR>')
+map('n', '<F9>', '<cmd>lua require"dap".step_into()<CR>')
+map('n', '<F10>', '<cmd>lua require"dap".step_out()<CR>')
+map('n', '<leader>b', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
+map('n', '<leader>B', '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
+map('n', '<leader>dr', '<cmd>lua require"dap".repl.open()<CR>')
+map('n', '<leader>dl', '<cmd>lua require"dap".run_last()<CR>')
+map('n', '<leader>dr', '<cmd>lua require"dap".repl.open()<CR>')
+map('n', '<leader>do', '<cmd>lua require("dapui").toggle()<CR>')
+
 -- General keybindings
 map('n', ';', '<nop>')
 map('n', '\\', ';')

@@ -97,6 +97,16 @@ return packer.startup(function()
     config = plugins_config.indent_blankline
   }
 
+  -- Debugging
+  use {
+    "mfussenegger/nvim-dap",
+    config = plugins_config.nvim_dap
+  }
+  use {
+    "rcarriga/nvim-dap-ui",
+    config = plugins_config.nvim_dap_ui
+  }
+
   -- Utilities
   use "tpope/vim-sleuth"
   use "Shougo/neosnippet.vim"

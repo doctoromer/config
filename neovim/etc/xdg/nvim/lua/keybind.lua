@@ -46,10 +46,13 @@ map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
 map('n', '<leader>gf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 
--- neosnippets
-map('i', '<C-Space>', '<Plug>(neosnippet_expand_or_jump)', {})
-map('s', '<C-Space>', '<Plug>(neosnippet_expand_or_jump)', {})
-map('x', '<C-Space>', '<Plug>(neosnippet_expand_target)', {})
+-- vsnips
+map('i', '<C-space>', "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", {expr = true})
+map('s', '<C-space>', "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", {expr = true})
+map ('i', "<Tab>",  "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>'", {expr = true})
+map ('s', "<Tab>",  "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>'", {expr = true})
+map ('i', "<S-Tab>",  "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'", {expr = true})
+map ('s', "<S-Tab>",  "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'", {expr = true})
 
 -- nvim-dap
 map('n', '<F5>', '<cmd>lua require"dap".continue()<CR>')

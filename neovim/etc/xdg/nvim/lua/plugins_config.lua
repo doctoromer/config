@@ -135,8 +135,6 @@ function M.compe()
           nvim_lsp = true;
           nvim_lua = true;
           vsnip = true;
-          ultisnips = true;
-          luasnip = true;
       };
   }
 end
@@ -262,6 +260,10 @@ end
 
 function M.nvim_dap_ui()
   require("dapui").setup()
+end
+
+function M.vsnip()
+  g.vsnip_snippet_dir = vim.fn.fnamemodify(vim.call("resolve", vim.fn.expand("<sfile>:p")), ":h") .. "/../snippets"
 end
 
 return M

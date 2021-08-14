@@ -109,12 +109,14 @@ return packer.startup(function()
 
   -- Utilities
   use "tpope/vim-sleuth"
-  use "Shougo/neosnippet.vim"
+  use {
+    "hrsh7th/vim-vsnip",
+    config = plugins_config.vsnip
+  }
   use {
     "whiteinge/diffconflicts",
     cmd = "DiffConflicts"
   }
-  use "Shougo/neosnippet-snippets"
   use {"Vimjas/vim-python-pep8-indent", ft = "python"}
   use {
     "christoomey/vim-tmux-navigator",

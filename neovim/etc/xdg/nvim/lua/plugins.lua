@@ -9,7 +9,7 @@ packer.init {
     package_root = util.join_paths(script_directory, "pack"),
     compile_path = util.join_paths(script_directory, "plugin", "packer_compiled.lua"),
     display = {
-      open_fn = require('packer.util').float,
+      open_fn = require("packer.util").float,
     }
 }
 

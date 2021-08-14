@@ -6,15 +6,15 @@ o.showmatch = true
 o.ttimeoutlen = 0
 o.foldenable = false
 o.lazyredraw = true
-o.clipboard = 'unnamed'
+o.clipboard = "unnamed"
 o.hidden = true
 
 -- Window display
 o.number = true
-o.signcolumn = 'yes'
-o.colorcolumn = '81'
+o.signcolumn = "yes"
+o.colorcolumn = "81"
 o.lazyredraw = true
-o.completeopt = 'menu'
+o.completeopt = "menu"
 
 -- Persistentcy
 o.undofile = true
@@ -63,3 +63,15 @@ g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
 g.loaded_netrwSettings = 1
 g.loaded_netrwFileHandlers = 1
+
+-- Other configurations
+vim.cmd [[
+    autocmd VimResized * wincmd =
+    autocmd FocusGained,BufEnter * :checktime
+
+    command W w
+    command Wq wq
+    command WQ wq
+    command Q q
+]]
+

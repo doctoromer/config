@@ -3,48 +3,48 @@ local M = {}
 g = vim.g
 
 function M.trouble()
-  require('trouble').setup {
+  require("trouble").setup {
     icons = false,
-    fold_open = 'v',
-    fold_closed = '>',
+    fold_open = "v",
+    fold_closed = ">",
     indent_lines = false,
     signs = {
-      error = 'error',
-      warning = 'warn',
-      hint = 'hint',
-      information = 'info',
-      other = 'other'
+      error = "error",
+      warning = "warn",
+      hint = "hint",
+      information = "info",
+      other = "other"
     },
     use_lsp_diagnostic_signs = false
   }
 end
 
 function M.telescope()
-  local actions = require('telescope.actions')
+  local actions = require("telescope.actions")
 
-  require('telescope').setup {
+  require("telescope").setup {
     defaults = {
       vimgrep_arguments = {
-        'ag',
-        '--nocolor',
-        '--noheading',
-        '--filename',
-        '--numbers',
-        '--column',
-        '--smart-case'
+        "ag",
+        "--nocolor",
+        "--noheading",
+        "--filename",
+        "--numbers",
+        "--column",
+        "--smart-case"
       },
       mappings = {
         i = {
-          ['<C-j>'] = actions.move_selection_next,
-          ['<C-k>'] = actions.move_selection_previous,
-          ['<ESC>'] = actions.close,
-          ['<C-c>'] = actions.close,
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+          ["<ESC>"] = actions.close,
+          ["<C-c>"] = actions.close,
         },
         n = {
-          ['<C-j>'] = actions.move_selection_next,
-          ['<C-k>'] = actions.move_selection_previous,
-          ['<ESC>'] = actions.close,
-          ['<C-c>'] = actions.close,
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+          ["<ESC>"] = actions.close,
+          ["<C-c>"] = actions.close,
         }
       }
     }
@@ -52,16 +52,16 @@ function M.telescope()
 end
 
 function M.indent_blankline()
-  g.indentLine_fileTypeExclude = {'dashboard', 'help'}
+  g.indentLine_fileTypeExclude = {"dashboard", "help"}
   g.indent_blankline_use_treesitter = true
   g.indent_blankline_show_first_indent_level = false
-  g.indentLine_char = '│'
+  g.indentLine_char = "│"
 end
 
 function M.better_whitespace()
   g.better_whitespace_enabled = true
   g.strip_whitespace_on_save = false
-  g.better_whitespace_filetypes_blacklist = {'dashboard', 'help', 'markdown'}
+  g.better_whitespace_filetypes_blacklist = {"dashboard", "help", "markdown"}
 end
 
 function M.vim_tmux_navigator()
@@ -69,7 +69,7 @@ function M.vim_tmux_navigator()
 end
 
 function M.supertab()
-  g.SuperTabDefaultCompletionType = '<c-n>'
+  g.SuperTabDefaultCompletionType = "<c-n>"
 end
 
 function M.vim_pasta()
@@ -77,8 +77,8 @@ function M.vim_pasta()
 end
 
 function M.treesitter()
-  require('nvim-treesitter.configs').setup {
-    ensure_installed = {'c', 'cpp', 'python', 'bash', 'html', 'java', 'json', 'lua', 'regex', 'toml'},
+  require("nvim-treesitter.configs").setup {
+    ensure_installed = {"c", "cpp", "python", "bash", "html", "java", "json", "lua", "regex", "toml"},
     ignore_install = {},
     highlight = { enable = true },
     incremental_selection = {
@@ -95,24 +95,24 @@ function M.treesitter()
 end
 
 function M.lspconfig()
-  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {virtual_text = false}
   )
 
-  local nvim_lsp = require('lspconfig')
-  local servers = { 'pylsp', 'clangd' }
+  local nvim_lsp = require("lspconfig")
+  local servers = { "pylsp", "clangd" }
   for _, lsp in ipairs(servers) do
       nvim_lsp[lsp].setup {}
   end
 end
 
 function M.compe()
-  require('compe').setup {
+  require("compe").setup {
       enabled = true;
       autocomplete = true;
       debug = false;
       min_length = 1;
-      preselect = 'enable';
+      preselect = "enable";
       throttle_time = 80;
       source_timeout = 200;
       resolve_timeout = 800;
@@ -121,8 +121,8 @@ function M.compe()
       max_kind_width = 100;
       max_menu_width = 100;
       documentation = {
-          border = { '', '' ,'', ' ', '', '', '', ' ' },
-          winhighlight = 'NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder',
+          border = { "", "" ,"", " ", "", "", "", " " },
+          winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
           max_width = 120,
           min_width = 60,
           max_height = math.floor(vim.o.lines * 0.3),
@@ -140,63 +140,63 @@ function M.compe()
 end
 
 function M.dashboard()
-  g.dashboard_default_executive = 'telescope'
+  g.dashboard_default_executive = "telescope"
   g.dashboard_custom_shortcut = {
-      last_session = '';
-      find_history = '';
-      find_file = '';
-      new_file = '';
-      change_colorscheme = '';
-      find_word = '';
-      book_marks = '';
+      last_session = "";
+      find_history = "";
+      find_file = "";
+      new_file = "";
+      change_colorscheme = "";
+      find_word = "";
+      book_marks = "";
   }
 
   g.dashboard_custom_shortcut_icon = {
-      last_session = '';
-      find_history = '';
-      find_file = '';
-      new_file = '';
-      change_colorscheme = '';
-      find_word = '';
-      book_marks = '';
+      last_session = "";
+      find_history = "";
+      find_file = "";
+      new_file = "";
+      change_colorscheme = "";
+      find_word = "";
+      book_marks = "";
   }
 
   g.dashboard_custom_header = {
-      '',
-      '         __                         ',
-      '        / /\\                       ',
-      '       / /  \\                      ',
-      '      / /    \\__________           ',
-      '     / /      \\        /\\         ',
-      '    /_/        \\      / /          ',
-      ' ___\\ \\      ___\\____/_/_        ',
-      '/____\\ \\    /___________/\\       ',
-      '\\     \\ \\   \\           \\ \\   ',
-      ' \\     \\ \\   \\____       \\ \\  ',
-      '  \\     \\ \\  /   /\\       \\ \\ ',
-      '   \\   / \\_\\/   / /        \\ \\ ',
-      '    \\ /        / /__________\\/    ',
-      '     /        / /     /             ',
-      '    /        / /     /              ',
-      '   /________/ /\\    /              ',
-      '   \\________\\/\\ \\  /            ',
-      '               \\_\\/               ',
-      ''
+      "",
+      "         __                         ",
+      "        / /\\                       ",
+      "       / /  \\                      ",
+      "      / /    \\__________           ",
+      "     / /      \\        /\\         ",
+      "    /_/        \\      / /          ",
+      " ___\\ \\      ___\\____/_/_        ",
+      "/____\\ \\    /___________/\\       ",
+      "\\     \\ \\   \\           \\ \\   ",
+      " \\     \\ \\   \\____       \\ \\  ",
+      "  \\     \\ \\  /   /\\       \\ \\ ",
+      "   \\   / \\_\\/   / /        \\ \\ ",
+      "    \\ /        / /__________\\/    ",
+      "     /        / /     /             ",
+      "    /        / /     /              ",
+      "   /________/ /\\    /              ",
+      "   \\________\\/\\ \\  /            ",
+      "               \\_\\/               ",
+      ""
   }
 
-  g.dashboard_custom_footer = {'🙃'}
+  g.dashboard_custom_footer = {"🙃"}
 end
 
 function M.treesitter_context()
-  require'treesitter-context.config'.setup { enable = true }
+  require"treesitter-context.config".setup { enable = true }
 end
 
 function M.lsp_signature()
-  require 'lsp_signature'.setup()
+  require "lsp_signature".setup()
 end
 
 function M.gitsigns()
-  require('gitsigns').setup()
+  require("gitsigns").setup()
 end
 
 function M.lightbulb()
@@ -230,32 +230,32 @@ function M.treesitter_textobjects()
 end
 
 function M.nvim_dap()
-  local dap = require('dap')
+  local dap = require("dap")
   dap.adapters.python = {
-    type = 'executable',
-    command = '/usr/bin/python3',
-    args = {'-m', 'debugpy.adapter'}
+    type = "executable",
+    command = "/usr/bin/python3",
+    args = {"-m", "debugpy.adapter"}
   }
   dap.configurations.python = {
     {
-      type = 'python',
-      request = 'launch',
+      type = "python",
+      request = "launch",
       name = "Launch file",
       program = "${file}",
       pythonPath = function()
         local cwd = vim.fn.getcwd()
-        if vim.fn.executable(cwd .. '/venv/bin/python3') == 1 then
-          return cwd .. '/venv/bin/python3'
-        elseif vim.fn.executable(cwd .. '/.venv/bin/python3') == 1 then
-          return cwd .. '/.venv/bin/python3'
+        if vim.fn.executable(cwd .. "/venv/bin/python3") == 1 then
+          return cwd .. "/venv/bin/python3"
+        elseif vim.fn.executable(cwd .. "/.venv/bin/python3") == 1 then
+          return cwd .. "/.venv/bin/python3"
         else
-          return '/usr/bin/python3'
+          return "/usr/bin/python3"
         end
       end
     },
   }
-  vim.fn.sign_define('DapBreakpoint', {text='🔴', texthl='', linehl='', numhl=''})
-  vim.fn.sign_define('DapStopped', {text='🔵', texthl='', linehl='', numhl=''})
+  vim.fn.sign_define("DapBreakpoint", {text="🔴", texthl="", linehl="", numhl=""})
+  vim.fn.sign_define("DapStopped", {text="🔵", texthl="", linehl="", numhl=""})
 end
 
 function M.nvim_dap_ui()

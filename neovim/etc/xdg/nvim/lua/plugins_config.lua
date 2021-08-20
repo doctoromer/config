@@ -1,6 +1,7 @@
 local M = {}
 
 g = vim.g
+fn = vim.fn
 
 function M.trouble()
   require("trouble").setup {
@@ -243,10 +244,10 @@ function M.nvim_dap()
       name = "Launch file",
       program = "${file}",
       pythonPath = function()
-        local cwd = vim.fn.getcwd()
-        if vim.fn.executable(cwd .. "/venv/bin/python3") == 1 then
+        local cwd = fn.getcwd()
+        if fn.executable(cwd .. "/venv/bin/python3") == 1 then
           return cwd .. "/venv/bin/python3"
-        elseif vim.fn.executable(cwd .. "/.venv/bin/python3") == 1 then
+        elseif fn.executable(cwd .. "/.venv/bin/python3") == 1 then
           return cwd .. "/.venv/bin/python3"
         else
           return "/usr/bin/python3"
@@ -254,8 +255,8 @@ function M.nvim_dap()
       end
     },
   }
-  vim.fn.sign_define("DapBreakpoint", {text="🔴", texthl="", linehl="", numhl=""})
-  vim.fn.sign_define("DapStopped", {text="🔵", texthl="", linehl="", numhl=""})
+  fn.sign_define("DapBreakpoint", {text="🔴", texthl="", linehl="", numhl=""})
+  fn.sign_define("DapStopped", {text="🔵", texthl="", linehl="", numhl=""})
 end
 
 function M.nvim_dap_ui()
@@ -263,7 +264,7 @@ function M.nvim_dap_ui()
 end
 
 function M.vsnip()
-  g.vsnip_snippet_dir = vim.fn.fnamemodify(vim.call("resolve", vim.fn.expand("<sfile>:p")), ":h") .. "/../snippets"
+  g.vsnip_snippet_dir = fn.fnamemodify(vim.call("resolve", fn.expand("<sfile>:p")), ":h") .. "/../snippets"
 end
 
 return M

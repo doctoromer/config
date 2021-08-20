@@ -42,7 +42,6 @@ return packer.startup(function()
   }
   use {
     "nvim-treesitter/nvim-treesitter",
-    -- run = ":TSUpdate",
     config = plugins_config.treesitter
   }
   use {
@@ -130,7 +129,24 @@ return packer.startup(function()
     "sickill/vim-pasta",
     config = plugins_config.vim_pasta
   }
-  use "tpope/vim-surround"
+  use {
+    "tpope/vim-surround",
+    keys = {
+      {"n", "ds"},
+      {"n", "cs"},
+      {"n", "cS"},
+      {"n", "ys"},
+      {"n", "yS"},
+      {"n", "yss"},
+      {"n", "ySs"},
+      {"n", "ySS"},
+      {"x", "S"},
+      {"x", "gS"},
+      {"i", "<C-S>"},
+      {"i", "<C-G>s"},
+      {"i", "<C-G>S"}
+    }
+  }
   use "wellle/targets.vim"
   use "markonm/traces.vim"
   use {
@@ -140,7 +156,17 @@ return packer.startup(function()
   }
   use "tpope/vim-unimpaired"
   use "jiangmiao/auto-pairs"
-  use "tpope/vim-commentary"
+  use {
+    "tpope/vim-commentary",
+    keys = {
+      {"x", "gc"},
+      {"n", "gc"},
+      {"o", "gc"},
+      {"n", "gcc"},
+      {"n", "cgc"},
+      {"n", "gcu"}
+    }
+  }
   use {
     "easymotion/vim-easymotion",
     keys = {{"n", "<Plug>(easymotion-prefix)"}, {"v", "<Plug>(easymotion-prefix)"}}

@@ -101,10 +101,32 @@ function M.lspconfig()
   )
 
   local nvim_lsp = require("lspconfig")
-  local servers = { "pylsp", "clangd" }
-  for _, lsp in ipairs(servers) do
-      nvim_lsp[lsp].setup {}
+  local servers = {
+    pylsp = {
+      init_options = {documentFormatting = false}
+    },
+    clangd = {},
+    efm = {
+      init_options = {documentFormatting = true},
+      filetypes = {"python"},
+      settings = {
+        -- cmd = {"efm-langserver"},
+        rootMarkers = {".git/"},
+        languages = {
+          python = {
+            {
+              formatCommand = "autopep8 --max-line-length 120 -",
+              formatStdin = true
+            }
+          }
+        }
+      }
+    }
+  }
+  for server_name, config in pairs(servers) do
+      nvim_lsp[server_name].setup(config)
   end
+
 end
 
 function M.compe()

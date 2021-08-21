@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 
 SOURCE_CODE_ASSET = "SOURCE_CODE_ASSET.zip"
 
+
 with open("binaries.json", "r") as binaries_file:
     BINARIES = json.load(binaries_file)
 

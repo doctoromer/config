@@ -44,6 +44,7 @@ map("n", "gr", "<cmd>lua vim.lsp.buf.rename()<CR>")
 map("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>")
 map("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
 map("n", "<leader>gf", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+map("v", "<leader>gf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>")
 map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 
 -- vsnips

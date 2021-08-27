@@ -5,20 +5,20 @@ end
 
 vim.g.mapleader = ";"
 
-map("n", "<leader>x", "<cmd>Trouble<cr>")
+map("n", "<leader>x", "<cmd>Trouble<CR>")
 
 -- Telescope
-map("n", "<leader>f", "<cmd>Telescope find_files<cr>")
-map("n", "<leader>a", "<cmd>Telescope live_grep<cr>")
-map("n", "<leader>l", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
-map("n", "<leader>b", "<cmd>Telescope buffers<cr>")
-map("n", "<leader>h", "<cmd>Telescope help_tags<cr>")
-map("n", "<leader>m", "<cmd>Telescope keymaps<cr>")
+map("n", "<leader>f", "<cmd>Telescope find_files<CR>")
+map("n", "<leader>a", "<cmd>Telescope live_grep<CR>")
+map("n", "<leader>l", "<cmd>Telescope current_buffer_fuzzy_find<CR>")
+map("n", "<leader>b", "<cmd>Telescope buffers<CR>")
+map("n", "<leader>h", "<cmd>Telescope help_tags<CR>")
+map("n", "<leader>m", "<cmd>Telescope keymaps<CR>")
 
 -- Telescope LSP
-map("n", "gx", "<cmd>Telescope lsp_references<cr>")
-map("n", "gd", "<cmd>Telescope lsp_definitions<cr>")
-map("n", "gs", "<cmd>Telescope lsp_document_symbols<cr>")
+map("n", "gx", "<cmd>Telescope lsp_references<CR>")
+map("n", "gd", "<cmd>Telescope lsp_definitions<CR>")
+map("n", "gs", "<cmd>Telescope lsp_document_symbols<CR>")
 
 
 -- Easymotion
@@ -26,13 +26,13 @@ map("n", "<Space>", "<Plug>(easymotion-prefix)", {})
 map("v", "<Space>", "<Plug>(easymotion-prefix)", {})
 
 -- vim-tmux-navigator
-map("n", "<M-h>", "<cmd>TmuxNavigateLeft<cr>")
-map("n", "<M-j>", "<cmd>TmuxNavigateDown<cr>")
-map("n", "<M-k>", "<cmd>TmuxNavigateUp<cr>")
-map("n", "<M-l>", "<cmd>TmuxNavigateRight<cr>")
+map("n", "<M-h>", "<cmd>TmuxNavigateLeft<CR>")
+map("n", "<M-j>", "<cmd>TmuxNavigateDown<CR>")
+map("n", "<M-k>", "<cmd>TmuxNavigateUp<CR>")
+map("n", "<M-l>", "<cmd>TmuxNavigateRight<CR>")
 
 -- Argwrap
-map("n", "ga", "<cmd>ArgWrap<cr>")
+map("n", "ga", "<cmd>ArgWrap<CR>")
 
 -- LSP
 map("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>")
@@ -54,6 +54,9 @@ map ("i", "<Tab>",  "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>'", {
 map ("s", "<Tab>",  "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>'", {expr = true})
 map ("i", "<S-Tab>",  "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'", {expr = true})
 map ("s", "<S-Tab>",  "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'", {expr = true})
+
+-- git blame
+map("n", "<leader>gb", "<cmd>Git blame<CR>")
 
 -- nvim-dap
 map("n", "<F5>", "<cmd>lua require'dap'.continue()<CR>")
@@ -86,10 +89,10 @@ map("n", "<up>", "<nop>")
 map("n", "<right>", "<nop>")
 
 -- Tabs
-map("n", "<leader>tt", "<cmd>tabnew<cr>")
-map("n", "gb", "<cmd>tabprevious<cr>")
-map("n", "gf", "<cmd>-tabmove<cr>")
-map("n", "gh", "<cmd>+tabmove<cr>")
+map("n", "<leader>tt", "<cmd>tabnew<CR>")
+map("n", "gb", "<cmd>tabprevious<CR>")
+map("n", "gf", "<cmd>-tabmove<CR>")
+map("n", "gh", "<cmd>+tabmove<CR>")
 
 -- Horizontal scroll
 map("n", "zl", "zL")
@@ -97,4 +100,4 @@ map("n", "zh", "zH")
 
 -- Other
 map("n", "Y", "y$")
-map("n", "<c-l>", "<cmd>noh<cr>")
+map("n", "<c-l>", "<cmd>noh<CR>")

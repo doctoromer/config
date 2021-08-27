@@ -191,12 +191,7 @@ def parse_args():
         subparsers[subcommand].set_defaults(command=subcommand)
 
     for command in ("install", "remove"):
-        subparsers[command].add_argument(
-            "--packages",
-            "-p",
-            choices=["all"] + PACKAGES,
-            default="all"
-        )
+        subparsers[command].add_argument("--packages", "-p", default=None)
 
     return parser.parse_args()
 
@@ -221,18 +216,15 @@ def main():
 
     logger.info(f"Executing {args.command} command")
 
-    if args.command == "install":
-        if args.packages == "all":
-            packages = PACKAGES
-        else:
-            packages = args.packages
-        dploy.stow(packages, "/")
+    if args.packages is None:
+        packages = PACKAGES
+    else:
+        packages = args.packages.split(",")
 
+    if args.command == "install":
+        dploy.stow(packages, "/")
     elif args.command == "remove":
-        if args.packages == "all":
-            dploy.unstow(PACKAGES, "/")
-        else:
-            dploy.unstow(args.packages, "/")
+        dploy.unstow(packages, "/")
     elif args.command == "download":
         download_binaries(BINARIES, BINARIES_DIR)
         download_vim_plugins()

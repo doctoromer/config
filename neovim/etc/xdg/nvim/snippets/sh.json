@@ -76,5 +76,5 @@
       "case word in [ [(] pattern [ | pattern ] ... ) list ;; ] ... esac\n",
       "A case command first expands word, and tries to match it against each pattern in turn."
     ]
-  },
+  }
 }

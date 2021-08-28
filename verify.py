@@ -27,13 +27,15 @@ def check_import(import_name):
 
 
 FEATURES = {
-    "ag": (check_command, ["ag"]),
-    "zsh": (check_command, ["zsh"]),
-    "pylsp": (check_command, ["pylsp"]),
-    "clangd": (check_command, ["clangd"]),
-    "python-neovim": (check_import, ["neovim.api"]),
-    "requests": (check_import, ["requests"]),
-    "dploy": (check_import, ["dploy"])
+    "ag": (check_command, "ag"),
+    "zsh": (check_command, "zsh"),
+    "git": (check_command, "git"),
+    "pylsp": (check_command, "pylsp"),
+    "clangd": (check_command, "clangd"),
+    "debugpy": (check_import, "debugpy"),
+    "python-neovim": (check_import, "neovim.api"),
+    "requests": (check_import, "requests"),
+    "dploy": (check_import, "dploy")
 }
 
 
@@ -43,6 +45,8 @@ def verify_environment():
     print("Verifying:")
 
     for name, (function, args) in FEATURES.items():
+        if type(args) not in (list, tuple):
+            args = [args]
         is_valid = function(*args)
         print(f"    {name.ljust(20)}{VALID if is_valid else INVALID}")
         if not is_valid:

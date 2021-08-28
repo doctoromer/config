@@ -49,7 +49,11 @@ return packer.startup(function()
   use {"navarasu/onedark.nvim", config = plugins_config.onedark}
   use {"itchyny/lightline.vim", config = plugins_config.lightline}
   use {"glepnir/dashboard-nvim", config = plugins_config.dashboard}
-  use {"lewis6991/gitsigns.nvim", requires = {"nvim-lua/plenary.nvim"}}
+  use {
+    "lewis6991/gitsigns.nvim",
+    requires = {"nvim-lua/plenary.nvim"},
+    config = plugins_config.gitsigns
+  }
   use {"tpope/vim-fugitive", cmd = "Git"}
   use {"machakann/vim-highlightedyank", event = "TextYankPost"}
   use {"ntpeters/vim-better-whitespace", config = plugins_config.better_whitespace}

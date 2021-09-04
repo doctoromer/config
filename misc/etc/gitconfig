@@ -1,6 +1,3 @@
-[user]
-	email = omer@sarig.co.il
-	name = Omer Sarig
 [core]
 	pager = diff-so-fancy | less --tabs=4 -RFX
 	editor = vim
@@ -32,6 +29,7 @@
 	rerere-reset = "!rm -rf $(git rev-parse --show-toplevel)/.git/rr-cache"
 	fresh = clean -f -d -X
 	fixup = commit --amend --no-edit
+	count = "!git log --oneline --branches | wc -l"
 [merge]
 	tool = diffconflicts
 	conflictstyle = diff3
@@ -52,3 +50,5 @@
 [mergetool "diffconflicts"]
 	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
 	trustExitCode = true
+[init]
+	defaultBranch = master

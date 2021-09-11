@@ -216,10 +216,11 @@ def main():
 
     logger.info(f"Executing {args.command} command")
 
-    if args.packages is None:
-        packages = PACKAGES
-    else:
-        packages = args.packages.split(",")
+    if args.command in ("install", "remove"):
+        if args.packages is None:
+            packages = PACKAGES
+        else:
+            packages = args.packages.split(",")
 
     if args.command == "install":
         dploy.stow(packages, "/")

@@ -3,23 +3,6 @@ local M = {}
 g = vim.g
 fn = vim.fn
 
-function M.trouble()
-  require("trouble").setup {
-    icons = false,
-    fold_open = "v",
-    fold_closed = ">",
-    indent_lines = false,
-    signs = {
-      error = "error",
-      warning = "warn",
-      hint = "hint",
-      information = "info",
-      other = "other"
-    },
-    use_lsp_diagnostic_signs = false
-  }
-end
-
 function M.telescope()
   local actions = require("telescope.actions")
 
@@ -287,6 +270,10 @@ end
 
 function M.vsnip()
   g.vsnip_snippet_dir = fn.fnamemodify(vim.call("resolve", fn.expand("<sfile>:p")), ":h") .. "/../snippets"
+end
+
+function M.which_key()
+  require("which-key").setup {}
 end
 
 return M

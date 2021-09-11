@@ -20,8 +20,6 @@ return packer.startup(function()
   use {"wbthomason/packer.nvim", lock = true}
 
   -- LSP
-  use { "folke/trouble.nvim", cmd = "Trouble", config = plugins_config.trouble
-  }
   use {"neovim/nvim-lspconfig", config = plugins_config.lspconfig}
   use {"kosayoda/nvim-lightbulb", config = plugins_config.lightbulb}
   use "ray-x/lsp_signature.nvim"
@@ -116,4 +114,8 @@ return packer.startup(function()
     keys = {{"n", "<Plug>(easymotion-prefix)"}, {"v", "<Plug>(easymotion-prefix)"}}
   }
   use "michaeljsmith/vim-indent-object"
+  use {
+    "folke/which-key.nvim",
+    config = plugins_config.which_key
+  }
 end)

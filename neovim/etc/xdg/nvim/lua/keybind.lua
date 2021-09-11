@@ -1,103 +1,105 @@
-function map(mode, lhs, rhs, opts)
-    opts = opts or { noremap = true, silent = true }
-    vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
-end
+local which_key = require("which-key")
+
+-- Normal mode keybindings
+which_key.register({
+    ["<leader>"] = {
+        f = {"<cmd>Telescope find_files<CR>", "Find file"},
+        a = {"<cmd>Telescope live_grep<CR>", "Search in files"},
+        l = {"<cmd>Telescope current_buffer_fuzzy_find<CR>", "Search in current file"},
+        b = {"<cmd>Telescope buffers<CR>", "Find buffer"},
+        h = {"<cmd>Telescope help_tags<CR>", "Help pages"},
+        m = {"<cmd>Telescope keymaps<CR>", "Find keymaps"},
+
+        gD = {"<cmd>lua vim.lsp.buf.type_definition()<CR>", "Goto type definition"},
+        gf = {"<cmd>lua vim.lsp.buf.formatting()<CR>", "Format all file"},
+        ca = {"<cmd>lua vim.lsp.buf.code_action()<CR>", "Code action"},
+
+        gb = {"<cmd>Git blame<CR>", "Git blame"},
+    },
+    g = {
+        x = {"<cmd>Telescope lsp_references<CR>", "Show references"},
+        d = {"<cmd>Telescope lsp_definitions<CR>", "Goto definition"},
+        s = {"<cmd>Telescope lsp_document_symbols<CR>", "Show symbols"},
+        D = {"<Cmd>lua vim.lsp.buf.declaration()<CR>", "Goto decleration"},
+        i = {"<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto implementation"},
+        r = {"<cmd>lua vim.lsp.buf.rename()<CR>", "Rename"},
+
+        a = {"<cmd>ArgWrap<CR>", "Spread arguments"},
+    },
+
+    K = {"<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover"},
+    ["[d"] = {"<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", "Next diagnostic"},
+    ["]d"] = {"<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", "Previous diagnostic"},
+
+    ["<M-h>"] = {"<cmd>TmuxNavigateLeft<CR>", "Tmux left"},
+    ["<M-j>"] = {"<cmd>TmuxNavigateDown<CR>", "Tmux down"},
+    ["<M-k>"] = {"<cmd>TmuxNavigateUp<CR>", "Tmux up"},
+    ["<M-l>"] = {"<cmd>TmuxNavigateRight<CR>", "Tmux right"},
+
+    ["<Space>"] = {"<Plug>(easymotion-prefix)", "Easymotion prefix"},
+
+    -- General keybindings
+    [";"] = {"<nop>", ""},
+    ["\\"] = {";", ""},
+
+    -- Disable bad keys
+    ["<home>"] = {"<nop>", "Bad key"},
+    ["<end>"] = {"<nop>", "Bad key"},
+    ["<del>"] = {"<nop>", "Bad key"},
+    ["<insert>"] = {"<nop>", "Bad key"},
+    ["<left>"] = {"<nop>", "Bad key"},
+    ["<down>"] = {"<nop>", "Bad key"},
+    ["<up>"] = {"<nop>", "Bad key"},
+    ["<right>"] = {"<nop>", "Bad key"},
+
+    -- Tabs
+    ["<leader>tt"] = {"<cmd>tabnew<CR>", "New tab"},
+    ["gb"] = {"<cmd>tabprevious<CR>", "Previous tab"},
+    ["gf"] = {"<cmd>-tabmove<CR>", "Move tab left"},
+    ["gh"] = {"<cmd>+tabmove<CR>", "Move tab right"},
+
+    -- Horizontal scroll
+    ["zl"] = {"zL", "Scroll right"},
+    ["zh"] = {"zH", "Scroll left"},
+
+    -- Other
+    ["Y"] = {"y$", "Yank to end of line"},
+    ["<c-l>"] = {"<cmd>noh<CR>", "Turn off search highlight"},
+})
+
+-- Visual mode keybindings
+which_key.register({
+    ["<leader>"] = {
+        gf = {"<cmd>lua vim.lsp.buf.range_formatting()<CR>", "Format range"}
+    },
+    ["<Space>"] = {"<Plug>(easymotion-prefix)", "Easymotion prefix"},
+    [">"] = {">gv", "Indent"},
+    ["<"] = {"<gv", "Dedent"}
+
+}, {mode = "v"})
+
+-- Insert mode keybindings
+vsnip_keybindings = {
+    ["<C-space>"] = {"vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", "Use snippet"},
+    ["<Tab>"] =  {"vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>'", "Jump next in snippet"},
+    ["<S-Tab>"] =  {"vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'", "Jump previous in snippet"}
+}
+
+-- Select mode keybindings
+which_key.register(vsnip_keybindings, {mode = "i", expr = true})
+which_key.register(vsnip_keybindings, {mode = "s", expr = true})
 
 vim.g.mapleader = ";"
 
-map("n", "<leader>x", "<cmd>Trouble<CR>")
+-- -- nvim-dap
+-- map("n", "<F5>", "<cmd>lua require'dap'.continue()<CR>")
+-- map("n", "<F8>", "<cmd>lua require'dap'.step_over()<CR>")
+-- map("n", "<F9>", "<cmd>lua require'dap'.step_into()<CR>")
+-- map("n", "<F10>", "<cmd>lua require'dap'.step_out()<CR>")
+-- map("n", "<leader>b", "<cmd>lua require'dap'.toggle_breakpoint()<CR>")
+-- map("n", "<leader>B", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
+-- map("n", "<leader>dr", "<cmd>lua require'dap'.repl.open()<CR>")
+-- map("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<CR>")
+-- map("n", "<leader>dr", "<cmd>lua require'dap'.repl.open()<CR>")
+-- map("n", "<leader>do", "<cmd>lua require('dapui').toggle()<CR>")
 
--- Telescope
-map("n", "<leader>f", "<cmd>Telescope find_files<CR>")
-map("n", "<leader>a", "<cmd>Telescope live_grep<CR>")
-map("n", "<leader>l", "<cmd>Telescope current_buffer_fuzzy_find<CR>")
-map("n", "<leader>b", "<cmd>Telescope buffers<CR>")
-map("n", "<leader>h", "<cmd>Telescope help_tags<CR>")
-map("n", "<leader>m", "<cmd>Telescope keymaps<CR>")
-
--- Telescope LSP
-map("n", "gx", "<cmd>Telescope lsp_references<CR>")
-map("n", "gd", "<cmd>Telescope lsp_definitions<CR>")
-map("n", "gs", "<cmd>Telescope lsp_document_symbols<CR>")
-
-
--- Easymotion
-map("n", "<Space>", "<Plug>(easymotion-prefix)", {})
-map("v", "<Space>", "<Plug>(easymotion-prefix)", {})
-
--- vim-tmux-navigator
-map("n", "<M-h>", "<cmd>TmuxNavigateLeft<CR>")
-map("n", "<M-j>", "<cmd>TmuxNavigateDown<CR>")
-map("n", "<M-k>", "<cmd>TmuxNavigateUp<CR>")
-map("n", "<M-l>", "<cmd>TmuxNavigateRight<CR>")
-
--- Argwrap
-map("n", "ga", "<cmd>ArgWrap<CR>")
-
--- LSP
-map("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>")
-map("n", "<leader>gD", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
-map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-map("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
-map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
-map("n", "gr", "<cmd>lua vim.lsp.buf.rename()<CR>")
-map("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>")
-map("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
-map("n", "<leader>gf", "<cmd>lua vim.lsp.buf.formatting()<CR>")
-map("v", "<leader>gf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>")
-map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-
--- vsnips
-map("i", "<C-space>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", {expr = true})
-map("s", "<C-space>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", {expr = true})
-map ("i", "<Tab>",  "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>'", {expr = true})
-map ("s", "<Tab>",  "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>'", {expr = true})
-map ("i", "<S-Tab>",  "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'", {expr = true})
-map ("s", "<S-Tab>",  "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'", {expr = true})
-
--- git blame
-map("n", "<leader>gb", "<cmd>Git blame<CR>")
-
--- nvim-dap
-map("n", "<F5>", "<cmd>lua require'dap'.continue()<CR>")
-map("n", "<F8>", "<cmd>lua require'dap'.step_over()<CR>")
-map("n", "<F9>", "<cmd>lua require'dap'.step_into()<CR>")
-map("n", "<F10>", "<cmd>lua require'dap'.step_out()<CR>")
-map("n", "<leader>b", "<cmd>lua require'dap'.toggle_breakpoint()<CR>")
-map("n", "<leader>B", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
-map("n", "<leader>dr", "<cmd>lua require'dap'.repl.open()<CR>")
-map("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<CR>")
-map("n", "<leader>dr", "<cmd>lua require'dap'.repl.open()<CR>")
-map("n", "<leader>do", "<cmd>lua require('dapui').toggle()<CR>")
-
--- General keybindings
-map("n", ";", "<nop>")
-map("n", "\\", ";")
-
--- Stay in visual mode after indent or unindent
-map("v", ">", ">gv")
-map("v", "<", "<gv")
-
--- Disable bad keys
-map("n", "<home>", "<nop>")
-map("n", "<end>", "<nop>")
-map("n", "<del>", "<nop>")
-map("n", "<insert>", "<nop>")
-map("n", "<left>", "<nop>")
-map("n", "<down>", "<nop>")
-map("n", "<up>", "<nop>")
-map("n", "<right>", "<nop>")
-
--- Tabs
-map("n", "<leader>tt", "<cmd>tabnew<CR>")
-map("n", "gb", "<cmd>tabprevious<CR>")
-map("n", "gf", "<cmd>-tabmove<CR>")
-map("n", "gh", "<cmd>+tabmove<CR>")
-
--- Horizontal scroll
-map("n", "zl", "zL")
-map("n", "zh", "zH")
-
--- Other
-map("n", "Y", "y$")
-map("n", "<c-l>", "<cmd>noh<CR>")

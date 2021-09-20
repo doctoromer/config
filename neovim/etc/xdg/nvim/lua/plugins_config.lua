@@ -277,4 +277,8 @@ function M.which_key()
   require("which-key").setup()
 end
 
+function M.comment()
+  require("nvim_comment").setup()
+end
+
 return M

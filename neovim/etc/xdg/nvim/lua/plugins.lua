@@ -100,7 +100,7 @@ return packer.startup(function()
   use "tpope/vim-unimpaired"
   use "jiangmiao/auto-pairs"
   use {
-    "tpope/vim-commentary",
+    "terrortylor/nvim-comment",
     keys = {
       {"x", "gc"},
       {"n", "gc"},
@@ -108,7 +108,8 @@ return packer.startup(function()
       {"n", "gcc"},
       {"n", "cgc"},
       {"n", "gcu"}
-    }
+    },
+    config = plugins_config.comment
   }
   use {
     "easymotion/vim-easymotion",

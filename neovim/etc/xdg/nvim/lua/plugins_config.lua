@@ -74,7 +74,6 @@ function M.treesitter()
         node_decremental = "<C-r>",
       },
     },
-
   }
 end
 
@@ -269,11 +268,13 @@ function M.nvim_dap_ui()
 end
 
 function M.vsnip()
+  -- This sets the snippets dir to be relative to this file.
+  -- Then, it is possible to use this in user's home directory or as a system wide configuration.
   g.vsnip_snippet_dir = fn.fnamemodify(vim.call("resolve", fn.expand("<sfile>:p")), ":h") .. "/../snippets"
 end
 
 function M.which_key()
-  require("which-key").setup {}
+  require("which-key").setup()
 end
 
 return M

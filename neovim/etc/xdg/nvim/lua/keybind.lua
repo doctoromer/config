@@ -75,19 +75,16 @@ which_key.register({
     ["<Space>"] = {"<Plug>(easymotion-prefix)", "Easymotion prefix"},
     [">"] = {">gv", "Indent"},
     ["<"] = {"<gv", "Dedent"}
-
 }, {mode = "v"})
 
--- Insert mode keybindings
-vsnip_keybindings = {
-    ["<C-space>"] = {"vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", "Use snippet"},
-    ["<Tab>"] =  {"vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>'", "Jump next in snippet"},
-    ["<S-Tab>"] =  {"vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'", "Jump previous in snippet"}
+vsnip_keys = {
+    ["<C-space>"] = {"vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<nop>'", "Complete snippet", expr=true},
+    ["<Tab>"] = {"vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>'", "Jump next placeholder", expr=true},
+    ["<S-Tab>"] = {"vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'", "Jump previous placeholder", expr=true}
 }
 
--- Select mode keybindings
-which_key.register(vsnip_keybindings, {mode = "i", expr = true})
-which_key.register(vsnip_keybindings, {mode = "s", expr = true})
+which_key.register(vsnip_keys, {mode = "i", noremap = false})
+which_key.register(vsnip_keys, {mode = "s", noremap = false})
 
 vim.g.mapleader = ";"
 

@@ -1,35 +1,37 @@
 local which_key = require("which-key")
 
+telescope = require("telescope.builtin")
+
 -- Normal mode keybindings
 which_key.register({
     ["<leader>"] = {
-        f = {"<cmd>Telescope find_files<CR>", "Find file"},
-        a = {"<cmd>Telescope live_grep<CR>", "Search in files"},
-        l = {"<cmd>Telescope current_buffer_fuzzy_find<CR>", "Search in current file"},
-        b = {"<cmd>Telescope buffers<CR>", "Find buffer"},
-        h = {"<cmd>Telescope help_tags<CR>", "Help pages"},
-        m = {"<cmd>Telescope keymaps<CR>", "Find keymaps"},
+        f = {telescope.find_files, "Find file"},
+        a = {telescope.live_grep, "Search in files"},
+        l = {telescope.current_buffer_fuzzy_find, "Search in current file"},
+        b = {telescope.buffers, "Find buffer"},
+        h = {telescope.help_tags, "Help pages"},
+        m = {telescope.keymaps, "Find keymaps"},
 
-        gD = {"<cmd>lua vim.lsp.buf.type_definition()<CR>", "Goto type definition"},
-        gf = {"<cmd>lua vim.lsp.buf.formatting()<CR>", "Format all file"},
-        ca = {"<cmd>lua vim.lsp.buf.code_action()<CR>", "Code action"},
+        gD = {vim.lsp.buf.type_definition, "Goto type definition"},
+        gf = {vim.lsp.buf.formatting, "Format all file"},
+        ca = {vim.lsp.buf.code_action, "Code action"},
 
         gb = {"<cmd>Git blame<CR>", "Git blame"},
     },
     g = {
-        x = {"<cmd>Telescope lsp_references<CR>", "Show references"},
-        d = {"<cmd>Telescope lsp_definitions<CR>", "Goto definition"},
-        s = {"<cmd>Telescope lsp_document_symbols<CR>", "Show symbols"},
-        D = {"<Cmd>lua vim.lsp.buf.declaration()<CR>", "Goto decleration"},
-        i = {"<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto implementation"},
-        r = {"<cmd>lua vim.lsp.buf.rename()<CR>", "Rename"},
+        x = {telescope.lsp_references, "Show references"},
+        d = {telescope.lsp_definitions, "Goto definition"},
+        s = {telescope.lsp_document_symbols, "Show symbols"},
+        D = {vim.lsp.buf.declaration, "Goto decleration"},
+        i = {vim.lsp.buf.implementation, "Goto implementation"},
+        r = {vim.lsp.buf.rename, "Rename"},
 
         a = {"<cmd>ArgWrap<CR>", "Spread arguments"},
     },
 
-    K = {"<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover"},
-    ["[d"] = {"<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", "Next diagnostic"},
-    ["]d"] = {"<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", "Previous diagnostic"},
+    K = {vim.lsp.buf.hover, "Hover"},
+    ["[d"] = {vim.lsp.diagnostic.goto_prev, "Next diagnostic"},
+    ["]d"] = {vim.lsp.diagnostic.goto_next, "Previous diagnostic"},
 
     ["<M-h>"] = {"<cmd>TmuxNavigateLeft<CR>", "Tmux left"},
     ["<M-j>"] = {"<cmd>TmuxNavigateDown<CR>", "Tmux down"},

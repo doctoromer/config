@@ -1,6 +1,7 @@
 local which_key = require("which-key")
 
 telescope = require("telescope.builtin")
+navigator = require("Navigator")
 
 -- Normal mode keybindings
 which_key.register({
@@ -33,10 +34,10 @@ which_key.register({
     ["[d"] = {vim.lsp.diagnostic.goto_prev, "Next diagnostic"},
     ["]d"] = {vim.lsp.diagnostic.goto_next, "Previous diagnostic"},
 
-    ["<M-h>"] = {"<cmd>TmuxNavigateLeft<CR>", "Tmux left"},
-    ["<M-j>"] = {"<cmd>TmuxNavigateDown<CR>", "Tmux down"},
-    ["<M-k>"] = {"<cmd>TmuxNavigateUp<CR>", "Tmux up"},
-    ["<M-l>"] = {"<cmd>TmuxNavigateRight<CR>", "Tmux right"},
+    ["<M-h>"] = {navigator.left, "Tmux left"},
+    ["<M-j>"] = {navigator.down, "Tmux down"},
+    ["<M-k>"] = {navigator.up, "Tmux up"},
+    ["<M-l>"] = {navigator.right, "Tmux right"},
 
     ["<Space>"] = {"<Plug>(easymotion-prefix)", "Easymotion prefix"},
 

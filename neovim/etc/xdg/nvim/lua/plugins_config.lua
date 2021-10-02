@@ -48,8 +48,8 @@ function M.better_whitespace()
   g.better_whitespace_filetypes_blacklist = {"dashboard", "help", "markdown"}
 end
 
-function M.vim_tmux_navigator()
-  g.tmux_navigator_no_mappings = true
+function M.navigator_nvim()
+  require('Navigator').setup()
 end
 
 function M.supertab()

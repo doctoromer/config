@@ -67,11 +67,7 @@ return packer.startup(function()
   use {"hrsh7th/vim-vsnip", config = plugins_config.vsnip}
   use {"whiteinge/diffconflicts", cmd = "DiffConflicts"}
   use {"Vimjas/vim-python-pep8-indent", ft = "python"}
-  use {
-    "christoomey/vim-tmux-navigator",
-    cmd = {"TmuxNavigateLeft", "TmuxNavigateDown", "TmuxNavigateUp", "TmuxNavigateRight"},
-    config = plugins_config.vim_tmux_navigator
-  }
+  use {"numToStr/Navigator.nvim", config = plugins_config.navigator_nvim}
 
   -- Editing
   use "tpope/vim-repeat"

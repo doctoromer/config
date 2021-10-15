@@ -81,7 +81,7 @@ which_key.register({
 }, {mode = "v"})
 
 vsnip_keys = {
-    ["<C-space>"] = {"vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<nop>'", "Complete snippet", expr=true},
+    ["<C-space>"] = {"vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : ''", "Complete snippet", expr=true},
     ["<Tab>"] = {"vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>'", "Jump next placeholder", expr=true},
     ["<S-Tab>"] = {"vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'", "Jump previous placeholder", expr=true}
 }

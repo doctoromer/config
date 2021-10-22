@@ -45,12 +45,5 @@
             "[^/]*/bat.1": "usr/share/man/man1/exa.1",
             "[^/]*/autocomplete/bat.zsh": "usr/local/share/zsh/site-functions/bat.zsh"
         }
-    },
-    "efm": {
-        "repo": "mattn/efm-langserver",
-        "asset_regex": "efm-langserver_v0.0.36_linux_amd64.tar.gz",
-        "file_map": {
-            "efm-langserver_.*/efm-langserver": "usr/bin/efm-langserver"
-        }
     }
 }

@@ -1,46 +1,77 @@
+local M = {}
+
 local which_key = require("which-key")
 
-telescope = require("telescope.builtin")
-navigator = require("Navigator")
-
 -- Normal mode keybindings
-which_key.register({
-    ["<leader>"] = {
-        f = {telescope.find_files, "Find file"},
-        a = {telescope.live_grep, "Search in files"},
-        l = {telescope.current_buffer_fuzzy_find, "Search in current file"},
-        b = {telescope.buffers, "Find buffer"},
-        h = {telescope.help_tags, "Help pages"},
-        m = {telescope.keymaps, "Find keymaps"},
+function M.telescope()
+    telescope = require("telescope.builtin")
+    return {
+        ["<leader>"] = {
+            f = {telescope.find_files, "Find file"},
+            a = {telescope.live_grep, "Search in files"},
+            l = {telescope.current_buffer_fuzzy_find, "Search in current file"},
+            b = {telescope.buffers, "Find buffer"},
+            h = {telescope.help_tags, "Help pages"},
+            m = {telescope.keymaps, "Find keymaps"},
+        },
+        g = {
+            x = {telescope.lsp_references, "Show references"},
+            d = {telescope.lsp_definitions, "Goto definition"},
+            s = {telescope.lsp_document_symbols, "Show symbols"},
+        }
+    }
+end
 
-        gD = {vim.lsp.buf.type_definition, "Goto type definition"},
-        gf = {vim.lsp.buf.formatting, "Format all file"},
-        ca = {vim.lsp.buf.code_action, "Code action"},
+function M.lspconfig()
+    return {
+        ["<leader>"] = {
+            gD = {vim.lsp.buf.type_definition, "Goto type definition"},
+            gf = {vim.lsp.buf.formatting, "Format all file"},
+            ca = {vim.lsp.buf.code_action, "Code action"},
+            gf = {"<cmd>lua vim.lsp.buf.range_formatting()<CR>", "Format range", mode="v"}
+        },
+        g = {
+            D = {vim.lsp.buf.declaration, "Goto decleration"},
+            i = {vim.lsp.buf.implementation, "Goto implementation"},
+            r = {vim.lsp.buf.rename, "Rename"},
+        },
+        K = {vim.lsp.buf.hover, "Hover"},
+        ["[d"] = {vim.lsp.diagnostic.goto_prev, "Next diagnostic"},
+        ["]d"] = {vim.lsp.diagnostic.goto_next, "Previous diagnostic"},
+    }
+end
 
-        gb = {"<cmd>Git blame<CR>", "Git blame"},
-    },
-    g = {
-        x = {telescope.lsp_references, "Show references"},
-        d = {telescope.lsp_definitions, "Goto definition"},
-        s = {telescope.lsp_document_symbols, "Show symbols"},
-        D = {vim.lsp.buf.declaration, "Goto decleration"},
-        i = {vim.lsp.buf.implementation, "Goto implementation"},
-        r = {vim.lsp.buf.rename, "Rename"},
+function M.fugitive()
+    return {
+        ["<leader>"] = {
+            gb = {"<cmd>Git blame<CR>", "Git blame"}
+        }
+    }
+end
 
-        a = {"<cmd>ArgWrap<CR>", "Spread arguments"},
-    },
+function M.argwrap()
+    return {
+        ga = {"<cmd>ArgWrap<CR>", "Spread arguments"}
+    }
+end
 
-    K = {vim.lsp.buf.hover, "Hover"},
-    ["[d"] = {vim.lsp.diagnostic.goto_prev, "Next diagnostic"},
-    ["]d"] = {vim.lsp.diagnostic.goto_next, "Previous diagnostic"},
+function M.navigator()
+    navigator = require("Navigator")
+    return {
+        ["<M-h>"] = {navigator.left, "Tmux left"},
+        ["<M-j>"] = {navigator.down, "Tmux down"},
+        ["<M-k>"] = {navigator.up, "Tmux up"},
+        ["<M-l>"] = {navigator.right, "Tmux right"},
+    }
+end
 
-    ["<M-h>"] = {navigator.left, "Tmux left"},
-    ["<M-j>"] = {navigator.down, "Tmux down"},
-    ["<M-k>"] = {navigator.up, "Tmux up"},
-    ["<M-l>"] = {navigator.right, "Tmux right"},
+function M.easymotion()
+    return {
+        ["<Space>"] = {"<Plug>(easymotion-prefix)", "Easymotion prefix"}
+    }
+end
 
-    ["<Space>"] = {"<Plug>(easymotion-prefix)", "Easymotion prefix"},
-
+which_key.register {
     -- General keybindings
     [";"] = {"<nop>", ""},
     ["\\"] = {";", ""},
@@ -68,38 +99,25 @@ which_key.register({
     -- Other
     ["Y"] = {"y$", "Yank to end of line"},
     ["<c-l>"] = {"<cmd>noh<CR>", "Turn off search highlight"},
-})
+    [">"] = {">gv", "Indent", mode="v"},
+    ["<"] = {"<gv", "Dedent", mode="v"}
+}
 
--- Visual mode keybindings
-which_key.register({
-    ["<leader>"] = {
-        gf = {"<cmd>lua vim.lsp.buf.range_formatting()<CR>", "Format range"}
-    },
-    ["<Space>"] = {"<Plug>(easymotion-prefix)", "Easymotion prefix"},
-    [">"] = {">gv", "Indent"},
-    ["<"] = {"<gv", "Dedent"}
-}, {mode = "v"})
-
+-- Temporary direct calls, Until there will be a better way to set same mapping for multiple modes
 vsnip_keys = {
     ["<C-space>"] = {"vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : ''", "Complete snippet", expr=true},
-    ["<Tab>"] = {"vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>'", "Jump next placeholder", expr=true},
-    ["<S-Tab>"] = {"vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'", "Jump previous placeholder", expr=true}
+    ["<Tab>"] = {"vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : pumvisible() ? '<C-n>' : '<Tab>'", "Jump next placeholder", expr=true},
+    ["<S-Tab>"] = {"vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : pumvisible() ? '<C-p>' : '<S-Tab>'", "Jump previous placeholder", expr=true}
 }
 
 which_key.register(vsnip_keys, {mode = "i", noremap = false})
 which_key.register(vsnip_keys, {mode = "s", noremap = false})
 
+which_key.register({
+    ["<Space>"] = {"<Plug>(easymotion-prefix)", "Easymotion prefix", mode = "v"}
+})
+
+-- Setting the leader key
 vim.g.mapleader = ";"
 
--- -- nvim-dap
--- map("n", "<F5>", "<cmd>lua require'dap'.continue()<CR>")
--- map("n", "<F8>", "<cmd>lua require'dap'.step_over()<CR>")
--- map("n", "<F9>", "<cmd>lua require'dap'.step_into()<CR>")
--- map("n", "<F10>", "<cmd>lua require'dap'.step_out()<CR>")
--- map("n", "<leader>b", "<cmd>lua require'dap'.toggle_breakpoint()<CR>")
--- map("n", "<leader>B", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
--- map("n", "<leader>dr", "<cmd>lua require'dap'.repl.open()<CR>")
--- map("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<CR>")
--- map("n", "<leader>dr", "<cmd>lua require'dap'.repl.open()<CR>")
--- map("n", "<leader>do", "<cmd>lua require('dapui').toggle()<CR>")
-
+return M

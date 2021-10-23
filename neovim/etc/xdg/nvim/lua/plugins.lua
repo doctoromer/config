@@ -14,6 +14,39 @@ packer.init {
     }
 }
 
+plugins_mapping = {
+  ["telescope.nvim"] = "telescope",
+  ["nvim-lspconfig"] = "lspconfig",
+  ["nvim-treesitter-context"] = "treesitter_context",
+  ["nvim-treesitter"] = "treesitter",
+  ["nvim-treesitter-textobjects"] = "treesitter_textobjects",
+  ["vim-fugitive"] = "fugitive",
+  ["vim-argwrap"] = "argwrap",
+  ["Navigator.nvim"] = "navigator",
+  ["vim-easymotion"] = "easymotion",
+}
+
+function call_config_and_keybinds(name)
+  local keybind = require("keybind")
+  local which_key = require("which-key")
+  local plugins_config = require("plugins_config")
+
+  name = plugins_mapping[name]
+
+  if keybind[name] ~= nil then
+    keybind_result = keybind[name]()
+    if keybind_result[1] ~= nil and keybind_result[2] ~= nil then
+      which_key.register(keybind_result[1], keybind_result[2])
+    else
+      which_key.register(keybind_result)
+    end
+  end
+  if plugins_config[name] ~= nil then
+    plugins_config[name]()
+  end
+end
+
+
 return packer.startup(function()
   local plugins_config = require("plugins_config")
 
@@ -21,7 +54,7 @@ return packer.startup(function()
   use {"wbthomason/packer.nvim", lock = true}
 
   -- LSP
-  use {"neovim/nvim-lspconfig", config = plugins_config.lspconfig}
+  use {"neovim/nvim-lspconfig", config = call_config_and_keybinds}
   use {"kosayoda/nvim-lightbulb", config = plugins_config.lightbulb}
   use "ray-x/lsp_signature.nvim"
 
@@ -35,13 +68,11 @@ return packer.startup(function()
   }
 
   -- Completion and searching
-  use {"ervandew/supertab", config = plugins_config.supertab}
   use {"hrsh7th/nvim-compe", config = plugins_config.compe}
   use {
     "nvim-telescope/telescope.nvim",
     requires = {"nvim-lua/popup.nvim", "nvim-lua/plenary.nvim"},
-    cmd = "Telescope",
-    config = plugins_config.telescope
+    config = call_config_and_keybinds
   }
 
   -- UI and display
@@ -53,21 +84,17 @@ return packer.startup(function()
     requires = {"nvim-lua/plenary.nvim"},
     config = plugins_config.gitsigns
   }
-  use {"tpope/vim-fugitive", cmd = "Git"}
+  use {"tpope/vim-fugitive", config = call_config_and_keybinds}
   use {"machakann/vim-highlightedyank", event = "TextYankPost"}
   use {"ntpeters/vim-better-whitespace", config = plugins_config.better_whitespace}
   use {"lukas-reineke/indent-blankline.nvim", config = plugins_config.indent_blankline}
-
-  -- Debugging
-  use {"mfussenegger/nvim-dap", config = plugins_config.nvim_dap}
-  use {"rcarriga/nvim-dap-ui", config = plugins_config.nvim_dap_ui}
 
   -- Utilities
   use "tpope/vim-sleuth"
   use {"hrsh7th/vim-vsnip", config = plugins_config.vsnip}
   use {"whiteinge/diffconflicts", cmd = "DiffConflicts"}
   use {"Vimjas/vim-python-pep8-indent", ft = "python"}
-  use {"numToStr/Navigator.nvim", config = plugins_config.navigator_nvim}
+  use {"numToStr/Navigator.nvim", config = call_config_and_keybinds}
 
   -- Editing
   use "tpope/vim-repeat"
@@ -92,7 +119,7 @@ return packer.startup(function()
   }
   use "wellle/targets.vim"
   use "markonm/traces.vim"
-  use {"foosoft/vim-argwrap", cmd = "ArgWrap"}
+  use {"foosoft/vim-argwrap", config = call_config_and_keybinds}
   use "tpope/vim-unimpaired"
   use "jiangmiao/auto-pairs"
   use {
@@ -109,7 +136,7 @@ return packer.startup(function()
   }
   use {
     "easymotion/vim-easymotion",
-    keys = {{"n", "<Plug>(easymotion-prefix)"}, {"v", "<Plug>(easymotion-prefix)"}}
+    config = call_config_and_keybinds
   }
   use "michaeljsmith/vim-indent-object"
   use {

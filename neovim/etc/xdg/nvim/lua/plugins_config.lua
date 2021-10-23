@@ -48,7 +48,7 @@ function M.better_whitespace()
   g.better_whitespace_filetypes_blacklist = {"dashboard", "help", "markdown"}
 end
 
-function M.navigator_nvim()
+function M.navigator()
   require('Navigator').setup()
 end
 

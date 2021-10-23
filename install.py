@@ -58,6 +58,8 @@ def get_latest_release(repo_name, asset_regex):
         if re.match(asset_regex, asset["name"]):
             with requests.get(asset["browser_download_url"]) as response:
                 return asset["name"], response.content
+    else:
+        raise ValueError(f"No matching asset to regex {asset_regex}")
 
 
 def match_file_map_entry(base_dir, entry_name, file_map):

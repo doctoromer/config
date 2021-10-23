@@ -67,7 +67,6 @@ g.loaded_netrwFileHandlers = 1
 -- Other configurations
 vim.cmd [[
     autocmd VimResized * wincmd =
-    autocmd FocusGained,BufEnter * :checktime
 
     command W w
     command Wq wq

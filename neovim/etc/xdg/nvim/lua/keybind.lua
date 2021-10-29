@@ -88,26 +88,30 @@ which_key.register {
 
     -- Tabs
     ["<leader>tt"] = {"<cmd>tabnew<CR>", "New tab"},
-    ["gb"] = {"<cmd>tabprevious<CR>", "Previous tab"},
-    ["gf"] = {"<cmd>-tabmove<CR>", "Move tab left"},
-    ["gh"] = {"<cmd>+tabmove<CR>", "Move tab right"},
+    gb = {"<cmd>tabprevious<CR>", "Previous tab"},
+    gf = {"<cmd>-tabmove<CR>", "Move tab left"},
+    gh = {"<cmd>+tabmove<CR>", "Move tab right"},
 
     -- Horizontal scroll
-    ["zl"] = {"zL", "Scroll right"},
-    ["zh"] = {"zH", "Scroll left"},
+    zl = {"zL", "Scroll right"},
+    zh = {"zH", "Scroll left"},
 
     -- Other
-    ["Y"] = {"y$", "Yank to end of line"},
+    Y = {"y$", "Yank to end of line"},
     ["<c-l>"] = {"<cmd>noh<CR>", "Turn off search highlight"},
     [">"] = {">gv", "Indent", mode="v"},
-    ["<"] = {"<gv", "Dedent", mode="v"}
+    ["<"] = {"<gv", "Dedent", mode="v"},
+
+    -- Center after search
+    n = {"nzz"},
+    N = {"Nzz"},
 }
 
 -- Temporary direct calls, Until there will be a better way to set same mapping for multiple modes
-vsnip_keys = {
-    ["<C-space>"] = {"vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : ''", "Complete snippet", expr=true},
-    ["<Tab>"] = {"vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : pumvisible() ? '<C-n>' : '<Tab>'", "Jump next placeholder", expr=true},
-    ["<S-Tab>"] = {"vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : pumvisible() ? '<C-p>' : '<S-Tab>'", "Jump previous placeholder", expr=true}
+local vsnip_keys = {
+    ["<C-space>"] = {"vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : ''", "Complete snippet", expr = true},
+    ["<Tab>"] = {"vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : pumvisible() ? '<C-n>' : '<Tab>'", "Jump next placeholder", expr = true},
+    ["<S-Tab>"] = {"vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : pumvisible() ? '<C-p>' : '<S-Tab>'", "Jump previous placeholder", expr = true}
 }
 
 which_key.register(vsnip_keys, {mode = "i", noremap = false})

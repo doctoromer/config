@@ -1,7 +1,7 @@
 local M = {}
 
-g = vim.g
-fn = vim.fn
+local g = vim.g
+local fn = vim.fn
 
 M["telescope.nvim"] = function()
   local actions = require("telescope.actions")
@@ -224,39 +224,6 @@ M["nvim-treesitter-textobjects"] = function()
       }
     }
   }
-end
-
-function M.nvim_dap()
-  local dap = require("dap")
-  dap.adapters.python = {
-    type = "executable",
-    command = "/usr/bin/python3",
-    args = {"-m", "debugpy.adapter"}
-  }
-  dap.configurations.python = {
-    {
-      type = "python",
-      request = "launch",
-      name = "Launch file",
-      program = "${file}",
-      pythonPath = function()
-        local cwd = fn.getcwd()
-        if fn.executable(cwd .. "/venv/bin/python3") == 1 then
-          return cwd .. "/venv/bin/python3"
-        elseif fn.executable(cwd .. "/.venv/bin/python3") == 1 then
-          return cwd .. "/.venv/bin/python3"
-        else
-          return "/usr/bin/python3"
-        end
-      end
-    },
-  }
-  fn.sign_define("DapBreakpoint", {text="🔴", texthl="", linehl="", numhl=""})
-  fn.sign_define("DapStopped", {text="🔵", texthl="", linehl="", numhl=""})
-end
-
-function M.nvim_dap_ui()
-  require("dapui").setup()
 end
 
 M["vim-vsnip"] = function()

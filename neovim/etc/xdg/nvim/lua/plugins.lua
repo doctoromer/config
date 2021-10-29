@@ -14,14 +14,14 @@ packer.init {
     }
 }
 
-function call_config_and_keybinds(name)
+local function call_config_and_keybinds(name)
   local keybind = require("keybind")
   local which_key = require("which-key")
   local plugins_config = require("plugins_config")
 
-  if keybind[name] ~= nil then
+  if keybind[name] then
     keybind_result = keybind[name]()
-    if keybind_result[1] ~= nil and keybind_result[2] ~= nil then
+    if keybind_result[1] and keybind_result[2] then
       which_key.register(keybind_result[1], keybind_result[2])
     else
       which_key.register(keybind_result)

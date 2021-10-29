@@ -27,7 +27,7 @@ local function call_config_and_keybinds(name)
       which_key.register(keybind_result)
     end
   end
-  if plugins_config[name] ~= nil then
+  if plugins_config[name] then
     plugins_config[name]()
   end
 end

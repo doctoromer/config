@@ -192,8 +192,8 @@ M["nvim-treesitter-context"] = function()
   require"treesitter-context.config".setup { enable = true }
 end
 
-M.lsp_signature = function()
-  require "lsp_signature".setup()
+M["lsp_signature.nvim"] = function()
+  require("lsp_signature").setup()
 end
 
 M["gitsigns.nvim"] = function()

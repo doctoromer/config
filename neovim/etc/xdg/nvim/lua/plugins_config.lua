@@ -3,7 +3,7 @@ local M = {}
 g = vim.g
 fn = vim.fn
 
-function M.telescope()
+M["telescope.nvim"] = function()
   local actions = require("telescope.actions")
 
   require("telescope").setup {
@@ -35,32 +35,28 @@ function M.telescope()
   }
 end
 
-function M.indent_blankline()
+M["indent-blankline.nvim"] = function()
   g.indentLine_fileTypeExclude = {"dashboard", "help"}
   g.indent_blankline_use_treesitter = true
   g.indent_blankline_show_first_indent_level = false
   g.indentLine_char = "│"
 end
 
-function M.better_whitespace()
+M["vim-better-whitespace"] = function()
   g.better_whitespace_enabled = true
   g.strip_whitespace_on_save = false
   g.better_whitespace_filetypes_blacklist = {"dashboard", "help", "markdown"}
 end
 
-function M.navigator()
+M["Navigator.nvim"] = function()
   require('Navigator').setup()
 end
 
-function M.supertab()
-  g.SuperTabDefaultCompletionType = "<c-n>"
-end
-
-function M.vim_pasta()
+M["vim-pasta"] = function()
   g.pasta_disabled_filetypes = {}
 end
 
-function M.treesitter()
+M["nvim-treesitter"] = function()
   require("nvim-treesitter.configs").setup {
     ensure_installed = {"c", "cpp", "python", "bash", "html", "java", "json", "lua", "regex", "toml"},
     ignore_install = {},
@@ -77,12 +73,12 @@ function M.treesitter()
   }
 end
 
-function M.lspconfig()
+M["nvim-lspconfig"] = function()
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {virtual_text = false}
   )
 
-  local nvim_lsp = require("lspconfig")
+  local lspconfig = require("lspconfig")
   local servers = {
     pylsp = {
       init_options = {documentFormatting = false}
@@ -106,12 +102,12 @@ function M.lspconfig()
     }
   }
   for server_name, config in pairs(servers) do
-      nvim_lsp[server_name].setup(config)
+      lspconfig[server_name].setup(config)
   end
 
 end
 
-function M.compe()
+M["nvim-compe"] = function()
   require("compe").setup {
       enabled = true;
       autocomplete = true;
@@ -144,7 +140,7 @@ function M.compe()
   }
 end
 
-function M.dashboard()
+M["dashboard-nvim"] = function()
   g.dashboard_default_executive = "telescope"
   g.dashboard_custom_shortcut = {
       last_session = "";
@@ -192,32 +188,28 @@ function M.dashboard()
   g.dashboard_custom_footer = {"🙃"}
 end
 
-function M.treesitter_context()
+M["nvim-treesitter-context"] = function()
   require"treesitter-context.config".setup { enable = true }
 end
 
-function M.lsp_signature()
+M.lsp_signature = function()
   require "lsp_signature".setup()
 end
 
-function M.gitsigns()
+M["gitsigns.nvim"] = function()
   require("gitsigns").setup()
 end
 
-function M.lightbulb()
-  vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()"
-end
-
-function M.lightline()
+M["lightline.vim"] = function()
   g.lightline = {colorscheme = "one"}
 end
 
-function M.onedark()
+M["onedark.nvim"] = function()
   g.onedark_style = "darker"
   vim.cmd "colorscheme onedark"
 end
 
-function M.treesitter_textobjects()
+M["nvim-treesitter-textobjects"] = function()
   require("nvim-treesitter.configs").setup {
     textobjects = {
       select = {
@@ -267,17 +259,17 @@ function M.nvim_dap_ui()
   require("dapui").setup()
 end
 
-function M.vsnip()
+M["vim-vsnip"] = function()
   -- This sets the snippets dir to be relative to this file.
   -- Then, it is possible to use this in user's home directory or as a system wide configuration.
   g.vsnip_snippet_dir = fn.fnamemodify(vim.call("resolve", fn.expand("<sfile>:p")), ":h") .. "/../snippets"
 end
 
-function M.which_key()
+M["which-key.nvim"] = function()
   require("which-key").setup()
 end
 
-function M.comment()
+M["nvim-comment"] = function()
   require("nvim_comment").setup()
 end
 

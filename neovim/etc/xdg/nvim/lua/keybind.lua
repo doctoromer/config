@@ -3,7 +3,7 @@ local M = {}
 local which_key = require("which-key")
 
 -- Normal mode keybindings
-function M.telescope()
+M["telescope.nvim"] = function()
     telescope = require("telescope.builtin")
     return {
         ["<leader>"] = {
@@ -22,7 +22,7 @@ function M.telescope()
     }
 end
 
-function M.lspconfig()
+M["nvim-lspconfig"] = function()
     return {
         ["<leader>"] = {
             gD = {vim.lsp.buf.type_definition, "Goto type definition"},
@@ -41,7 +41,7 @@ function M.lspconfig()
     }
 end
 
-function M.fugitive()
+M["vim-fugitive"] = function()
     return {
         ["<leader>"] = {
             gb = {"<cmd>Git blame<CR>", "Git blame"}
@@ -49,13 +49,13 @@ function M.fugitive()
     }
 end
 
-function M.argwrap()
+M["vim-argwrap"] = function()
     return {
         ga = {"<cmd>ArgWrap<CR>", "Spread arguments"}
     }
 end
 
-function M.navigator()
+M["Navigator.nvim"] = function()
     navigator = require("Navigator")
     return {
         ["<M-h>"] = {navigator.left, "Tmux left"},
@@ -65,7 +65,7 @@ function M.navigator()
     }
 end
 
-function M.easymotion()
+M["vim-easymotion"] = function()
     return {
         ["<Space>"] = {"<Plug>(easymotion-prefix)", "Easymotion prefix"}
     }

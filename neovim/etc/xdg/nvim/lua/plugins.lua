@@ -68,16 +68,43 @@ local function call_config_and_keybinds(name)
   end
 end
 
+DUMMY_MODULE = {}
+setmetatable(DUMMY_MODULE, {
+  __index = function(dummy_module, key)
+    return dummy_module
+  end
+})
+
+function generate_keybinds(name)
+  local keybind = require("keybind")
+  local keys = require("which-key.keys")
+
+  if keybind[name] then
+    keybind_result = keybind[name](DUMMY_MODULE)
+    mappings = keys.parse_mappings({}, keybind_result, "")
+    result = {}
+
+    for _, mapping in pairs(mappings) do
+      if not mapping.group then
+        mode = mapping.mode or "n"
+        table.insert(result, {mode, mapping.prefix})
+      end
+    end
+    return result
+  else
+    return {}
+  end
+end
+
 
 return packer.startup(function()
-  local plugins_config = require("plugins_config")
-
   -- Packer.nvim
   use {"wbthomason/packer.nvim", lock = true}
 
   -- LSP
   use {
     "neovim/nvim-lspconfig",
+    -- keys = generate_keybinds("nvim-lspconfig"),
     config = call_config_and_keybinds
   }
   use {"ray-x/lsp_signature.nvim", config = call_config_and_keybinds}
@@ -96,6 +123,8 @@ return packer.startup(function()
   use {
     "nvim-telescope/telescope.nvim",
     requires = {"nvim-lua/popup.nvim", "nvim-lua/plenary.nvim"},
+    keys = generate_keybinds("telescope.nvim"),
+    ft = "dashboard",
     config = call_config_and_keybinds
   }
 
@@ -110,6 +139,7 @@ return packer.startup(function()
   }
   use {
     "tpope/vim-fugitive",
+    keys = generate_keybinds("vim-fugitive"),
     config = call_config_and_keybinds
   }
   use {"machakann/vim-highlightedyank", event = "TextYankPost"}
@@ -123,6 +153,7 @@ return packer.startup(function()
   use {"Vimjas/vim-python-pep8-indent", ft = "python"}
   use {
     "numToStr/Navigator.nvim",
+    keys = generate_keybinds("Navigator.nvim"),
     config = call_config_and_keybinds
   }
 
@@ -151,6 +182,7 @@ return packer.startup(function()
   use "markonm/traces.vim"
   use {
     "foosoft/vim-argwrap",
+    keys = generate_keybinds("vim-argwrap"),
     config = call_config_and_keybinds
   }
   use "tpope/vim-unimpaired"
@@ -169,6 +201,7 @@ return packer.startup(function()
   }
   use {
     "easymotion/vim-easymotion",
+    keys = generate_keybinds("vim-easymotion"),
     config = call_config_and_keybinds
   }
   use "michaeljsmith/vim-indent-object"

@@ -80,23 +80,7 @@ M["nvim-lspconfig"] = function(lspconfig)
     pylsp = {
       init_options = {documentFormatting = false}
     },
-    clangd = {},
-    efm = {
-      init_options = {documentFormatting = true},
-      filetypes = {"python"},
-      settings = {
-        -- cmd = {"efm-langserver"},
-        rootMarkers = {".git/"},
-        languages = {
-          python = {
-            {
-              formatCommand = "autopep8 --max-line-length 120 -",
-              formatStdin = true
-            }
-          }
-        }
-      }
-    }
+    clangd = {}
   }
   for server_name, config in pairs(servers) do
       lspconfig[server_name].setup(config)

@@ -3,10 +3,8 @@ local M = {}
 local g = vim.g
 local fn = vim.fn
 
-M["telescope.nvim"] = function()
-  local actions = require("telescope.actions")
-
-  require("telescope").setup {
+M["telescope.nvim"] = function(telescope, actions)
+  telescope.setup {
     defaults = {
       vimgrep_arguments = {
         "ag",
@@ -48,16 +46,16 @@ M["vim-better-whitespace"] = function()
   g.better_whitespace_filetypes_blacklist = {"dashboard", "help", "markdown"}
 end
 
-M["Navigator.nvim"] = function()
-  require('Navigator').setup()
+M["Navigator.nvim"] = function(navigator)
+  navigator.setup()
 end
 
 M["vim-pasta"] = function()
   g.pasta_disabled_filetypes = {}
 end
 
-M["nvim-treesitter"] = function()
-  require("nvim-treesitter.configs").setup {
+M["nvim-treesitter"] = function(treesitter_config)
+  treesitter_config.setup {
     ensure_installed = {"c", "cpp", "python", "bash", "html", "java", "json", "lua", "regex", "toml"},
     ignore_install = {},
     highlight = { enable = true },
@@ -73,12 +71,11 @@ M["nvim-treesitter"] = function()
   }
 end
 
-M["nvim-lspconfig"] = function()
+M["nvim-lspconfig"] = function(lspconfig)
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {virtual_text = false}
   )
 
-  local lspconfig = require("lspconfig")
   local servers = {
     pylsp = {
       init_options = {documentFormatting = false}
@@ -107,8 +104,8 @@ M["nvim-lspconfig"] = function()
 
 end
 
-M["nvim-compe"] = function()
-  require("compe").setup {
+M["nvim-compe"] = function(compe)
+  compe.setup {
       enabled = true;
       autocomplete = true;
       debug = false;
@@ -188,16 +185,16 @@ M["dashboard-nvim"] = function()
   g.dashboard_custom_footer = {"🙃"}
 end
 
-M["nvim-treesitter-context"] = function()
-  require"treesitter-context.config".setup { enable = true }
+M["nvim-treesitter-context"] = function(treesitter_context)
+  treesitter_context.setup { enable = true }
 end
 
-M["lsp_signature.nvim"] = function()
-  require("lsp_signature").setup()
+M["lsp_signature.nvim"] = function(lsp_signature)
+  lsp_signature.setup()
 end
 
-M["gitsigns.nvim"] = function()
-  require("gitsigns").setup()
+M["gitsigns.nvim"] = function(gitsigns)
+  gitsigns.setup()
 end
 
 M["lightline.vim"] = function()
@@ -209,8 +206,8 @@ M["onedark.nvim"] = function()
   vim.cmd "colorscheme onedark"
 end
 
-M["nvim-treesitter-textobjects"] = function()
-  require("nvim-treesitter.configs").setup {
+M["nvim-treesitter-textobjects"] = function(treesitter_config)
+  treesitter_config.setup {
     textobjects = {
       select = {
         enable = true,
@@ -232,12 +229,12 @@ M["vim-vsnip"] = function()
   g.vsnip_snippet_dir = fn.fnamemodify(vim.call("resolve", fn.expand("<sfile>:p")), ":h") .. "/../snippets"
 end
 
-M["which-key.nvim"] = function()
-  require("which-key").setup()
+M["which-key.nvim"] = function(which_key)
+  which_key.setup()
 end
 
-M["nvim-comment"] = function()
-  require("nvim_comment").setup()
+M["nvim-comment"] = function(comment)
+  comment.setup()
 end
 
 return M

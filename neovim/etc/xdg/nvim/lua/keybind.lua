@@ -3,8 +3,7 @@ local M = {}
 local which_key = require("which-key")
 
 -- Normal mode keybindings
-M["telescope.nvim"] = function()
-    telescope = require("telescope.builtin")
+M["telescope.nvim"] = function(telescope)
     return {
         ["<leader>"] = {
             f = {telescope.find_files, "Find file"},
@@ -55,8 +54,7 @@ M["vim-argwrap"] = function()
     }
 end
 
-M["Navigator.nvim"] = function()
-    navigator = require("Navigator")
+M["Navigator.nvim"] = function(navigator)
     return {
         ["<M-h>"] = {navigator.left, "Tmux left"},
         ["<M-j>"] = {navigator.down, "Tmux down"},

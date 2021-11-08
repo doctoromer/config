@@ -45,10 +45,14 @@ elif which cat > /dev/null; then
 fi
 
 alias ls=exa
-alias ll='exa -alF'
 alias la='exa -a'
 alias l='exa -F'
 alias tree="exa -T --color=always"
+
+better_ll() {
+    exa -l --color=always $* | less -RFX
+}
+alias ll=better_ll
 
 most() {
     case "$1" in

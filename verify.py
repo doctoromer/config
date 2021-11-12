@@ -33,7 +33,6 @@ FEATURES = {
     "pylsp": (check_command, "pylsp"),
     "clangd": (check_command, "clangd"),
     "debugpy": (check_import, "debugpy"),
-    "python-neovim": (check_import, "neovim.api"),
     "requests": (check_import, "requests"),
     "dploy": (check_import, "dploy")
 }

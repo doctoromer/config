@@ -56,7 +56,20 @@ end
 
 M["nvim-treesitter"] = function(treesitter_config)
   treesitter_config.setup {
-    ensure_installed = {"c", "cpp", "python", "bash", "html", "java", "json", "lua", "regex", "toml"},
+    ensure_installed = {
+      "c",
+      "cpp",
+      "cmake",
+      "python",
+      "bash",
+      "html",
+      "java",
+      "json",
+      "json5",
+      "lua",
+      "regex",
+      "toml"
+    },
     ignore_install = {},
     highlight = { enable = true },
     rainbow = {
@@ -85,7 +98,9 @@ M["nvim-lspconfig"] = function(lspconfig)
     pylsp = {
       init_options = {documentFormatting = false}
     },
-    clangd = {}
+    clangd = {},
+    cmake = {}
+
   }
   for server_name, config in pairs(servers) do
       lspconfig[server_name].setup(config)

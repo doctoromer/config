@@ -30,9 +30,9 @@ FEATURES = {
     "ag": (check_command, "ag"),
     "zsh": (check_command, "zsh"),
     "git": (check_command, "git"),
-    "pylsp": (check_command, "pylsp"),
-    "clangd": (check_command, "clangd"),
-    "debugpy": (check_import, "debugpy"),
+    "Python LSP": (check_command, "pylsp"),
+    "C/CPP LSP": (check_command, "clangd"),
+    "cmake LSP": (check_command, "cmake-language-server"),
     "requests": (check_import, "requests"),
     "dploy": (check_import, "dploy")
 }

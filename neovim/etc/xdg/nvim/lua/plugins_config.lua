@@ -59,6 +59,11 @@ M["nvim-treesitter"] = function(treesitter_config)
     ensure_installed = {"c", "cpp", "python", "bash", "html", "java", "json", "lua", "regex", "toml"},
     ignore_install = {},
     highlight = { enable = true },
+    rainbow = {
+      enable = true,
+      extended_mode = true,
+      max_file_lines = nil,
+    },
     incremental_selection = {
       enable = true,
       keymaps = {

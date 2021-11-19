@@ -112,6 +112,7 @@ return packer.startup(function()
   -- Treesitter
   use {"romgrk/nvim-treesitter-context", config = call_config_and_keybinds}
   use {"nvim-treesitter/nvim-treesitter", config = call_config_and_keybinds}
+  use {"p00f/nvim-ts-rainbow"}
   use {
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "0.5-compat",

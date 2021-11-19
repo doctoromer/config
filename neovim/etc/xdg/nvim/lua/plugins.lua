@@ -16,16 +16,16 @@ packer.init {
 
 modules_names = {
   ["telescope.nvim"] = {keybind = "telescope.builtin", config = {"telescope", "telescope.actions"}},
-  ["Navigator.nvim"] = {keybind = "Navigator", config = {"Navigator"}},
-  ["nvim-treesitter"] = {config = {"nvim-treesitter.configs"}},
-  ["nvim-lspconfig"] = {config = {"lspconfig"}},
-  ["nvim-compe"] = {config = {"compe"}},
-  ["nvim-treesitter-context"] = {config = {"treesitter-context.config"}},
-  ["lsp_signature.nvim"] = {config = {"lsp_signature"}},
-  ["gitsigns.nvim"] = {config = {"gitsigns"}},
-  ["nvim-treesitter-textobjects"] = {config = {"nvim-treesitter.configs"}},
-  ["which-key.nvim"] = {config = {"which-key"}},
-  ["nvim-comment"] = {config = {"nvim_comment"}},
+  ["Navigator.nvim"] = {keybind = "Navigator", config = "Navigator"},
+  ["nvim-treesitter"] = {config = "nvim-treesitter.configs"},
+  ["nvim-lspconfig"] = {config = "lspconfig"},
+  ["nvim-compe"] = {config = "compe"},
+  ["nvim-treesitter-context"] = {config = "treesitter-context.config"},
+  ["lsp_signature.nvim"] = {config = "lsp_signature"},
+  ["gitsigns.nvim"] = {config = "gitsigns"},
+  ["nvim-treesitter-textobjects"] = {config = "nvim-treesitter.configs"},
+  ["which-key.nvim"] = {config = "which-key"},
+  ["nvim-comment"] = {config = "nvim_comment"},
 }
 
 function require_plugin_modules(plugin_name, modules_type)

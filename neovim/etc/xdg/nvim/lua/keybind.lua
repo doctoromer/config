@@ -1,6 +1,6 @@
 local M = {}
 
-local which_key = require("which-key")
+vim.g.mapleader = ";"
 
 -- Normal mode keybindings
 M["telescope.nvim"] = function(telescope)
@@ -69,57 +69,72 @@ M["vim-easymotion"] = function()
     }
 end
 
-which_key.register {
-    -- General keybindings
-    [";"] = {"<nop>", ""},
-    ["\\"] = {";", ""},
+M["which-key.nvim"] = function()
+    return {
+        -- General keybindings
+        [";"] = {"<nop>", ""},
+        ["\\"] = {";", ""},
 
-    -- Disable bad keys
-    ["<home>"] = {"<nop>", "Bad key"},
-    ["<end>"] = {"<nop>", "Bad key"},
-    ["<del>"] = {"<nop>", "Bad key"},
-    ["<insert>"] = {"<nop>", "Bad key"},
-    ["<left>"] = {"<nop>", "Bad key"},
-    ["<down>"] = {"<nop>", "Bad key"},
-    ["<up>"] = {"<nop>", "Bad key"},
-    ["<right>"] = {"<nop>", "Bad key"},
+        -- Disable bad keys
+        ["<home>"] = {"<nop>", "Bad key"},
+        ["<end>"] = {"<nop>", "Bad key"},
+        ["<del>"] = {"<nop>", "Bad key"},
+        ["<insert>"] = {"<nop>", "Bad key"},
+        ["<left>"] = {"<nop>", "Bad key"},
+        ["<down>"] = {"<nop>", "Bad key"},
+        ["<up>"] = {"<nop>", "Bad key"},
+        ["<right>"] = {"<nop>", "Bad key"},
 
-    -- Tabs
-    ["<leader>tt"] = {"<cmd>tabnew<CR>", "New tab"},
-    gb = {"<cmd>tabprevious<CR>", "Previous tab"},
-    gf = {"<cmd>-tabmove<CR>", "Move tab left"},
-    gh = {"<cmd>+tabmove<CR>", "Move tab right"},
+        -- Tabs
+        ["<leader>tt"] = {"<cmd>tabnew<CR>", "New tab"},
+        gb = {"<cmd>tabprevious<CR>", "Previous tab"},
+        gf = {"<cmd>-tabmove<CR>", "Move tab left"},
+        gh = {"<cmd>+tabmove<CR>", "Move tab right"},
 
-    -- Horizontal scroll
-    zl = {"zL", "Scroll right"},
-    zh = {"zH", "Scroll left"},
+        -- Horizontal scroll
+        zl = {"zL", "Scroll right"},
+        zh = {"zH", "Scroll left"},
 
-    -- Other
-    Y = {"y$", "Yank to end of line"},
-    ["<c-l>"] = {"<cmd>noh<CR>", "Turn off search highlight"},
-    [">"] = {">gv", "Indent", mode="v"},
-    ["<"] = {"<gv", "Dedent", mode="v"},
+        -- Other
+        Y = {"y$", "Yank to end of line"},
+        ["<c-l>"] = {"<cmd>noh<CR>", "Turn off search highlight"},
+        [">"] = {">gv", "Indent", mode="v"},
+        ["<"] = {"<gv", "Dedent", mode="v"},
 
-    -- Center after search
-    n = {"nzz"},
-    N = {"Nzz"},
-}
+        -- Center after search
+        n = {"nzz", "Search next"},
+        N = {"Nzz", "Search previous"},
+    }
+end
 
--- Temporary direct calls, Until there will be a better way to set same mapping for multiple modes
-local vsnip_keys = {
-    ["<C-space>"] = {"vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : ''", "Complete snippet", expr = true},
-    ["<Tab>"] = {"vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : pumvisible() ? '<C-n>' : '<Tab>'", "Jump next placeholder", expr = true},
-    ["<S-Tab>"] = {"vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : pumvisible() ? '<C-p>' : '<S-Tab>'", "Jump previous placeholder", expr = true}
-}
+M["vim-vsnip"] = function()
+    -- This is an ugly hack. The calls to register are done inside the function
+    -- and It returns empty table. This will be fixed once there will be a better
+    -- way to register multiple key maps.
+    local vsnip_keys = {
+        ["<C-space>"] = {
+            "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : ''",
+            "Complete snippet",
+            expr = true
+        },
+        ["<Tab>"] = {
+            "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : pumvisible() ? '<C-n>' : '<Tab>'",
+            "Jump next placeholder",
+            expr = true
+        },
+        ["<S-Tab>"] = {
+            "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : pumvisible() ? '<C-p>' : '<S-Tab>'",
+            "Jump previous placeholder",
+            expr = true
+        }
+    }
 
-which_key.register(vsnip_keys, {mode = "i", noremap = false})
-which_key.register(vsnip_keys, {mode = "s", noremap = false})
+    local which_key = require("which-key")
 
-which_key.register({
-    ["<Space>"] = {"<Plug>(easymotion-prefix)", "Easymotion prefix", mode = "v"}
-})
+    which_key.register(vsnip_keys, {mode = "i", noremap = false})
+    which_key.register(vsnip_keys, {mode = "s", noremap = false})
 
--- Setting the leader key
-vim.g.mapleader = ";"
+    return {}
+end
 
 return M

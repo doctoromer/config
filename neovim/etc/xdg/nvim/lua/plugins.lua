@@ -19,7 +19,10 @@ modules_names = {
   ["Navigator.nvim"] = {keybind = "Navigator", config = "Navigator"},
   ["nvim-treesitter"] = {config = "nvim-treesitter.configs"},
   ["nvim-lspconfig"] = {config = "lspconfig"},
-  ["nvim-compe"] = {config = "compe"},
+  ["nvim-cmp"] = {
+    keybind = "cmp",
+    config = {"cmp", "cmp_nvim_lsp"}
+  },
   ["nvim-treesitter-context"] = {config = "treesitter-context.config"},
   ["lsp_signature.nvim"] = {config = "lsp_signature"},
   ["gitsigns.nvim"] = {config = "gitsigns"},
@@ -120,7 +123,17 @@ return packer.startup(function()
   }
 
   -- Completion and searching
-  use {"hrsh7th/nvim-compe", config = call_config_and_keybinds}
+  use {
+    "hrsh7th/nvim-cmp",
+    config = call_config_and_keybinds,
+    requires = {
+      "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-vsnip"
+    }
+  }
   use {
     "nvim-telescope/telescope.nvim",
     requires = {"nvim-lua/popup.nvim", "nvim-lua/plenary.nvim"},

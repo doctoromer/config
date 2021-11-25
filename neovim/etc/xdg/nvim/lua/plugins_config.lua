@@ -3,6 +3,15 @@ local M = {}
 local g = vim.g
 local fn = vim.fn
 
+local language_servers = {
+  pylsp = {
+    init_options = {documentFormatting = false}
+  },
+  clangd = {},
+  cmake = {}
+
+}
+
 M["telescope.nvim"] = function(telescope, actions)
   telescope.setup {
     defaults = {
@@ -94,51 +103,80 @@ M["nvim-lspconfig"] = function(lspconfig)
       vim.lsp.diagnostic.on_publish_diagnostics, {virtual_text = false}
   )
 
-  local servers = {
-    pylsp = {
-      init_options = {documentFormatting = false}
-    },
-    clangd = {},
-    cmake = {}
-
-  }
-  for server_name, config in pairs(servers) do
+  for server_name, config in pairs(language_servers) do
       lspconfig[server_name].setup(config)
   end
 
 end
 
-M["nvim-compe"] = function(compe)
-  compe.setup {
-      enabled = true;
-      autocomplete = true;
-      debug = false;
-      min_length = 1;
-      preselect = "enable";
-      throttle_time = 80;
-      source_timeout = 200;
-      resolve_timeout = 800;
-      incomplete_delay = 400;
-      max_abbr_width = 100;
-      max_kind_width = 100;
-      max_menu_width = 100;
-      documentation = {
-          border = { "", "" ,"", " ", "", "", "", " " },
-          winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-          max_width = 120,
-          min_width = 60,
-          max_height = math.floor(vim.o.lines * 0.3),
-          min_height = 1,
-      };
-      source = {
-          path = true;
-          buffer = true;
-          calc = true;
-          nvim_lsp = true;
-          nvim_lua = true;
-          vsnip = true;
-      };
+M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
+
+  local feedkey = function(key, mode)
+    vim.api.nvim_feedkeys(
+      vim.api.nvim_replace_termcodes(key, true, true, true),
+      mode,
+      true
+    )
+  end
+  local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  end
+
+  local tab = function(fallback)
+    if cmp.visible() then
+        cmp.select_next_item()
+    elseif vim.fn["vsnip#available"](1) == 1 then
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+    elseif has_words_before() then
+        cmp.complete()
+    else
+        fallback()
+    end
+  end
+
+  local shift_tab = function()
+    if cmp.visible() then
+      cmp.select_prev_item()
+    elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+      feedkey("<Plug>(vsnip-jump-prev)", "")
+    end
+  end
+
+  cmp.setup {
+    snippet = {
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+      end,
+    },
+    mapping = {
+      ["<Tab>"] = cmp.mapping(tab, {"i", "s"}),
+      ["<S-Tab>"] = cmp.mapping(shift_tab, {"i", "s"}),
+      ["<CR>"] = cmp.mapping.confirm(
+        {behavior = cmp.ConfirmBehavior.Replace, select = true},
+        {"i", "s"}
+      ),
+    },
+    sources = cmp.config.sources(
+      {{name = "vsnip"}, {name = "nvim_lsp"}},
+      {{name = "buffer"}}
+    )
   }
+
+  cmp.setup.cmdline("/", {sources = {{name = "buffer"}}})
+  cmp.setup.cmdline("?", {sources = {{name = "buffer"}}})
+  cmp.setup.cmdline(":", {
+    sources = cmp.config.sources({{name = "path"}}, {{name = "cmdline"}})
+  })
+
+  -- setup lspconfig
+  local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you"ve enabled.
+  for server_name, _ in pairs(language_servers) do
+    require("lspconfig")[server_name].setup {
+      capabilities = capabilities
+    }
+  end
 end
 
 M["dashboard-nvim"] = function()

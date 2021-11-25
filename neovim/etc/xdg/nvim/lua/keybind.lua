@@ -107,34 +107,4 @@ M["which-key.nvim"] = function()
     }
 end
 
-M["vim-vsnip"] = function()
-    -- This is an ugly hack. The calls to register are done inside the function
-    -- and It returns empty table. This will be fixed once there will be a better
-    -- way to register multiple key maps.
-    local vsnip_keys = {
-        ["<C-space>"] = {
-            "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : ''",
-            "Complete snippet",
-            expr = true
-        },
-        ["<Tab>"] = {
-            "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : pumvisible() ? '<C-n>' : '<Tab>'",
-            "Jump next placeholder",
-            expr = true
-        },
-        ["<S-Tab>"] = {
-            "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : pumvisible() ? '<C-p>' : '<S-Tab>'",
-            "Jump previous placeholder",
-            expr = true
-        }
-    }
-
-    local which_key = require("which-key")
-
-    which_key.register(vsnip_keys, {mode = "i", noremap = false})
-    which_key.register(vsnip_keys, {mode = "s", noremap = false})
-
-    return {}
-end
-
 return M

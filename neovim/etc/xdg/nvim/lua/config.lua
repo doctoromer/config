@@ -14,7 +14,7 @@ o.number = true
 o.signcolumn = "yes"
 o.colorcolumn = "81"
 o.lazyredraw = true
-o.completeopt = "menu"
+o.completeopt = "menu,menuone,noselect"
 
 -- Persistentcy
 o.undofile = true

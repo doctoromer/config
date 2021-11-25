@@ -74,13 +74,12 @@ M["nvim-treesitter"] = function(treesitter_config)
       "html",
       "java",
       "json",
-      "json5",
       "lua",
       "regex",
       "toml"
     },
     ignore_install = {},
-    highlight = { enable = true },
+    highlight = {enable = true},
     rainbow = {
       enable = true,
       extended_mode = true,
@@ -228,7 +227,7 @@ M["dashboard-nvim"] = function()
 end
 
 M["nvim-treesitter-context"] = function(treesitter_context)
-  treesitter_context.setup { enable = true }
+  treesitter_context.setup {enable = true}
 end
 
 M["lsp_signature.nvim"] = function(lsp_signature)

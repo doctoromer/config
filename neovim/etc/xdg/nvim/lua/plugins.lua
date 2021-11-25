@@ -15,8 +15,14 @@ packer.init {
 }
 
 modules_names = {
-  ["telescope.nvim"] = {keybind = "telescope.builtin", config = {"telescope", "telescope.actions"}},
-  ["Navigator.nvim"] = {keybind = "Navigator", config = "Navigator"},
+  ["telescope.nvim"] = {
+    keybind = "telescope.builtin",
+    config = {"telescope", "telescope.actions"}
+  },
+  ["Navigator.nvim"] = {
+    keybind = "Navigator",
+    config = "Navigator"
+  },
   ["nvim-treesitter"] = {config = "nvim-treesitter.configs"},
   ["nvim-lspconfig"] = {config = "lspconfig"},
   ["nvim-cmp"] = {

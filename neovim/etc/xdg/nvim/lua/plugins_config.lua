@@ -95,6 +95,8 @@ M["nvim-treesitter"] = function(treesitter_config)
       },
     },
   }
+  vim.wo.foldmethod = "expr"
+  vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 end
 
 M["nvim-lspconfig"] = function(lspconfig)

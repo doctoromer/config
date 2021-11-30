@@ -35,6 +35,7 @@ modules_names = {
   ["nvim-treesitter-textobjects"] = {config = "nvim-treesitter.configs"},
   ["which-key.nvim"] = {config = "which-key"},
   ["nvim-comment"] = {config = "nvim_comment"},
+  ["virt-column.nvim"] = {config = "virt-column"},
 }
 
 function require_plugin_modules(plugin_name, modules_type)
@@ -137,6 +138,7 @@ return packer.startup(function()
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp",
+      "neovim/nvim-lspconfig",
       "hrsh7th/cmp-vsnip"
     }
   }
@@ -165,6 +167,7 @@ return packer.startup(function()
   use {"machakann/vim-highlightedyank", event = "TextYankPost"}
   use {"ntpeters/vim-better-whitespace", config = call_config_and_keybinds}
   use {"lukas-reineke/indent-blankline.nvim", config = call_config_and_keybinds}
+  use {"lukas-reineke/virt-column.nvim", config = call_config_and_keybinds}
 
   -- Utilities
   use "tpope/vim-sleuth"

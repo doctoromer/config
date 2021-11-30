@@ -49,6 +49,10 @@ M["indent-blankline.nvim"] = function()
   g.indentLine_char = "│"
 end
 
+M["virt-column.nvim"] = function(virt_column)
+  virt_column.setup()
+end
+
 M["vim-better-whitespace"] = function()
   g.better_whitespace_enabled = true
   g.strip_whitespace_on_save = false

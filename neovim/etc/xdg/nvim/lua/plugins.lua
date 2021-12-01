@@ -108,8 +108,9 @@ end
 
 
 return packer.startup(function()
-  -- Packer.nvim
+  -- Base plugins
   use {"wbthomason/packer.nvim", lock = true}
+  use {"folke/which-key.nvim", config = call_config_and_keybinds}
 
   -- LSP
   use {
@@ -155,11 +156,7 @@ return packer.startup(function()
     requires = {"nvim-lua/plenary.nvim"},
     config = call_config_and_keybinds
   }
-  use {
-    "tpope/vim-fugitive",
-    keys = generate_keybinds("vim-fugitive"),
-    config = call_config_and_keybinds
-  }
+  use {"tpope/vim-fugitive", keys = generate_keybinds("vim-fugitive")}
   use {"machakann/vim-highlightedyank", event = "TextYankPost"}
   use {"ntpeters/vim-better-whitespace", config = call_config_and_keybinds}
   use {"lukas-reineke/indent-blankline.nvim", config = call_config_and_keybinds}
@@ -218,14 +215,6 @@ return packer.startup(function()
     },
     config = call_config_and_keybinds
   }
-  use {
-    "easymotion/vim-easymotion",
-    keys = generate_keybinds("vim-easymotion"),
-    config = call_config_and_keybinds
-  }
+  use {"easymotion/vim-easymotion", keys = generate_keybinds("vim-easymotion")}
   use "michaeljsmith/vim-indent-object"
-  use {
-    "folke/which-key.nvim",
-    config = call_config_and_keybinds
-  }
 end)

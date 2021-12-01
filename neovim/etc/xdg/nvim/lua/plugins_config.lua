@@ -9,62 +9,29 @@ local language_servers = {
   },
   clangd = {},
   cmake = {}
-
 }
 
-M["telescope.nvim"] = function(telescope, actions)
-  telescope.setup {
-    defaults = {
-      vimgrep_arguments = {
-        "ag",
-        "--nocolor",
-        "--noheading",
-        "--filename",
-        "--numbers",
-        "--column",
-        "--smart-case"
-      },
-      mappings = {
-        i = {
-          ["<C-j>"] = actions.move_selection_next,
-          ["<C-k>"] = actions.move_selection_previous,
-          ["<ESC>"] = actions.close,
-          ["<C-c>"] = actions.close,
-        },
-        n = {
-          ["<C-j>"] = actions.move_selection_next,
-          ["<C-k>"] = actions.move_selection_previous,
-          ["<ESC>"] = actions.close,
-          ["<C-c>"] = actions.close,
-        }
-      }
-    }
-  }
+M["which-key.nvim"] = function(which_key)
+  which_key.setup()
 end
 
-M["indent-blankline.nvim"] = function()
-  g.indentLine_fileTypeExclude = {"dashboard", "help"}
-  g.indent_blankline_use_treesitter = true
-  g.indent_blankline_show_first_indent_level = false
-  g.indentLine_char = "│"
+M["nvim-lspconfig"] = function(lspconfig)
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {virtual_text = false}
+  )
+
+  for server_name, config in pairs(language_servers) do
+      lspconfig[server_name].setup(config)
+  end
+
 end
 
-M["virt-column.nvim"] = function(virt_column)
-  virt_column.setup()
+M["lsp_signature.nvim"] = function(lsp_signature)
+  lsp_signature.setup()
 end
 
-M["vim-better-whitespace"] = function()
-  g.better_whitespace_enabled = true
-  g.strip_whitespace_on_save = false
-  g.better_whitespace_filetypes_blacklist = {"dashboard", "help", "markdown"}
-end
-
-M["Navigator.nvim"] = function(navigator)
-  navigator.setup()
-end
-
-M["vim-pasta"] = function()
-  g.pasta_disabled_filetypes = {}
+M["nvim-treesitter-context"] = function(treesitter_context)
+  treesitter_context.setup {enable = true}
 end
 
 M["nvim-treesitter"] = function(treesitter_config)
@@ -103,15 +70,21 @@ M["nvim-treesitter"] = function(treesitter_config)
   vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 end
 
-M["nvim-lspconfig"] = function(lspconfig)
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-      vim.lsp.diagnostic.on_publish_diagnostics, {virtual_text = false}
-  )
-
-  for server_name, config in pairs(language_servers) do
-      lspconfig[server_name].setup(config)
-  end
-
+M["nvim-treesitter-textobjects"] = function(treesitter_config)
+  treesitter_config.setup {
+    textobjects = {
+      select = {
+        enable = true,
+        lookahead = true,
+        keymaps = {
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ac"] = "@class.outer",
+          ["ic"] = "@class.inner",
+        }
+      }
+    }
+  }
 end
 
 M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
@@ -184,6 +157,45 @@ M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
   end
 end
 
+M["telescope.nvim"] = function(telescope, actions)
+  telescope.setup {
+    defaults = {
+      vimgrep_arguments = {
+        "ag",
+        "--nocolor",
+        "--noheading",
+        "--filename",
+        "--numbers",
+        "--column",
+        "--smart-case"
+      },
+      mappings = {
+        i = {
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+          ["<ESC>"] = actions.close,
+          ["<C-c>"] = actions.close,
+        },
+        n = {
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+          ["<ESC>"] = actions.close,
+          ["<C-c>"] = actions.close,
+        }
+      }
+    }
+  }
+end
+
+M["onedark.nvim"] = function()
+  g.onedark_style = "darker"
+  vim.cmd "colorscheme onedark"
+end
+
+M["lightline.vim"] = function()
+  g.lightline = {colorscheme = "one"}
+end
+
 M["dashboard-nvim"] = function()
   g.dashboard_default_executive = "telescope"
   g.dashboard_custom_shortcut = {
@@ -232,42 +244,25 @@ M["dashboard-nvim"] = function()
   g.dashboard_custom_footer = {"🙃"}
 end
 
-M["nvim-treesitter-context"] = function(treesitter_context)
-  treesitter_context.setup {enable = true}
-end
-
-M["lsp_signature.nvim"] = function(lsp_signature)
-  lsp_signature.setup()
-end
-
 M["gitsigns.nvim"] = function(gitsigns)
   gitsigns.setup()
 end
 
-M["lightline.vim"] = function()
-  g.lightline = {colorscheme = "one"}
+M["vim-better-whitespace"] = function()
+  g.better_whitespace_enabled = true
+  g.strip_whitespace_on_save = false
+  g.better_whitespace_filetypes_blacklist = {"dashboard", "help", "markdown"}
 end
 
-M["onedark.nvim"] = function()
-  g.onedark_style = "darker"
-  vim.cmd "colorscheme onedark"
+M["indent-blankline.nvim"] = function()
+  g.indentLine_fileTypeExclude = {"dashboard", "help"}
+  g.indent_blankline_use_treesitter = true
+  g.indent_blankline_show_first_indent_level = false
+  g.indentLine_char = "│"
 end
 
-M["nvim-treesitter-textobjects"] = function(treesitter_config)
-  treesitter_config.setup {
-    textobjects = {
-      select = {
-        enable = true,
-        lookahead = true,
-        keymaps = {
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["ac"] = "@class.outer",
-          ["ic"] = "@class.inner",
-        }
-      }
-    }
-  }
+M["virt-column.nvim"] = function(virt_column)
+  virt_column.setup()
 end
 
 M["vim-vsnip"] = function()
@@ -276,8 +271,12 @@ M["vim-vsnip"] = function()
   g.vsnip_snippet_dir = fn.fnamemodify(vim.call("resolve", fn.expand("<sfile>:p")), ":h") .. "/../snippets"
 end
 
-M["which-key.nvim"] = function(which_key)
-  which_key.setup()
+M["Navigator.nvim"] = function(navigator)
+  navigator.setup()
+end
+
+M["vim-pasta"] = function()
+  g.pasta_disabled_filetypes = {}
 end
 
 M["nvim-comment"] = function(comment)

@@ -2,25 +2,6 @@ local M = {}
 
 vim.g.mapleader = ";"
 
--- Normal mode keybindings
-M["telescope.nvim"] = function(telescope)
-    return {
-        ["<leader>"] = {
-            f = {telescope.find_files, "Find file"},
-            a = {telescope.live_grep, "Search in files"},
-            l = {telescope.current_buffer_fuzzy_find, "Search in current file"},
-            b = {telescope.buffers, "Find buffer"},
-            h = {telescope.help_tags, "Help pages"},
-            m = {telescope.keymaps, "Find keymaps"},
-        },
-        g = {
-            x = {telescope.lsp_references, "Show references"},
-            d = {telescope.lsp_definitions, "Goto definition"},
-            s = {telescope.lsp_document_symbols, "Show symbols"},
-        }
-    }
-end
-
 M["nvim-lspconfig"] = function()
     return {
         ["<leader>"] = {
@@ -40,17 +21,29 @@ M["nvim-lspconfig"] = function()
     }
 end
 
+M["telescope.nvim"] = function(telescope)
+    return {
+        ["<leader>"] = {
+            f = {telescope.find_files, "Find file"},
+            a = {telescope.live_grep, "Search in files"},
+            l = {telescope.current_buffer_fuzzy_find, "Search in current file"},
+            b = {telescope.buffers, "Find buffer"},
+            h = {telescope.help_tags, "Help pages"},
+            m = {telescope.keymaps, "Find keymaps"},
+        },
+        g = {
+            x = {telescope.lsp_references, "Show references"},
+            d = {telescope.lsp_definitions, "Goto definition"},
+            s = {telescope.lsp_document_symbols, "Show symbols"},
+        }
+    }
+end
+
 M["vim-fugitive"] = function()
     return {
         ["<leader>"] = {
             gb = {"<cmd>Git blame<CR>", "Git blame"}
         }
-    }
-end
-
-M["vim-argwrap"] = function()
-    return {
-        ga = {"<cmd>ArgWrap<CR>", "Spread arguments"}
     }
 end
 
@@ -60,6 +53,12 @@ M["Navigator.nvim"] = function(navigator)
         ["<M-j>"] = {navigator.down, "Tmux down"},
         ["<M-k>"] = {navigator.up, "Tmux up"},
         ["<M-l>"] = {navigator.right, "Tmux right"},
+    }
+end
+
+M["vim-argwrap"] = function()
+    return {
+        ga = {"<cmd>ArgWrap<CR>", "Spread arguments"}
     }
 end
 

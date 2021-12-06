@@ -15,7 +15,15 @@ ZSH_THEME="kyoshi"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue,bold,underline"
 
-plugins=(git colored-man-pages vi-mode command-not-found ag zsh-autosuggestions)
+plugins=(
+    ag
+    git
+    vi-mode
+    colored-man-pages
+    command-not-found
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+)
 
 source $ZSH/oh-my-zsh.sh
 export FZF_DEFAULT_COMMAND='ag -l --nocolor --nogroup --hidden -g "" --ignore ".git"'

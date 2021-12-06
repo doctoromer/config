@@ -13,3 +13,6 @@
 [submodule "zsh-autopair"]
 	path = zsh/etc/zsh/custom/plugins/zsh-autopair
 	url = https://github.com/hlissner/zsh-autopair
+[submodule "fzf-tab"]
+	path = zsh/etc/zsh/custom/plugins/fzf-tab
+	url = https://github.com/Aloxaf/fzf-tab

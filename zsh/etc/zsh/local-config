@@ -8,14 +8,14 @@ echo "$PATH" | grep -q "$HOME/.local/bin" || export PATH="$PATH:$HOME/.local/bin
 
 
 export ZSH=/etc/zsh/ohmyzsh
-export ZSH_CUSTOM=/etc/zsh
+export ZSH_CUSTOM=/etc/zsh/custom
 
 ZSH_THEME="kyoshi"
 
 DISABLE_UNTRACKED_FILES_DIRTY="true"
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=1"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue,bold,underline"
 
-plugins=(git colored-man-pages vi-mode command-not-found ag)
+plugins=(git colored-man-pages vi-mode command-not-found ag zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 export FZF_DEFAULT_COMMAND='ag -l --nocolor --nogroup --hidden -g "" --ignore ".git"'

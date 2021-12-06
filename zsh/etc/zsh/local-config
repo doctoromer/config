@@ -19,6 +19,7 @@ plugins=(
     ag
     git
     vi-mode
+    zsh-autopair
     colored-man-pages
     command-not-found
     zsh-autosuggestions

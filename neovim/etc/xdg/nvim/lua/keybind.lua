@@ -95,8 +95,6 @@ M["which-key.nvim"] = function()
         zh = {"zH", "Scroll left"},
 
         -- Other
-        Y = {"y$", "Yank to end of line"},
-        ["<c-l>"] = {"<cmd>noh<CR>", "Turn off search highlight"},
         [">"] = {">gv", "Indent", mode="v"},
         ["<"] = {"<gv", "Dedent", mode="v"},
 

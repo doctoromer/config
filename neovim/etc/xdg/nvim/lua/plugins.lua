@@ -195,7 +195,6 @@ return packer.startup(function()
     }
   }
   use "wellle/targets.vim"
-  use "markonm/traces.vim"
   use {
     "foosoft/vim-argwrap",
     keys = generate_keybinds("vim-argwrap"),

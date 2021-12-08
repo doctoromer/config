@@ -214,6 +214,10 @@ return packer.startup(function()
     },
     config = call_config_and_keybinds
   }
-  use {"easymotion/vim-easymotion", keys = generate_keybinds("vim-easymotion")}
+  use {
+    "easymotion/vim-easymotion",
+    keys = generate_keybinds("vim-easymotion"),
+    config = call_config_and_keybinds
+  }
   use "michaeljsmith/vim-indent-object"
 end)

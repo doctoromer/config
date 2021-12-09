@@ -28,7 +28,7 @@ M["telescope.nvim"] = function(telescope)
             a = {telescope.live_grep, "Search in files"},
             l = {telescope.current_buffer_fuzzy_find, "Search in current file"},
             b = {telescope.buffers, "Find buffer"},
-            h = {telescope.help_tags, "Help pages"},
+            H = {telescope.help_tags, "Help pages"},
             m = {telescope.keymaps, "Find keymaps"},
         },
         g = {

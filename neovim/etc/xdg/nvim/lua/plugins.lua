@@ -156,7 +156,11 @@ return packer.startup(function()
     requires = {"nvim-lua/plenary.nvim"},
     config = call_config_and_keybinds
   }
-  use {"tpope/vim-fugitive", keys = generate_keybinds("vim-fugitive")}
+  use {
+    "tpope/vim-fugitive",
+    keys = generate_keybinds("vim-fugitive"),
+    config = call_config_and_keybinds
+  }
   use {"machakann/vim-highlightedyank", event = "TextYankPost"}
   use {"ntpeters/vim-better-whitespace", config = call_config_and_keybinds}
   use {"lukas-reineke/indent-blankline.nvim", config = call_config_and_keybinds}

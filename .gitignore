@@ -2,3 +2,4 @@ binaries/*
 __pycache__
 packer_compiled.lua
 neovim/etc/xdg/nvim/pack
+zsh/usr/share/zsh/config/repos

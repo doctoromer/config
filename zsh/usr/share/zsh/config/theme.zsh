@@ -1,4 +1,4 @@
-# Shameless rip-off of cypher and steeef themes
+# Kyoshi: shameless rip-off of cypher and steeef themes from oh-my-zsh
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
@@ -11,6 +11,7 @@ setopt prompt_subst
 
 autoload -U add-zsh-hook
 autoload -Uz vcs_info
+autoload -U colors && colors
 
 #use extended color palette if available
 if [[ $terminfo[colors] -ge 256 ]]; then
@@ -90,7 +91,5 @@ function kyoshi_precmd {
     fi
 }
 add-zsh-hook precmd kyoshi_precmd
-
-PROMPT=$'$vcs_info_msg_0_%{$orange%}%{${reset_color}%} %{${fg_bold[red]}%}:: %{${fg[green]}%}%3~ %{${fg[blue]}%}»%{${reset_color}%} '
 
 PROMPT=$'%{$purple%}%n${PR_RST} %{${fg_bold[red]}%}:: %{$limegreen%}%4~${PR_RST} $vcs_info_msg_0_$(virtualenv_info)%{${fg[blue]}%}»%{${reset_color}%} '

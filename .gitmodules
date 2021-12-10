@@ -1,18 +1,6 @@
-[submodule "oh-my-zsh"]
-	path = zsh/etc/zsh/ohmyzsh
-	url = https://github.com/ohmyzsh/ohmyzsh
 [submodule "packer.nvim"]
 	path = neovim/etc/xdg/nvim/pack/packer/start/packer.nvim
 	url = https://github.com/wbthomason/packer.nvim
-[submodule "zsh-autosuggestions"]
-	path = zsh/etc/zsh/custom/plugins/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions
-[submodule "zsh-syntax-highlighting"]
-	path = zsh/etc/zsh/custom/plugins/zsh-syntax-highlighting
-	url = https://github.com/zsh-users/zsh-syntax-highlighting
-[submodule "zsh-autopair"]
-	path = zsh/etc/zsh/custom/plugins/zsh-autopair
-	url = https://github.com/hlissner/zsh-autopair
-[submodule "fzf-tab"]
-	path = zsh/etc/zsh/custom/plugins/fzf-tab
-	url = https://github.com/Aloxaf/fzf-tab
+[submodule "zcomet"]
+	path = zsh/usr/share/zsh/config/zcomet
+	url = https://github.com/agkozak/zcomet

@@ -1,44 +1,3 @@
-# zmodload zsh/zprof
-if [[ -z "$PATH" || "$PATH" == "/bin:/usr/bin" ]]
-then
-	export PATH="/usr/local/bin:/usr/bin:/bin:/usr/games"
-fi
-
-echo "$PATH" | grep -q "$HOME/.local/bin" || export PATH="$PATH:$HOME/.local/bin"
-
-
-export ZSH=/etc/zsh/ohmyzsh
-export ZSH_CUSTOM=/etc/zsh/custom
-
-ZSH_THEME="kyoshi"
-
-DISABLE_UNTRACKED_FILES_DIRTY="true"
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue,bold,underline"
-
-plugins=(
-    ag
-    git
-    vi-mode
-    fzf-tab
-    zsh-autopair
-    colored-man-pages
-    command-not-found
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-)
-
-source $ZSH/oh-my-zsh.sh
-
-export FZF_DEFAULT_COMMAND='ag -l --nocolor --nogroup --hidden -g "" --ignore ".git"'
-source /usr/local/share/zsh/site-functions/fzf-completion.zsh
-source /usr/local/share/zsh/site-functions/fzf-key-bindings.zsh
-
-bindkey "^ " autosuggest-accept
-
-export EDITOR="vim"
-
-### Aliases ###
-
 # aliases for system maintenance
 alias depend='sudo apt -f install'
 alias update='sudo apt update'
@@ -50,7 +9,7 @@ alias maintain='update && depend && upgrade && clean && autorm'
 # aliases for common programs replacements
 if which batcat > /dev/null; then
     alias cat=batcat
-elif which cat > /dev/null; then
+elif which bat > /dev/null; then
     alias cat=bat
 fi
 

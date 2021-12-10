@@ -146,6 +146,11 @@ return packer.startup(function()
     ft = "dashboard",
     config = call_config_and_keybinds
   }
+  use {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    requires = {"nvim-telescope/telescope.nvim"},
+    run = "make"
+  }
 
   -- UI and display
   use {"navarasu/onedark.nvim", config = call_config_and_keybinds}

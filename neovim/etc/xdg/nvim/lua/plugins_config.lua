@@ -169,6 +169,14 @@ M["telescope.nvim"] = function(telescope, actions)
         "--column",
         "--smart-case"
       },
+      extensions = {
+        fzf = {
+          fuzzy = true,
+          override_generic_sorter = true,
+          override_file_sorter = true,
+          case_mode = "smart_case"
+        }
+      },
       mappings = {
         i = {
           ["<C-j>"] = actions.move_selection_next,

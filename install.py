@@ -151,6 +151,11 @@ def is_download_required(binaries, base_dir, name):
     return False
 
 
+def download_submodules():
+    """ Download git submodules """
+    subprocess.check_call(["git", "submodule", "update", "--init"])
+
+
 def download_binaries(binaries, base_dir):
     """ Download all binaries specified in `binaries` into `base_dir` """
     for name, binary in binaries.items():
@@ -175,6 +180,19 @@ def download_vim_plugins():
         ["binaries/usr/bin/vim", "--headless", "-c", "autocmd User PackerComplete quitall", "-c", "PackerSync"],
         env=env
     )
+
+def download_zsh_plugins():
+    """ Download zsh plugins using zcomet """
+    zsh_init_path = Path(__file__).parent / "zsh/usr/share/zsh/config/init.zsh"
+    subprocess.check_call(["zsh", str(zsh_init_path)])
+
+
+def download():
+    """ Download all dependencies """
+    download_submodules()
+    download_binaries(BINARIES, BINARIES_DIR)
+    download_vim_plugins()
+    download_zsh_plugins()
 
 
 def parse_args():
@@ -229,8 +247,7 @@ def main():
     elif args.command == "remove":
         dploy.unstow(packages, "/")
     elif args.command == "download":
-        download_binaries(BINARIES, BINARIES_DIR)
-        download_vim_plugins()
+        download()
     elif args.command == "verify":
         verify.verify_environment()
     else:

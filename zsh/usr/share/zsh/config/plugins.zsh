@@ -11,5 +11,7 @@ zcomet load ohmyzsh plugins/command-not-found
 zcomet load hlissner/zsh-autopair
 zcomet load zsh-users/zsh-autosuggestions
 zcomet load zsh-users/zsh-syntax-highlighting
+zcomet load Tarrasch/zsh-bd
+zcomet load MichaelAquilina/zsh-you-should-use
 
 bindkey "^ " autosuggest-accept

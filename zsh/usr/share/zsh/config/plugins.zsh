@@ -1,5 +1,12 @@
+zstyle ':zcomet:*' repos-dir $CURRENT_DIR/repos
+zstyle ':zcomet:*' snippets-dir $CURRENT_DIR/snippets
+
+source $CURRENT_DIR/zcomet/zcomet.zsh
+
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue,bold,underline"
+
+bindkey "^ " autosuggest-accept
 
 zcomet load ohmyzsh plugins/git
 zcomet load ohmyzsh plugins/ag
@@ -13,5 +20,3 @@ zcomet load zsh-users/zsh-autosuggestions
 zcomet load zsh-users/zsh-syntax-highlighting
 zcomet load Tarrasch/zsh-bd
 zcomet load MichaelAquilina/zsh-you-should-use
-
-bindkey "^ " autosuggest-accept

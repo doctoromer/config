@@ -1,9 +1,5 @@
 CURRENT_DIR=$(dirname $(realpath $0))
 
-zstyle ':zcomet:*' repos-dir $CURRENT_DIR/repos
-zstyle ':zcomet:*' snippets-dir $CURRENT_DIR/snippets
-
-source $CURRENT_DIR/zcomet/zcomet.zsh
 source $CURRENT_DIR/plugins.zsh
 source $CURRENT_DIR/alias.zsh
 source $CURRENT_DIR/theme.zsh

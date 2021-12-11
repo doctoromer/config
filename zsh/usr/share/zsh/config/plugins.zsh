@@ -6,6 +6,13 @@ source $CURRENT_DIR/zcomet/zcomet.zsh
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue,bold,underline"
 
+# To prevent zsh-vi-mode from overriding other keybindings (like fzf's ctrl-r)
+function zvm_config() {
+    ZVM_INIT_MODE=sourcing
+    ZVM_VI_SURROUND_BINDKEY=classic
+    ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+}
+
 bindkey "^ " autosuggest-accept
 
 zcomet load ohmyzsh plugins/git
@@ -20,3 +27,4 @@ zcomet load zsh-users/zsh-autosuggestions
 zcomet load zsh-users/zsh-syntax-highlighting
 zcomet load Tarrasch/zsh-bd
 zcomet load MichaelAquilina/zsh-you-should-use
+zcomet load jeffreytse/zsh-vi-mode

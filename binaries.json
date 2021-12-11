@@ -45,5 +45,12 @@
             "[^/]*/bat.1": "usr/share/man/man1/exa.1",
             "[^/]*/autocomplete/bat.zsh": "usr/local/share/zsh/site-functions/bat.zsh"
         }
+    },
+    "tmux": {
+        "repo": "pythops/tmux-linux-binary",
+        "asset_regex": "tmux",
+        "file_map": {
+            "tmux": "usr/bin/tmux"
+        }
     }
 }

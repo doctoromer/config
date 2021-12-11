@@ -181,10 +181,17 @@ def download_vim_plugins():
         env=env
     )
 
+
 def download_zsh_plugins():
     """ Download zsh plugins using zcomet """
     zsh_init_path = Path(__file__).parent / "zsh/usr/share/zsh/config/init.zsh"
     subprocess.check_call(["zsh", str(zsh_init_path)])
+
+
+def download_tmux_plugins():
+    """ Download tmux plugins using tpm """
+    download_script_path = Path(__file__).parent / "misc/usr/share/tmux/tpm/bin/install_plugins"
+    subprocess.check_call(["bash", download_script_path])
 
 
 def download():
@@ -193,6 +200,7 @@ def download():
     download_binaries(BINARIES, BINARIES_DIR)
     download_vim_plugins()
     download_zsh_plugins()
+    download_tmux_plugins()
 
 
 def parse_args():

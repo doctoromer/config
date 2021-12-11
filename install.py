@@ -203,12 +203,25 @@ def download():
     download_tmux_plugins()
 
 
+def auto_remove():
+    example_binary = Path("/usr/bin/vim")
+    if example_binary.is_symlink():
+        # We resolve the symlink to vim binary,
+        # then go up to the root of the config dir to find the install.py script
+        install_script_path = example_binary.resolve().parents[3] / "install.py"
+        logger.info(f"Executing remove script in: {install_script_path}")
+        subprocess.check_call(["python3", install_script_path, "remove"])
+    else:
+        logger.info("No previously installed config detected, exiting...")
+
+
 def parse_args():
     subcommands = {
         "verify": "Verify that essential programs are installed",
         "download": "Download required files",
         "install": "Create symlinks to the configuration",
-        "remove": "Remove symlinks to the configuration"
+        "remove": "Remove symlinks to the configuration",
+        "auto-remove": "Remove previous installation of this config"
     }
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", action="store_true", default=False, dest="verbose")
@@ -218,7 +231,7 @@ def parse_args():
         subparsers[subcommand] = subparsers_parser.add_parser(subcommand, help=help_text)
         subparsers[subcommand].set_defaults(command=subcommand)
 
-    for command in ("install", "remove"):
+    for command in ("install", "remove", "auto-remove"):
         subparsers[command].add_argument("--packages", "-p", default=None)
 
     return parser.parse_args()
@@ -254,6 +267,8 @@ def main():
         dploy.stow(packages, "/")
     elif args.command == "remove":
         dploy.unstow(packages, "/")
+    elif args.command == "auto-remove":
+        auto_remove()
     elif args.command == "download":
         download()
     elif args.command == "verify":

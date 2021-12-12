@@ -13,8 +13,6 @@ function zvm_config() {
     ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 }
 
-bindkey "^ " autosuggest-accept
-
 zcomet load ohmyzsh plugins/git
 zcomet load ohmyzsh plugins/ag
 zcomet load ohmyzsh plugins/git
@@ -28,3 +26,5 @@ zcomet load zsh-users/zsh-syntax-highlighting
 zcomet load Tarrasch/zsh-bd
 zcomet load MichaelAquilina/zsh-you-should-use
 zcomet load jeffreytse/zsh-vi-mode
+
+bindkey "^ " autosuggest-accept

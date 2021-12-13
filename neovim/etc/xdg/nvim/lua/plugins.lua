@@ -25,6 +25,7 @@ modules_names = {
   },
   ["nvim-treesitter"] = {config = "nvim-treesitter.configs"},
   ["nvim-lspconfig"] = {config = "lspconfig"},
+  ["formatter.nvim"] = {config = "formatter"},
   ["nvim-cmp"] = {
     keybind = "cmp",
     config = {"cmp", "cmp_nvim_lsp"}
@@ -119,6 +120,8 @@ return packer.startup(function()
     config = call_config_and_keybinds
   }
   use {"ray-x/lsp_signature.nvim", config = call_config_and_keybinds}
+
+  use {"mhartington/formatter.nvim", config = call_config_and_keybinds}
 
   -- Treesitter
   use {"romgrk/nvim-treesitter-context", config = call_config_and_keybinds}

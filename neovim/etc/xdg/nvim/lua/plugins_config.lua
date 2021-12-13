@@ -30,6 +30,57 @@ M["lsp_signature.nvim"] = function(lsp_signature)
   lsp_signature.setup()
 end
 
+M["formatter.nvim"] = function(formatter)
+  formatters = {}
+  file_extensions = {}
+
+  -- if fn.executable("clang-format") == 1 then
+  --   formatters.c = {
+  --    function()
+  --       return {
+  --         exe = "clang-format",
+  --         args = {"--assume-filename", vim.api.nvim_buf_get_name(0)},
+  --         stdin = true,
+  --         cwd = fn.expand('%:p:h')
+  --       }
+  --     end
+  --   }
+  --   table.insert(file_extensions, "*.c")
+  -- end
+
+  if fn.executable("autopep8") == 1 then
+    formatters.python = {
+      function()
+        return {
+          exe = "autopep8",
+          args = {
+            "--in-place --max-line-length 120",
+            fn.fnameescape(vim.api.nvim_buf_get_name(0))
+          },
+          stdin = false
+        }
+      end
+    }
+    table.insert(file_extensions, "*.py")
+  end
+
+  formatter.setup({filetype = formatters})
+
+  -- Autoformat on save
+  vim.api.nvim_exec(
+    string.format(
+      [[
+        augroup FormatAutogroup
+          autocmd!
+          autocmd BufWritePost %s FormatWrite
+        augroup END
+      ]],
+      table.concat(file_extensions, ",")
+    ),
+    true
+  )
+end
+
 M["nvim-treesitter-context"] = function(treesitter_context)
   treesitter_context.setup {enable = true}
 end
@@ -104,7 +155,7 @@ M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
   local tab = function(fallback)
     if cmp.visible() then
         cmp.select_next_item()
-    elseif vim.fn["vsnip#available"](1) == 1 then
+    elseif fn["vsnip#available"](1) == 1 then
         feedkey("<Plug>(vsnip-expand-or-jump)", "")
     elseif has_words_before() then
         cmp.complete()
@@ -116,7 +167,7 @@ M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
   local shift_tab = function()
     if cmp.visible() then
       cmp.select_prev_item()
-    elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+    elseif fn["vsnip#jumpable"](-1) == 1 then
       feedkey("<Plug>(vsnip-jump-prev)", "")
     end
   end
@@ -124,7 +175,7 @@ M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
   cmp.setup {
     snippet = {
       expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
+        fn["vsnip#anonymous"](args.body)
       end,
     },
     mapping = {

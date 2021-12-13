@@ -25,6 +25,16 @@ modules_names = {
   },
   ["nvim-treesitter"] = {config = "nvim-treesitter.configs"},
   ["nvim-lspconfig"] = {config = "lspconfig"},
+  ["lspsaga.nvim"] = {
+    keybind = {
+      "lspsaga.provider",
+      "lspsaga.hover",
+      "lspsaga.rename",
+      "lspsaga.diagnostic",
+      "lspsaga.floaterm"
+    },
+    config = "lspsaga",
+  },
   ["formatter.nvim"] = {config = "formatter"},
   ["nvim-cmp"] = {
     keybind = "cmp",
@@ -118,6 +128,11 @@ return packer.startup(function()
     "neovim/nvim-lspconfig",
     -- keys = generate_keybinds("nvim-lspconfig"),
     config = call_config_and_keybinds
+  }
+  use {
+    "tami5/lspsaga.nvim",
+    config = call_config_and_keybinds,
+    requires = {"neovim/nvim-lspconfig"}
   }
   use {"ray-x/lsp_signature.nvim", config = call_config_and_keybinds}
 

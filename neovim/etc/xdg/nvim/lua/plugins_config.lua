@@ -26,6 +26,14 @@ M["nvim-lspconfig"] = function(lspconfig)
 
 end
 
+M["lspsaga.nvim"] = function(saga)
+  saga.init_lsp_saga {
+    finder_action_keys = {
+      vsplit = "v", split = "s", quit = {"q", "<esc>", "<C-c>"}, open = "<CR>"
+    }
+  }
+end
+
 M["lsp_signature.nvim"] = function(lsp_signature)
   lsp_signature.setup()
 end

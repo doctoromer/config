@@ -13,11 +13,29 @@ M["nvim-lspconfig"] = function()
         g = {
             D = {vim.lsp.buf.declaration, "Goto decleration"},
             i = {vim.lsp.buf.implementation, "Goto implementation"},
-            r = {vim.lsp.buf.rename, "Rename"},
         },
-        K = {vim.lsp.buf.hover, "Hover"},
         ["[d"] = {vim.lsp.diagnostic.goto_prev, "Next diagnostic"},
         ["]d"] = {vim.lsp.diagnostic.goto_next, "Previous diagnostic"},
+    }
+end
+
+M["lspsaga.nvim"] = function(saga_provider, saga_hover, saga_rename, saga_diagnostic, saga_floaterm)
+    vim.api.nvim_set_keymap(
+        "t",
+        "<C-t>",
+        "<C-\\><C-n>:lua require('lspsaga.floaterm').close_float_terminal()<CR>",
+        {noremap = true, silent = true}
+    )
+    return {
+        ["<leader>"] = {
+            gd = {saga_provider.lsp_finder, "Show definition and references"}
+        },
+        K = {saga_hover.render_hover_doc, "Show hover information"},
+        gr = {saga_rename.rename, "Rename symbol"},
+        gp = {saga_provider.preview_definition, "Preview definition"},
+        ["[d"] = {saga_diagnostic.navigate("next"), "Next diagnostic"},
+        ["]d"] = {saga_diagnostic.navigate("prev"), "Previous diagnostic"},
+        ["<C-t>"] = {saga_floaterm.open_float_terminal, "Toggle float terminal"},
     }
 end
 

@@ -17,6 +17,16 @@ setopt HIST_REDUCE_BLANKS
 setopt INC_APPEND_HISTORY_TIME
 setopt EXTENDED_HISTORY
 
+# Highlight on select
+zstyle ':completion:*' menu select
+
+# Allow shift-tab completion
+zmodload zsh/complist
+bindkey -M menuselect '^[[Z' reverse-menu-complete
+
+# Smarter completion
+zstyle ':completion:*' matcher-list '' '+m:{a-zA-Z}={A-Za-z}' '+r:|[.,_-]=* r:|=*' '+l:|=* r:|=*'
+
 # Fzf
 export FZF_DEFAULT_COMMAND='ag -l --nocolor --nogroup --hidden -g "" --ignore ".git"'
 source /usr/local/share/zsh/site-functions/fzf-completion.zsh

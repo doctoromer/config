@@ -12,7 +12,7 @@ o.hidden = true
 -- Window display
 o.number = true
 o.signcolumn = "yes"
-o.colorcolumn = "81"
+o.colorcolumn = "120"
 o.lazyredraw = true
 o.completeopt = "menu,menuone,noselect"
 

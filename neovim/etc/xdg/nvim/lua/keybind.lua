@@ -33,8 +33,8 @@ M["lspsaga.nvim"] = function(saga_provider, saga_hover, saga_rename, saga_diagno
         K = {saga_hover.render_hover_doc, "Show hover information"},
         gr = {saga_rename.rename, "Rename symbol"},
         gp = {saga_provider.preview_definition, "Preview definition"},
-        ["[d"] = {saga_diagnostic.navigate("next"), "Next diagnostic"},
-        ["]d"] = {saga_diagnostic.navigate("prev"), "Previous diagnostic"},
+        ["[d"] = {saga_diagnostic.navigate("prev"), "Previous diagnostic"},
+        ["]d"] = {saga_diagnostic.navigate("next"), "Next diagnostic"},
         ["<C-t>"] = {saga_floaterm.open_float_terminal, "Toggle float terminal"},
     }
 end

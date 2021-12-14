@@ -59,3 +59,13 @@ alias sudo='sudo '
 # aliases for paging ag output with colors
 alias less='less -r'
 alias ag='ag --color --group'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias .......='cd ../../../../../..'
+alias ........='cd ../../../../../../..'
+alias .........='cd ../../../../../../../..'
+alias ..........='cd ../../../../../../../../..'

@@ -40,7 +40,6 @@ end
 
 M["formatter.nvim"] = function(formatter)
   formatters = {}
-  file_extensions = {}
 
   -- if fn.executable("clang-format") == 1 then
   --   formatters.c = {
@@ -53,7 +52,6 @@ M["formatter.nvim"] = function(formatter)
   --       }
   --     end
   --   }
-  --   table.insert(file_extensions, "*.c")
   -- end
 
   if fn.executable("autopep8") == 1 then
@@ -69,24 +67,9 @@ M["formatter.nvim"] = function(formatter)
         }
       end
     }
-    table.insert(file_extensions, "*.py")
   end
 
   formatter.setup({filetype = formatters})
-
-  -- Autoformat on save
-  vim.api.nvim_exec(
-    string.format(
-      [[
-        augroup FormatAutogroup
-          autocmd!
-          autocmd BufWritePost %s FormatWrite
-        augroup END
-      ]],
-      table.concat(file_extensions, ",")
-    ),
-    true
-  )
 end
 
 M["nvim-treesitter-context"] = function(treesitter_context)

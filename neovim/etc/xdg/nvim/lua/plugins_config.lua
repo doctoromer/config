@@ -139,6 +139,7 @@ M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
       true
     )
   end
+
   local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
@@ -147,8 +148,8 @@ M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
   local tab = function(fallback)
     if cmp.visible() then
         cmp.select_next_item()
-    elseif fn["vsnip#available"](1) == 1 then
-        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+    elseif fn["vsnip#jumpable"](1) == 1 then
+        feedkey("<Plug>(vsnip-jump-next)", "")
     elseif has_words_before() then
         cmp.complete()
     else
@@ -164,6 +165,12 @@ M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
     end
   end
 
+  local c_space = function()
+    if fn["vsnip#available"](1) == 1 or fn["vsnip#jumpable"](1) == 1 then
+      feedkey("<Plug>(vsnip-expand-or-jump)", "")
+    end
+  end
+
   cmp.setup {
     snippet = {
       expand = function(args)
@@ -173,10 +180,7 @@ M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
     mapping = {
       ["<Tab>"] = cmp.mapping(tab, {"i", "s"}),
       ["<S-Tab>"] = cmp.mapping(shift_tab, {"i", "s"}),
-      ["<CR>"] = cmp.mapping.confirm(
-        {behavior = cmp.ConfirmBehavior.Replace, select = true},
-        {"i", "s"}
-      ),
+      ["<C-space>"] = cmp.mapping(c_space, {"i", "s"}),
     },
     sources = cmp.config.sources(
       {{name = "vsnip"}, {name = "nvim_lsp"}},

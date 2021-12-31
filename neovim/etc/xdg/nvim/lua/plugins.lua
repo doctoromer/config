@@ -24,6 +24,7 @@ modules_names = {
     config = "Navigator"
   },
   ["nvim-treesitter"] = {config = "nvim-treesitter.configs"},
+  ["treesitter-unit"] = {keybind = "treesitter-unit"},
   ["nvim-lspconfig"] = {config = "lspconfig"},
   ["lspsaga.nvim"] = {
     keybind = {
@@ -143,6 +144,8 @@ return packer.startup(function()
   use {"nvim-treesitter/nvim-treesitter", config = call_config_and_keybinds}
   use {"p00f/nvim-ts-rainbow"}
   use {"nvim-treesitter/nvim-treesitter-textobjects", config = call_config_and_keybinds}
+  use {"windwp/nvim-ts-autotag"}
+  use {"David-Kunz/treesitter-unit", config = call_config_and_keybinds}
 
   -- Completion and searching
   use {

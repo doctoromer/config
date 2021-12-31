@@ -98,6 +98,7 @@ M["nvim-treesitter"] = function(treesitter_config)
       extended_mode = true,
       max_file_lines = nil,
     },
+    autotag = {enable = true},
     incremental_selection = {
       enable = true,
       keymaps = {

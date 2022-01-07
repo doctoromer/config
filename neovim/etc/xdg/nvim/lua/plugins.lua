@@ -2,6 +2,7 @@ local fn = vim.fn
 
 local packer = require("packer")
 local util = require("packer.util")
+local plugin_manager = require("plugin_manager")
 
 local script_directory = fn.fnamemodify(vim.call("resolve", fn.expand("<sfile>:p")), ":h")
 
@@ -50,107 +51,39 @@ modules_names = {
   ["virt-column.nvim"] = {config = "virt-column"},
 }
 
-function require_plugin_modules(plugin_name, modules_type)
-  plugin_spec = modules_names[plugin_name] or {}
-  require_data = plugin_spec[modules_type] or {}
-
-  if type(require_data) == "string" then
-    require_data = {require_data}
-  elseif type(require_data) ~= "table" then
-    error("Invalid require table data type: " .. type(require_data))
-  end
-
-  result = {}
-  for i, module_name in ipairs(require_data) do
-    result[i] = require(module_name)
-  end
-
-  return result
-end
-
-local function call_config_and_keybinds(name)
-  local keybind = require("keybind")
-  local which_key = require("which-key")
-  local plugins_config = require("plugins_config")
-
-  if keybind[name] then
-    modules = require_plugin_modules(name, "keybind")
-    keybind_result = keybind[name](unpack(modules))
-
-    if keybind_result[1] and keybind_result[2] then
-      which_key.register(keybind_result[1], keybind_result[2])
-    else
-      which_key.register(keybind_result)
-    end
-  end
-
-  if plugins_config[name] then
-    modules = require_plugin_modules(name, "config")
-    plugins_config[name](unpack(modules))
-  end
-end
-
-DUMMY_MODULE = {}
-setmetatable(DUMMY_MODULE, {
-  __index = function(dummy_module, key)
-    return dummy_module
-  end
+local plugin_manager = require("plugin_manager")
+plugin_manager.setup({
+  modules_names = modules_names,
+  keybindings = require("keybind"),
+  plugins_config = require("plugins_config"),
 })
 
-function generate_keybinds(name)
-  local keybind = require("keybind")
-  local keys = require("which-key.keys")
-
-  if keybind[name] then
-    keybind_result = keybind[name](DUMMY_MODULE)
-    mappings = keys.parse_mappings({}, keybind_result, "")
-    result = {}
-
-    for _, mapping in pairs(mappings) do
-      if not mapping.group then
-        mode = mapping.mode or "n"
-        table.insert(result, {mode, mapping.prefix})
-      end
-    end
-    return result
-  else
-    return {}
-  end
-end
-
-
-return packer.startup(function()
+return packer.startup(plugin_manager.make_config {
   -- Base plugins
-  use {"wbthomason/packer.nvim", lock = true}
-  use {"folke/which-key.nvim", config = call_config_and_keybinds}
+  {"wbthomason/packer.nvim", lock = true},
+  "folke/which-key.nvim",
 
   -- LSP
-  use {
-    "neovim/nvim-lspconfig",
-    -- keys = generate_keybinds("nvim-lspconfig"),
-    config = call_config_and_keybinds
-  }
-  use {
+  "neovim/nvim-lspconfig",
+  {
     "tami5/lspsaga.nvim",
-    config = call_config_and_keybinds,
-    requires = {"neovim/nvim-lspconfig"}
-  }
-  use {"ray-x/lsp_signature.nvim", config = call_config_and_keybinds}
+    requires = "neovim/nvim-lspconfig"
+  },
+  "ray-x/lsp_signature.nvim",
 
-  use {"mhartington/formatter.nvim", config = call_config_and_keybinds}
+  "mhartington/formatter.nvim",
 
   -- Treesitter
-  use {"romgrk/nvim-treesitter-context", config = call_config_and_keybinds}
-  use {"nvim-treesitter/nvim-treesitter", config = call_config_and_keybinds}
-  use {"p00f/nvim-ts-rainbow"}
-  use {"nvim-treesitter/nvim-treesitter-textobjects", config = call_config_and_keybinds}
-  use {"windwp/nvim-ts-autotag"}
-  use {"David-Kunz/treesitter-unit", config = call_config_and_keybinds}
+  "romgrk/nvim-treesitter-context",
+  "nvim-treesitter/nvim-treesitter",
+  "p00f/nvim-ts-rainbow",
+  "nvim-treesitter/nvim-treesitter-textobjects",
+  "windwp/nvim-ts-autotag",
+  "David-Kunz/treesitter-unit",
 
   -- Completion and searching
-  use {
+  {
     "hrsh7th/nvim-cmp",
-    config = call_config_and_keybinds,
     requires = {
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-path",
@@ -159,54 +92,43 @@ return packer.startup(function()
       "neovim/nvim-lspconfig",
       "hrsh7th/cmp-vsnip"
     }
-  }
-  use {
+  },
+  {
     "nvim-telescope/telescope.nvim",
     requires = {"nvim-lua/popup.nvim", "nvim-lua/plenary.nvim"},
-    keys = generate_keybinds("telescope.nvim"),
     ft = "dashboard",
-    config = call_config_and_keybinds
-  }
-  use {
+  },
+  {
     "nvim-telescope/telescope-fzf-native.nvim",
-    requires = {"nvim-telescope/telescope.nvim"},
+    requires = "nvim-telescope/telescope.nvim",
     run = "make"
-  }
+  },
 
   -- UI and display
-  use {"navarasu/onedark.nvim", config = call_config_and_keybinds}
-  use {"itchyny/lightline.vim", config = call_config_and_keybinds}
-  use {"glepnir/dashboard-nvim", config = call_config_and_keybinds}
-  use {
+  "navarasu/onedark.nvim",
+  "itchyny/lightline.vim",
+  "glepnir/dashboard-nvim",
+  {
     "lewis6991/gitsigns.nvim",
-    requires = {"nvim-lua/plenary.nvim"},
-    config = call_config_and_keybinds
-  }
-  use {
-    "tpope/vim-fugitive",
-    keys = generate_keybinds("vim-fugitive"),
-    config = call_config_and_keybinds
-  }
-  use {"machakann/vim-highlightedyank", event = "TextYankPost"}
-  use {"ntpeters/vim-better-whitespace", config = call_config_and_keybinds}
-  use {"lukas-reineke/indent-blankline.nvim", config = call_config_and_keybinds}
-  use {"lukas-reineke/virt-column.nvim", config = call_config_and_keybinds}
+    requires = "nvim-lua/plenary.nvim",
+  },
+  "tpope/vim-fugitive",
+  {"machakann/vim-highlightedyank", event = "TextYankPost"},
+  "ntpeters/vim-better-whitespace",
+  "lukas-reineke/indent-blankline.nvim",
+  "lukas-reineke/virt-column.nvim",
 
   -- Utilities
-  use "tpope/vim-sleuth"
-  use {"hrsh7th/vim-vsnip", config = call_config_and_keybinds}
-  use {"whiteinge/diffconflicts", cmd = "DiffConflicts"}
-  use {"Vimjas/vim-python-pep8-indent", ft = "python"}
-  use {
-    "numToStr/Navigator.nvim",
-    keys = generate_keybinds("Navigator.nvim"),
-    config = call_config_and_keybinds
-  }
+  "tpope/vim-sleuth",
+  "hrsh7th/vim-vsnip",
+  {"whiteinge/diffconflicts", cmd = "DiffConflicts"},
+  {"Vimjas/vim-python-pep8-indent", ft = "python"},
+  "numToStr/Navigator.nvim",
 
   -- Editing
-  use "tpope/vim-repeat"
-  use {"sickill/vim-pasta", config = call_config_and_keybinds}
-  use {
+  "tpope/vim-repeat",
+  "sickill/vim-pasta",
+  {
     "tpope/vim-surround",
     keys = {
       {"n", "ds"},
@@ -223,16 +145,12 @@ return packer.startup(function()
       {"i", "<C-G>s"},
       {"i", "<C-G>S"}
     }
-  }
-  use "wellle/targets.vim"
-  use {
-    "foosoft/vim-argwrap",
-    keys = generate_keybinds("vim-argwrap"),
-    config = call_config_and_keybinds
-  }
-  use "tpope/vim-unimpaired"
-  use "jiangmiao/auto-pairs"
-  use {
+  },
+  "wellle/targets.vim",
+  "foosoft/vim-argwrap",
+  "tpope/vim-unimpaired",
+  "jiangmiao/auto-pairs",
+  {
     "terrortylor/nvim-comment",
     keys = {
       {"x", "gc"},
@@ -242,12 +160,7 @@ return packer.startup(function()
       {"n", "cgc"},
       {"n", "gcu"}
     },
-    config = call_config_and_keybinds
-  }
-  use {
-    "easymotion/vim-easymotion",
-    keys = generate_keybinds("vim-easymotion"),
-    config = call_config_and_keybinds
-  }
-  use "michaeljsmith/vim-indent-object"
-end)
+  },
+  "easymotion/vim-easymotion",
+  "michaeljsmith/vim-indent-object",
+})

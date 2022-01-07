@@ -34,10 +34,6 @@ M["lspsaga.nvim"] = function(saga)
   }
 end
 
-M["lsp_signature.nvim"] = function(lsp_signature)
-  lsp_signature.setup()
-end
-
 M["formatter.nvim"] = function(formatter)
   formatters = {}
 

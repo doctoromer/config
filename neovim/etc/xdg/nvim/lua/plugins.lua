@@ -43,7 +43,6 @@ modules_names = {
     config = {"cmp", "cmp_nvim_lsp"}
   },
   ["nvim-treesitter-context"] = {config = "treesitter-context.config"},
-  ["lsp_signature.nvim"] = {config = "lsp_signature"},
   ["gitsigns.nvim"] = {config = "gitsigns"},
   ["nvim-treesitter-textobjects"] = {config = "nvim-treesitter.configs"},
   ["which-key.nvim"] = {config = "which-key"},
@@ -69,7 +68,6 @@ return packer.startup(plugin_manager.make_config {
     "tami5/lspsaga.nvim",
     requires = "neovim/nvim-lspconfig"
   },
-  "ray-x/lsp_signature.nvim",
 
   "mhartington/formatter.nvim",
 

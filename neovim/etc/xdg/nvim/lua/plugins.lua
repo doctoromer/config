@@ -59,11 +59,11 @@ plugin_manager.setup({
 
 return packer.startup(plugin_manager.make_config {
   -- Base plugins
-  {"wbthomason/packer.nvim", lock = true},
-  "folke/which-key.nvim",
+  {"wbthomason/packer.nvim", lock = true, config = false},
+  {"folke/which-key.nvim", keys = false},
 
   -- LSP
-  "neovim/nvim-lspconfig",
+  {"neovim/nvim-lspconfig", keys = false},
   {
     "tami5/lspsaga.nvim",
     requires = "neovim/nvim-lspconfig"

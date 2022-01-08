@@ -238,9 +238,10 @@ M["telescope.nvim"] = function(telescope, actions)
   }
 end
 
-M["onedark.nvim"] = function()
-  g.onedark_style = "darker"
-  vim.cmd "colorscheme onedark"
+M["onedark.nvim"] = function(onedark)
+  onedark.setup({
+    style = "darker"
+  })
 end
 
 M["lightline.vim"] = function()

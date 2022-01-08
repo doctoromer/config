@@ -20,6 +20,7 @@ modules_names = {
     keybind = "telescope.builtin",
     config = {"telescope", "telescope.actions"}
   },
+  ["onedark.nvim"] = {config = "onedark"},
   ["Navigator.nvim"] = {
     keybind = "Navigator",
     config = "Navigator"

@@ -37,19 +37,6 @@ end
 M["formatter.nvim"] = function(formatter)
   formatters = {}
 
-  -- if fn.executable("clang-format") == 1 then
-  --   formatters.c = {
-  --    function()
-  --       return {
-  --         exe = "clang-format",
-  --         args = {"--assume-filename", vim.api.nvim_buf_get_name(0)},
-  --         stdin = true,
-  --         cwd = fn.expand('%:p:h')
-  --       }
-  --     end
-  --   }
-  -- end
-
   if fn.executable("autopep8") == 1 then
     formatters.python = {
       function()
@@ -116,10 +103,10 @@ M["nvim-treesitter-textobjects"] = function(treesitter_config)
         enable = true,
         lookahead = true,
         keymaps = {
-          ["af"] = "@function.outer",
+          af = "@function.outer",
           ["if"] = "@function.inner",
-          ["ac"] = "@class.outer",
-          ["ic"] = "@class.inner",
+          ac = "@class.outer",
+          ic = "@class.inner",
         }
       }
     }
@@ -186,13 +173,10 @@ M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
 
   cmp.setup.cmdline("/", {sources = {{name = "buffer"}}})
   cmp.setup.cmdline("?", {sources = {{name = "buffer"}}})
-  cmp.setup.cmdline(":", {
-    sources = cmp.config.sources({{name = "path"}}, {{name = "cmdline"}})
-  })
+  cmp.setup.cmdline(":", {sources = cmp.config.sources({{name = "path"}}, {{name = "cmdline"}})})
 
   -- setup lspconfig
   local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you"ve enabled.
   for server_name, _ in pairs(language_servers) do
     require("lspconfig")[server_name].setup {
       capabilities = capabilities
@@ -239,9 +223,9 @@ M["telescope.nvim"] = function(telescope, actions)
 end
 
 M["onedark.nvim"] = function(onedark)
-  onedark.setup({
+  onedark.setup {
     style = "darker"
-  })
+  }
 end
 
 M["lightline.vim"] = function()

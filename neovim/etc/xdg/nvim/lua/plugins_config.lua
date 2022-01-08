@@ -306,11 +306,13 @@ M["vim-better-whitespace"] = function()
   g.better_whitespace_filetypes_blacklist = {"dashboard", "help", "markdown"}
 end
 
-M["indent-blankline.nvim"] = function()
-  g.indentLine_fileTypeExclude = {"dashboard", "help"}
-  g.indent_blankline_use_treesitter = true
-  g.indent_blankline_show_first_indent_level = false
-  g.indentLine_char = "│"
+M["indent-blankline.nvim"] = function(indent_blankline)
+  indent_blankline.setup {
+    char = "│",
+    filetype_exclude = {"dashboard", "help"},
+    show_first_indent_level = false,
+    show_trailing_blankline_indent = false
+  }
 end
 
 M["virt-column.nvim"] = function(virt_column)

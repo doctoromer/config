@@ -48,6 +48,7 @@ modules_names = {
   ["nvim-treesitter-textobjects"] = {config = "nvim-treesitter.configs"},
   ["which-key.nvim"] = {config = "which-key"},
   ["nvim-comment"] = {config = "nvim_comment"},
+  ["indent-blankline.nvim"] = {config = "indent_blankline"},
   ["virt-column.nvim"] = {config = "virt-column"},
 }
 

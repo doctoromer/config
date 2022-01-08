@@ -14,8 +14,6 @@ M["nvim-lspconfig"] = function()
             D = {vim.lsp.buf.declaration, "Goto decleration"},
             i = {vim.lsp.buf.implementation, "Goto implementation"},
         },
-        ["[d"] = {vim.lsp.diagnostic.goto_prev, "Next diagnostic"},
-        ["]d"] = {vim.lsp.diagnostic.goto_next, "Previous diagnostic"},
     }
 end
 

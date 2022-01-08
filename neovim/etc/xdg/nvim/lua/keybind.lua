@@ -94,7 +94,26 @@ M["vim-easymotion"] = function()
     }
 end
 
+paste_mode = false
+colorcolumn = nil
+
 M["which-key.nvim"] = function()
+    local toggle_copy_mode = function()
+        if paste_mode then
+            vim.cmd("IndentBlanklineEnable")
+            vim.o.colorcolumn = colorcolumn
+            vim.o.number = true
+            vim.o.signcolumn = "yes"
+        else
+            vim.cmd("IndentBlanklineDisable")
+            colorcolumn = vim.o.colorcolumn
+            vim.o.colorcolumn = ""
+            vim.o.number = false
+            vim.o.signcolumn = "no"
+        end
+        paste_mode = not paste_mode
+    end
+
     return {
         -- General keybindings
         [";"] = {"<nop>", ""},
@@ -115,6 +134,8 @@ M["which-key.nvim"] = function()
         gb = {"<cmd>tabprevious<CR>", "Previous tab"},
         gf = {"<cmd>-tabmove<CR>", "Move tab left"},
         gh = {"<cmd>+tabmove<CR>", "Move tab right"},
+
+        ["<leader>p"] = {toggle_copy_mode, "Toggle copymode"},
 
         -- Horizontal scroll
         zl = {"zL", "Scroll right"},

@@ -64,10 +64,7 @@ return packer.startup(plugin_manager.make_config {
 
   -- LSP
   {"neovim/nvim-lspconfig", keys = false},
-  {
-    "tami5/lspsaga.nvim",
-    requires = "neovim/nvim-lspconfig"
-  },
+  {"tami5/lspsaga.nvim", requires = "neovim/nvim-lspconfig"},
 
   "mhartington/formatter.nvim",
 
@@ -96,20 +93,13 @@ return packer.startup(plugin_manager.make_config {
     requires = {"nvim-lua/popup.nvim", "nvim-lua/plenary.nvim"},
     ft = "dashboard",
   },
-  {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    requires = "nvim-telescope/telescope.nvim",
-    run = "make"
-  },
+  {"nvim-telescope/telescope-fzf-native.nvim", requires = "nvim-telescope/telescope.nvim", run = "make"},
 
   -- UI and display
   "navarasu/onedark.nvim",
   "itchyny/lightline.vim",
   "glepnir/dashboard-nvim",
-  {
-    "lewis6991/gitsigns.nvim",
-    requires = "nvim-lua/plenary.nvim",
-  },
+  {"lewis6991/gitsigns.nvim", requires = "nvim-lua/plenary.nvim"},
   "tpope/vim-fugitive",
   {"machakann/vim-highlightedyank", event = "TextYankPost"},
   "ntpeters/vim-better-whitespace",

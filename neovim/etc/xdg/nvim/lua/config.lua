@@ -61,11 +61,11 @@ g.loaded_rrhelper = 1
 
 -- Other configurations
 vim.cmd [[
-    autocmd VimResized * wincmd =
+  autocmd VimResized * wincmd =
 
-    command W w
-    command Wq wq
-    command WQ wq
-    command Q q
+  command W w
+  command Wq wq
+  command WQ wq
+  command Q q
 ]]
 

@@ -3,38 +3,38 @@ local M = {}
 vim.g.mapleader = ";"
 
 M["nvim-lspconfig"] = function()
-    return {
-        ["<leader>"] = {
-            gD = {vim.lsp.buf.type_definition, "Goto type definition"},
-            gf = {vim.lsp.buf.formatting, "Format all file"},
-            ca = {vim.lsp.buf.code_action, "Code action"},
-            gf = {"<cmd>lua vim.lsp.buf.range_formatting()<CR>", "Format range", mode="v"}
-        },
-        g = {
-            D = {vim.lsp.buf.declaration, "Goto decleration"},
-            i = {vim.lsp.buf.implementation, "Goto implementation"},
-        },
-    }
+  return {
+    ["<leader>"] = {
+      gD = {vim.lsp.buf.type_definition, "Goto type definition"},
+      gf = {vim.lsp.buf.formatting, "Format all file"},
+      ca = {vim.lsp.buf.code_action, "Code action"},
+      gf = {"<cmd>lua vim.lsp.buf.range_formatting()<CR>", "Format range", mode="v"}
+    },
+    g = {
+      D = {vim.lsp.buf.declaration, "Goto decleration"},
+      i = {vim.lsp.buf.implementation, "Goto implementation"},
+    },
+  }
 end
 
 M["lspsaga.nvim"] = function(saga_provider, saga_hover, saga_rename, saga_diagnostic, saga_floaterm)
-    vim.api.nvim_set_keymap(
-        "t",
-        "<C-t>",
-        "<C-\\><C-n>:lua require('lspsaga.floaterm').close_float_terminal()<CR>",
-        {noremap = true, silent = true}
-    )
-    return {
-        ["<leader>"] = {
-            gd = {saga_provider.lsp_finder, "Show definition and references"}
-        },
-        K = {saga_hover.render_hover_doc, "Show hover information"},
-        gr = {saga_rename.rename, "Rename symbol"},
-        gp = {saga_provider.preview_definition, "Preview definition"},
-        ["[d"] = {saga_diagnostic.navigate("prev"), "Previous diagnostic"},
-        ["]d"] = {saga_diagnostic.navigate("next"), "Next diagnostic"},
-        ["<C-t>"] = {saga_floaterm.open_float_terminal, "Toggle float terminal"},
-    }
+  vim.api.nvim_set_keymap(
+    "t",
+    "<C-t>",
+    "<C-\\><C-n>:lua require('lspsaga.floaterm').close_float_terminal()<CR>",
+    {noremap = true, silent = true}
+  )
+  return {
+    ["<leader>"] = {
+      gd = {saga_provider.lsp_finder, "Show definition and references"}
+    },
+    K = {saga_hover.render_hover_doc, "Show hover information"},
+    gr = {saga_rename.rename, "Rename symbol"},
+    gp = {saga_provider.preview_definition, "Preview definition"},
+    ["[d"] = {saga_diagnostic.navigate("prev"), "Previous diagnostic"},
+    ["]d"] = {saga_diagnostic.navigate("next"), "Next diagnostic"},
+    ["<C-t>"] = {saga_floaterm.open_float_terminal, "Toggle float terminal"},
+  }
 end
 
 M["treesitter-unit"] = function()
@@ -46,107 +46,109 @@ M["treesitter-unit"] = function()
 end
 
 M["telescope.nvim"] = function(telescope)
-    return {
-        ["<leader>"] = {
-            f = {telescope.find_files, "Find file"},
-            a = {telescope.live_grep, "Search in files"},
-            l = {telescope.current_buffer_fuzzy_find, "Search in current file"},
-            b = {telescope.buffers, "Find buffer"},
-            H = {telescope.help_tags, "Help pages"},
-            m = {telescope.keymaps, "Find keymaps"},
-        },
-        g = {
-            x = {telescope.lsp_references, "Show references"},
-            d = {telescope.lsp_definitions, "Goto definition"},
-            s = {telescope.lsp_document_symbols, "Show symbols"},
-        }
+  return {
+    ["<leader>"] = {
+      f = {telescope.find_files, "Find file"},
+      a = {telescope.live_grep, "Search in files"},
+      l = {telescope.current_buffer_fuzzy_find, "Search in current file"},
+      b = {telescope.buffers, "Find buffer"},
+      H = {telescope.help_tags, "Help pages"},
+      m = {telescope.keymaps, "Find keymaps"},
+    },
+    g = {
+      x = {telescope.lsp_references, "Show references"},
+      d = {telescope.lsp_definitions, "Goto definition"},
+      s = {telescope.lsp_document_symbols, "Show symbols"},
     }
+  }
 end
 
 M["vim-fugitive"] = function()
-    return {
-        ["<leader>"] = {
-            gb = {"<cmd>Git blame<CR>", "Git blame"}
-        }
+  return {
+    ["<leader>"] = {
+      gb = {"<cmd>Git blame<CR>", "Git blame"}
     }
+  }
 end
 
 M["Navigator.nvim"] = function(navigator)
-    return {
-        ["<M-h>"] = {navigator.left, "Tmux left"},
-        ["<M-j>"] = {navigator.down, "Tmux down"},
-        ["<M-k>"] = {navigator.up, "Tmux up"},
-        ["<M-l>"] = {navigator.right, "Tmux right"},
-    }
+  return {
+    ["<M-h>"] = {navigator.left, "Tmux left"},
+    ["<M-j>"] = {navigator.down, "Tmux down"},
+    ["<M-k>"] = {navigator.up, "Tmux up"},
+    ["<M-l>"] = {navigator.right, "Tmux right"},
+  }
 end
 
 M["vim-argwrap"] = function()
-    return {
-        ga = {"<cmd>ArgWrap<CR>", "Spread arguments"}
-    }
+  return {
+    ga = {"<cmd>ArgWrap<CR>", "Spread arguments"}
+  }
 end
 
 M["vim-easymotion"] = function()
-    return {
-        ["<Space>"] = {"<Plug>(easymotion-prefix)", "Easymotion prefix"}
-    }
+  return {
+    ["<Space>"] = {"<Plug>(easymotion-prefix)", "Easymotion prefix"}
+  }
 end
 
 paste_mode = false
 colorcolumn = nil
 
 M["which-key.nvim"] = function()
-    local toggle_copy_mode = function()
-        if paste_mode then
-            vim.cmd("IndentBlanklineEnable")
-            vim.o.colorcolumn = colorcolumn
-            vim.o.number = true
-            vim.o.signcolumn = "yes"
-        else
-            vim.cmd("IndentBlanklineDisable")
-            colorcolumn = vim.o.colorcolumn
-            vim.o.colorcolumn = ""
-            vim.o.number = false
-            vim.o.signcolumn = "no"
-        end
-        paste_mode = not paste_mode
+  local toggle_copy_mode = function()
+    if paste_mode then
+      vim.cmd("IndentBlanklineEnable")
+      if vim.o.colorcolumn ~= nil then
+        vim.o.colorcolumn = colorcolumn
+      end
+      vim.o.number = true
+      vim.o.signcolumn = "yes"
+    else
+      vim.cmd("IndentBlanklineDisable")
+      colorcolumn = vim.o.colorcolumn
+      vim.o.colorcolumn = ""
+      vim.o.number = false
+      vim.o.signcolumn = "no"
     end
+    paste_mode = not paste_mode
+  end
 
-    return {
-        -- General keybindings
-        [";"] = {"<nop>", ""},
-        ["\\"] = {";", ""},
+  return {
+    -- General keybindings
+    [";"] = {"<nop>", ""},
+    ["\\"] = {";", ""},
 
-        -- Disable bad keys
-        ["<home>"] = {"<nop>", "Bad key"},
-        ["<end>"] = {"<nop>", "Bad key"},
-        ["<del>"] = {"<nop>", "Bad key"},
-        ["<insert>"] = {"<nop>", "Bad key"},
-        ["<left>"] = {"<nop>", "Bad key"},
-        ["<down>"] = {"<nop>", "Bad key"},
-        ["<up>"] = {"<nop>", "Bad key"},
-        ["<right>"] = {"<nop>", "Bad key"},
+    -- Disable bad keys
+    ["<home>"] = {"<nop>", "Bad key"},
+    ["<end>"] = {"<nop>", "Bad key"},
+    ["<del>"] = {"<nop>", "Bad key"},
+    ["<insert>"] = {"<nop>", "Bad key"},
+    ["<left>"] = {"<nop>", "Bad key"},
+    ["<down>"] = {"<nop>", "Bad key"},
+    ["<up>"] = {"<nop>", "Bad key"},
+    ["<right>"] = {"<nop>", "Bad key"},
 
-        -- Tabs
-        ["<leader>tt"] = {"<cmd>tabnew<CR>", "New tab"},
-        gb = {"<cmd>tabprevious<CR>", "Previous tab"},
-        gf = {"<cmd>-tabmove<CR>", "Move tab left"},
-        gh = {"<cmd>+tabmove<CR>", "Move tab right"},
+    -- Tabs
+    ["<leader>tt"] = {"<cmd>tabnew<CR>", "New tab"},
+    gb = {"<cmd>tabprevious<CR>", "Previous tab"},
+    gf = {"<cmd>-tabmove<CR>", "Move tab left"},
+    gh = {"<cmd>+tabmove<CR>", "Move tab right"},
 
-        ["<leader>p"] = {toggle_copy_mode, "Toggle copymode"},
+    ["<leader>p"] = {toggle_copy_mode, "Toggle copymode"},
 
-        -- Horizontal scroll
-        zl = {"zL", "Scroll right"},
-        zh = {"zH", "Scroll left"},
+    -- Horizontal scroll
+    zl = {"zL", "Scroll right"},
+    zh = {"zH", "Scroll left"},
 
-        -- Other
-        [">"] = {">gv", "Indent", mode="v"},
-        ["<"] = {"<gv", "Dedent", mode="v"},
+    -- Other
+    [">"] = {">gv", "Indent", mode="v"},
+    ["<"] = {"<gv", "Dedent", mode="v"},
 
-        -- Center after search
-        n = {"nzz", "Search next"},
-        N = {"Nzz", "Search previous"},
-    }
+    -- Center after search
+    n = {"nzz", "Search next"},
+    N = {"Nzz", "Search previous"},
+  }
 end
 
 return M

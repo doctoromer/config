@@ -152,4 +152,5 @@ return packer.startup(plugin_manager.make_config {
   },
   "easymotion/vim-easymotion",
   "michaeljsmith/vim-indent-object",
+  {"Julian/vim-textobj-variable-segment", requires = "kana/vim-textobj-user"}
 })

@@ -226,6 +226,7 @@ M["onedark.nvim"] = function(onedark)
   onedark.setup {
     style = "darker"
   }
+  vim.cmd("colorscheme onedark")
 end
 
 M["lightline.vim"] = function()

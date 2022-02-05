@@ -12,7 +12,12 @@ local language_servers = {
 }
 
 M["which-key.nvim"] = function()
-  require("which-key").setup()
+  require("which-key").setup {
+    plugins = {
+      registers = false,
+      marks = false
+    }
+  }
 end
 
 M["nvim-lspconfig"] = function()

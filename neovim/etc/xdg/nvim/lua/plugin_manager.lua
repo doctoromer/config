@@ -1,28 +1,9 @@
 local M = {}
 
 config = {
-  modules_names = nil,
   keybindings = nil,
   plugins_config = nil,
 }
-
-function require_plugin_modules(plugin_name, modules_type)
-  plugin_spec = config.modules_names[plugin_name] or {}
-  require_data = plugin_spec[modules_type] or {}
-
-  if type(require_data) == "string" then
-    require_data = {require_data}
-  elseif type(require_data) ~= "table" then
-    error("Invalid require table data type: " .. type(require_data))
-  end
-
-  result = {}
-  for i, module_name in ipairs(require_data) do
-    result[i] = require(module_name)
-  end
-
-  return result
-end
 
 DUMMY_MODULE = {}
 setmetatable(DUMMY_MODULE, {
@@ -47,8 +28,7 @@ function call_config_and_keybinds(name)
   local which_key = require_or_value("which-key", DUMMY_MODULE)
 
   if config.keybindings[name] then
-    modules = require_plugin_modules(name, "keybind")
-    keybind_result = config.keybindings[name](unpack(modules))
+    keybind_result = config.keybindings[name]()
 
     if keybind_result[1] and keybind_result[2] then
       which_key.register(keybind_result[1], keybind_result[2])
@@ -58,33 +38,17 @@ function call_config_and_keybinds(name)
   end
 
   if config.plugins_config[name] then
-    modules = require_plugin_modules(name, "config")
-    config.plugins_config[name](unpack(modules))
+    config.plugins_config[name]()
   end
 end
 
 local function generate_keybinds(keybindings)
   local which_key_keys = require_or_value("which-key.keys", DUMMY_MODULE)
 
-  keybind_result = keybindings(
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE,
-    DUMMY_MODULE
-  )
+  setfenv(keybindings, vim.tbl_extend("force", getfenv(), { require = function() return DUMMY_MODULE end}))
+  keybind_result = keybindings()
+  setfenv(keybindings, vim.tbl_extend("force", getfenv(), { require = require}))
+
   mappings = which_key_keys.parse_mappings({}, keybind_result, "")
   result = {}
 

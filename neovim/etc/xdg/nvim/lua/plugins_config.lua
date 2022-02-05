@@ -11,23 +11,23 @@ local language_servers = {
   cmake = {}
 }
 
-M["which-key.nvim"] = function(which_key)
-  which_key.setup()
+M["which-key.nvim"] = function()
+  require("which-key").setup()
 end
 
-M["nvim-lspconfig"] = function(lspconfig)
+M["nvim-lspconfig"] = function()
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {virtual_text = false}
   )
 
   for server_name, config in pairs(language_servers) do
-      lspconfig[server_name].setup(config)
+      require("lspconfig")[server_name].setup(config)
   end
 
 end
 
-M["lspsaga.nvim"] = function(saga)
-  saga.init_lsp_saga {
+M["lspsaga.nvim"] = function()
+  require("lspsaga").init_lsp_saga {
     finder_action_keys = {
       vsplit = "v", split = "s", quit = {"q", "<esc>", "<C-c>"}, open = "<CR>"
     }
@@ -52,15 +52,15 @@ M["formatter.nvim"] = function(formatter)
     }
   end
 
-  formatter.setup({filetype = formatters})
+  require("formatter").setup({filetype = formatters})
 end
 
-M["nvim-treesitter-context"] = function(treesitter_context)
-  treesitter_context.setup {enable = true}
+M["nvim-treesitter-context"] = function()
+  require("treesitter-context.config").setup {enable = true}
 end
 
-M["nvim-treesitter"] = function(treesitter_config)
-  treesitter_config.setup {
+M["nvim-treesitter"] = function()
+  require("nvim-treesitter.configs").setup {
     ensure_installed = {
       "c",
       "cpp",
@@ -96,8 +96,8 @@ M["nvim-treesitter"] = function(treesitter_config)
   vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 end
 
-M["nvim-treesitter-textobjects"] = function(treesitter_config)
-  treesitter_config.setup {
+M["nvim-treesitter-textobjects"] = function()
+  require("nvim-treesitter.configs").setup {
     textobjects = {
       select = {
         enable = true,
@@ -113,8 +113,8 @@ M["nvim-treesitter-textobjects"] = function(treesitter_config)
   }
 end
 
-M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
-
+M["nvim-cmp"] = function()
+  local cmp = require("cmp")
   local feedkey = function(key, mode)
     vim.api.nvim_feedkeys(
       vim.api.nvim_replace_termcodes(key, true, true, true),
@@ -176,7 +176,7 @@ M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
   cmp.setup.cmdline(":", {sources = cmp.config.sources({{name = "path"}}, {{name = "cmdline"}})})
 
   -- setup lspconfig
-  local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
   for server_name, _ in pairs(language_servers) do
     require("lspconfig")[server_name].setup {
       capabilities = capabilities
@@ -184,8 +184,9 @@ M["nvim-cmp"] = function(cmp, cmp_nvim_lsp)
   end
 end
 
-M["telescope.nvim"] = function(telescope, actions)
-  telescope.setup {
+M["telescope.nvim"] = function()
+  local actions = require("telescope.actions")
+  require("telescope").setup {
     defaults = {
       vimgrep_arguments = {
         "ag",
@@ -222,8 +223,8 @@ M["telescope.nvim"] = function(telescope, actions)
   }
 end
 
-M["onedark.nvim"] = function(onedark)
-  onedark.setup {
+M["onedark.nvim"] = function()
+  require("onedark").setup {
     style = "darker"
   }
   vim.cmd("colorscheme onedark")
@@ -281,8 +282,8 @@ M["dashboard-nvim"] = function()
   g.dashboard_custom_footer = {"🙃"}
 end
 
-M["gitsigns.nvim"] = function(gitsigns)
-  gitsigns.setup()
+M["gitsigns.nvim"] = function()
+  require("gitsigns").setup()
 end
 
 M["vim-better-whitespace"] = function()
@@ -291,8 +292,8 @@ M["vim-better-whitespace"] = function()
   g.better_whitespace_filetypes_blacklist = {"dashboard", "help", "markdown"}
 end
 
-M["indent-blankline.nvim"] = function(indent_blankline)
-  indent_blankline.setup {
+M["indent-blankline.nvim"] = function()
+  require("indent_blankline").setup {
     char = "│",
     filetype_exclude = {"dashboard", "help"},
     show_first_indent_level = false,
@@ -300,8 +301,8 @@ M["indent-blankline.nvim"] = function(indent_blankline)
   }
 end
 
-M["virt-column.nvim"] = function(virt_column)
-  virt_column.setup()
+M["virt-column.nvim"] = function()
+  require("virt-column").setup()
 end
 
 M["vim-vsnip"] = function()
@@ -310,16 +311,16 @@ M["vim-vsnip"] = function()
   g.vsnip_snippet_dir = fn.fnamemodify(vim.call("resolve", fn.expand("<sfile>:p")), ":h") .. "/../snippets"
 end
 
-M["Navigator.nvim"] = function(navigator)
-  navigator.setup()
+M["Navigator.nvim"] = function()
+  require("Navigator").setup()
 end
 
 M["vim-pasta"] = function()
   g.pasta_disabled_filetypes = {}
 end
 
-M["nvim-comment"] = function(comment)
-  comment.setup()
+M["nvim-comment"] = function()
+  require("nvim_comment").setup()
 end
 
 return M

@@ -15,46 +15,8 @@ packer.init {
     }
 }
 
-modules_names = {
-  ["telescope.nvim"] = {
-    keybind = "telescope.builtin",
-    config = {"telescope", "telescope.actions"}
-  },
-  ["onedark.nvim"] = {config = "onedark"},
-  ["Navigator.nvim"] = {
-    keybind = "Navigator",
-    config = "Navigator"
-  },
-  ["nvim-treesitter"] = {config = "nvim-treesitter.configs"},
-  ["treesitter-unit"] = {keybind = "treesitter-unit"},
-  ["nvim-lspconfig"] = {config = "lspconfig"},
-  ["lspsaga.nvim"] = {
-    keybind = {
-      "lspsaga.provider",
-      "lspsaga.hover",
-      "lspsaga.rename",
-      "lspsaga.diagnostic",
-      "lspsaga.floaterm"
-    },
-    config = "lspsaga",
-  },
-  ["formatter.nvim"] = {config = "formatter"},
-  ["nvim-cmp"] = {
-    keybind = "cmp",
-    config = {"cmp", "cmp_nvim_lsp"}
-  },
-  ["nvim-treesitter-context"] = {config = "treesitter-context.config"},
-  ["gitsigns.nvim"] = {config = "gitsigns"},
-  ["nvim-treesitter-textobjects"] = {config = "nvim-treesitter.configs"},
-  ["which-key.nvim"] = {config = "which-key"},
-  ["nvim-comment"] = {config = "nvim_comment"},
-  ["indent-blankline.nvim"] = {config = "indent_blankline"},
-  ["virt-column.nvim"] = {config = "virt-column"},
-}
-
 local plugin_manager = require("plugin_manager")
 plugin_manager.setup({
-  modules_names = modules_names,
   keybindings = require("keybind"),
   plugins_config = require("plugins_config"),
 })

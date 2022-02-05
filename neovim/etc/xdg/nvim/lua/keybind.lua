@@ -17,7 +17,13 @@ M["nvim-lspconfig"] = function()
   }
 end
 
-M["lspsaga.nvim"] = function(saga_provider, saga_hover, saga_rename, saga_diagnostic, saga_floaterm)
+M["lspsaga.nvim"] = function()
+  local saga_provider = require("lspsaga.provider")
+  local saga_hover = require("lspsaga.hover")
+  local saga_rename = require("lspsaga.rename")
+  local saga_diagnostic = require("lspsaga.diagnostic")
+  local saga_floaterm = require("lspsaga.floaterm")
+
   vim.api.nvim_set_keymap(
     "t",
     "<C-t>",
@@ -45,7 +51,9 @@ M["treesitter-unit"] = function()
   return {}
 end
 
-M["telescope.nvim"] = function(telescope)
+M["telescope.nvim"] = function()
+  local telescope = require("telescope.builtin")
+
   return {
     ["<leader>"] = {
       f = {telescope.find_files, "Find file"},
@@ -71,7 +79,9 @@ M["vim-fugitive"] = function()
   }
 end
 
-M["Navigator.nvim"] = function(navigator)
+M["Navigator.nvim"] = function()
+  local navigator = require("Navigator")
+
   return {
     ["<M-h>"] = {navigator.left, "Tmux left"},
     ["<M-j>"] = {navigator.down, "Tmux down"},

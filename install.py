@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 
 SOURCE_CODE_ASSET = "SOURCE_CODE_ASSET.zip"
 
+SCRIPT_DIR = Path(__file__).parent
 
 with open("binaries.json", "r") as binaries_file:
     BINARIES = json.load(binaries_file)
@@ -169,7 +170,7 @@ def download_binaries(binaries, base_dir):
 
 def download_vim_plugins():
     """ Download vim plugins using packer.nvim """
-    xdg_base_path = Path(__file__).parent / Path("neovim", "etc", "xdg")
+    xdg_base_path = SCRIPT_DIR / Path("neovim", "etc", "xdg")
     xdg_base_path = xdg_base_path.absolute()
 
     env = dict(os.environ)
@@ -184,23 +185,33 @@ def download_vim_plugins():
 
 def download_zsh_plugins():
     """ Download zsh plugins using zcomet """
-    zsh_init_path = Path(__file__).parent / "zsh/usr/share/zsh/config/init.zsh"
+    zsh_init_path = SCRIPT_DIR / "zsh/usr/share/zsh/config/init.zsh"
     subprocess.check_call(["zsh", str(zsh_init_path)])
 
 
 def download_tmux_plugins():
     """ Download tmux plugins using tpm """
-    download_script_path = Path(__file__).parent / "misc/usr/share/tmux/tpm/bin/install_plugins"
+    download_script_path = SCRIPT_DIR / "misc/usr/share/tmux/tpm/bin/install_plugins"
     subprocess.check_call(["bash", download_script_path])
+
+
+def fix_permissions():
+    """ Change ownership to the directory of this script if it is executed with sudo. """
+    real_user = os.environ.get("SUDO_USER", None)
+    if real_user is not None:
+        subprocess.call(["chown", "-f", "-R", real_user, SCRIPT_DIR, f"/home/{real_user}/.local/share/nvim"])
 
 
 def download():
     """ Download all dependencies """
-    download_submodules()
-    download_binaries(BINARIES, BINARIES_DIR)
-    download_vim_plugins()
-    download_zsh_plugins()
-    download_tmux_plugins()
+    try:
+        download_submodules()
+        download_binaries(BINARIES, BINARIES_DIR)
+        download_vim_plugins()
+        download_zsh_plugins()
+        download_tmux_plugins()
+    finally:
+        fix_permissions()
 
 
 def auto_remove():

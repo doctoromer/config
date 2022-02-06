@@ -16,10 +16,10 @@ packer.init {
 }
 
 local plugin_manager = require("plugin_manager")
-plugin_manager.setup({
+plugin_manager.setup {
   keybindings = require("keybind"),
   plugins_config = require("plugins_config"),
-})
+}
 
 return packer.startup(plugin_manager.make_config {
   -- Base plugins
@@ -33,12 +33,13 @@ return packer.startup(plugin_manager.make_config {
   "mhartington/formatter.nvim",
 
   -- Treesitter
-  "romgrk/nvim-treesitter-context",
   "nvim-treesitter/nvim-treesitter",
+  "romgrk/nvim-treesitter-context",
   "p00f/nvim-ts-rainbow",
   "nvim-treesitter/nvim-treesitter-textobjects",
   "windwp/nvim-ts-autotag",
   "David-Kunz/treesitter-unit",
+  "RRethy/nvim-treesitter-endwise",
 
   -- Completion and searching
   {

@@ -60,10 +60,6 @@ M["formatter.nvim"] = function(formatter)
   require("formatter").setup({filetype = formatters})
 end
 
-M["nvim-treesitter-context"] = function()
-  require("treesitter-context.config").setup {enable = true}
-end
-
 M["nvim-treesitter"] = function()
   require("nvim-treesitter.configs").setup {
     ensure_installed = {
@@ -79,14 +75,7 @@ M["nvim-treesitter"] = function()
       "regex",
       "toml"
     },
-    ignore_install = {},
     highlight = {enable = true},
-    rainbow = {
-      enable = true,
-      extended_mode = true,
-      max_file_lines = nil,
-    },
-    autotag = {enable = true},
     incremental_selection = {
       enable = true,
       keymaps = {
@@ -99,6 +88,20 @@ M["nvim-treesitter"] = function()
   }
   vim.wo.foldmethod = "expr"
   vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+end
+
+M["nvim-treesitter-context"] = function()
+  require("treesitter-context.config").setup {enable = true}
+end
+
+M["nvim-ts-rainbow"] = function()
+  require("nvim-treesitter.configs").setup {
+    rainbow = {
+      enable = true,
+      extended_mode = true,
+      max_file_lines = nil,
+    }
+  }
 end
 
 M["nvim-treesitter-textobjects"] = function()
@@ -115,6 +118,18 @@ M["nvim-treesitter-textobjects"] = function()
         }
       }
     }
+  }
+end
+
+M["nvim-ts-autotag"] = function()
+  require("nvim-treesitter.configs").setup {
+    autotag = {enable = true}
+  }
+end
+
+M["nvim-treesitter-endwise"] = function()
+  require("nvim-treesitter.configs").setup {
+    endwise = {enable = true}
   }
 end
 

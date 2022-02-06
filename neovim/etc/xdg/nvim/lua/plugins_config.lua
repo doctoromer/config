@@ -250,8 +250,49 @@ M["onedark.nvim"] = function()
   vim.cmd("colorscheme onedark")
 end
 
-M["lightline.vim"] = function()
-  g.lightline = {colorscheme = "one"}
+M["lualine.nvim"] = function()
+  require("lualine").setup {
+    options = {
+      theme = require("lualine.themes.onedark"),
+      component_separators = {
+        left = "│",
+        right = "│"
+      },
+      section_separators = {
+        left = "",
+        right = ""
+      }
+    },
+    sections = {
+      lualine_a = {"mode"},
+      lualine_b = {
+        {
+          "branch",
+          icon = ""
+        },
+        "diagnostics",
+      },
+      lualine_c = {
+        {
+          "filename",
+          symbols = {
+            modified = " +",
+            readonly = "",
+            unnamed = ""
+          }
+        }
+      },
+      lualine_x = {"endcoding"},
+      lualine_y = {
+        "fileformat",
+        {
+          "filetype",
+          cond = function() return vim.bo.filetype ~= "dashboard" end
+        }
+      },
+      lualine_z = {"location"},
+    }
+  }
 end
 
 M["dashboard-nvim"] = function()

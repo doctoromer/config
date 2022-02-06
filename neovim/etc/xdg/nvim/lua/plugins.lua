@@ -62,7 +62,7 @@ return packer.startup(plugin_manager.make_config {
 
   -- UI and display
   "navarasu/onedark.nvim",
-  "itchyny/lightline.vim",
+  "nvim-lualine/lualine.nvim",
   "glepnir/dashboard-nvim",
   {"lewis6991/gitsigns.nvim", requires = "nvim-lua/plenary.nvim"},
   "tpope/vim-fugitive",

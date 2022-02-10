@@ -186,8 +186,9 @@ M["nvim-cmp"] = function()
       ["<C-space>"] = cmp.mapping(c_space, {"i", "s"}),
     },
     sources = cmp.config.sources(
-      {{name = "vsnip"}, {name = "nvim_lsp"}},
-      {{name = "buffer"}}
+      {{name = "vsnip"}, {name = "nvim_lsp"}, {name = "nvim_lsp_signature_help"}},
+      {{name = "buffer"}},
+      {{name = "path"}}
     )
   }
 

@@ -49,6 +49,7 @@ return packer.startup(plugin_manager.make_config {
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
       "neovim/nvim-lspconfig",
       {"hrsh7th/cmp-vsnip", requires = "hrsh7th/vim-vsnip"}
     }

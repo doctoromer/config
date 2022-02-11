@@ -30,7 +30,7 @@ return packer.startup(plugin_manager.make_config {
   {"neovim/nvim-lspconfig", keys = false},
   {"tami5/lspsaga.nvim", requires = "neovim/nvim-lspconfig"},
 
-  "mhartington/formatter.nvim",
+  {"mhartington/formatter.nvim", cmd = {"Format", "FormatWrite"}},
 
   -- Treesitter
   "nvim-treesitter/nvim-treesitter",
@@ -59,7 +59,7 @@ return packer.startup(plugin_manager.make_config {
     requires = {"nvim-lua/popup.nvim", "nvim-lua/plenary.nvim"},
     ft = "dashboard",
   },
-  {"nvim-telescope/telescope-fzf-native.nvim", requires = "nvim-telescope/telescope.nvim", run = "make"},
+  {"nvim-telescope/telescope-fzf-native.nvim", after = "telescope.nvim", run = "make"},
 
   -- UI and display
   "navarasu/onedark.nvim",
@@ -103,7 +103,7 @@ return packer.startup(plugin_manager.make_config {
   "wellle/targets.vim",
   "foosoft/vim-argwrap",
   "tpope/vim-unimpaired",
-  "jiangmiao/auto-pairs",
+  {"jiangmiao/auto-pairs", event = "InsertEnter"},
   {
     "terrortylor/nvim-comment",
     keys = {

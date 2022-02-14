@@ -25,6 +25,7 @@
     },
     "vim": {
         "repo": "neovim/neovim",
+        "tag": "nightly",
         "asset_regex": "nvim.appimage",
         "file_map": {
             "nvim.appimage": "usr/bin/vim"

@@ -41,15 +41,20 @@ def ensure_dirs(path):
         os.makedirs(str(path.parent))
 
 
-def get_latest_release(repo_name, asset_regex):
+def _get_from_release_endpoint(repo_name, api_path=""):
+    with requests.get(f"https://api.github.com/repos/{repo_name}/releases/{api_path}") as response:
+        response_data = response.json()
+        return response_data
+
+
+def get_release(repo_name, asset_regex, api_path):
     """
-    Get an asset from the last release of github repository using github's API.
+    Get an asset from a release of github repository using github's API.
     If the `asset_regex` is `SOURCE_CODE_ASSET`, it return the zip file of the source.
     returns the tuple (`asset_name`, `asset_content`).
     """
     logger.info(f"Reading latest release of {repo_name}")
-    with requests.get(f"https://api.github.com/repos/{repo_name}/releases/latest") as response:
-        response_data = response.json()
+    response_data = _get_from_release_endpoint(repo_name, api_path=api_path)
 
     if asset_regex == SOURCE_CODE_ASSET:
         with requests.get(response_data["zipball_url"]) as response:
@@ -61,6 +66,14 @@ def get_latest_release(repo_name, asset_regex):
                 return asset["name"], response.content
     else:
         raise ValueError(f"No matching asset to regex {asset_regex}")
+
+
+def get_latest_release(repo_name, asset_regex):
+    return get_release(repo_name, asset_regex, "latest")
+
+
+def get_release_by_tag(repo_name, asset_regex, tag_name):
+    return get_release(repo_name, asset_regex, f"tags/{tag_name}")
 
 
 def match_file_map_entry(base_dir, entry_name, file_map):
@@ -162,7 +175,10 @@ def download_binaries(binaries, base_dir):
     for name, binary in binaries.items():
         if is_download_required(binaries, base_dir, name):
             logger.info(f"Downloading {name}")
-            asset_name, asset_data = get_latest_release(binary["repo"], binary["asset_regex"])
+            if "tag" in binary:
+                asset_name, asset_data = get_release_by_tag(binary["repo"], binary["asset_regex"], binary["tag"])
+            else:
+                asset_name, asset_data = get_latest_release(binary["repo"], binary["asset_regex"])
             write_or_extract_binaries(asset_name, asset_data, base_dir, binaries[name]["file_map"])
         else:
             logger.info(f"Downloading {name} is not required")

@@ -4,16 +4,12 @@ vim.g.mapleader = ";"
 
 M["nvim-lspconfig"] = function()
   return {
-    ["<leader>"] = {
-      gD = {vim.lsp.buf.type_definition, "Goto type definition"},
-      gf = {vim.lsp.buf.formatting, "Format all file"},
-      ca = {vim.lsp.buf.code_action, "Code action"},
-      gf = {"<cmd>lua vim.lsp.buf.range_formatting()<CR>", "Format range", mode="v"}
-    },
-    g = {
-      D = {vim.lsp.buf.declaration, "Goto decleration"},
-      i = {vim.lsp.buf.implementation, "Goto implementation"},
-    },
+    {"<leader>gD", vim.lsp.buf.type_definition, description = "Goto type definition"},
+    {"<leader>gf", vim.lsp.buf.formatting, description = "Format all file"},
+    {"<leader>ca", vim.lsp.buf.code_action, description = "Code action"},
+    {"<leader>gf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", description = "Format range", mode = "v"},
+    {"gD", vim.lsp.buf.declaration, description = "Goto decleration"},
+    {"gi", vim.lsp.buf.implementation, description = "Goto implementation"},
   }
 end
 
@@ -30,44 +26,41 @@ M["lspsaga.nvim"] = function()
     "<C-\\><C-n>:lua require('lspsaga.floaterm').close_float_terminal()<CR>",
     {noremap = true, silent = true}
   )
+
   return {
-    ["<leader>"] = {
-      gd = {saga_provider.lsp_finder, "Show definition and references"}
-    },
-    K = {saga_hover.render_hover_doc, "Show hover information"},
-    gr = {saga_rename.rename, "Rename symbol"},
-    gp = {saga_provider.preview_definition, "Preview definition"},
-    ["[d"] = {saga_diagnostic.navigate("prev"), "Previous diagnostic"},
-    ["]d"] = {saga_diagnostic.navigate("next"), "Next diagnostic"},
-    ["<C-t>"] = {saga_floaterm.open_float_terminal, "Toggle float terminal"},
+    {"<leader>gd", saga_provider.lsp_finder, description = "Show definition and references"},
+    {"K", saga_hover.render_hover_doc, description = "Show hover information"},
+    {"gr", saga_rename.rename, description = "Rename symbol"},
+    {"gp", saga_provider.preview_definition, description = "Preview definition"},
+    {"[d", saga_diagnostic.navigate("prev"), description = "Previous diagnostic"},
+    {"]d", saga_diagnostic.navigate("next"), description = "Next diagnostic"},
+    {"<C-t>", saga_floaterm.open_float_terminal, description = "Toggle float terminal"},
   }
 end
 
+
 M["treesitter-unit"] = function()
-  vim.api.nvim_set_keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
-  vim.api.nvim_set_keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
-  vim.api.nvim_set_keymap('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<CR>', {noremap=true})
-  vim.api.nvim_set_keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>', {noremap=true})
-  return {}
+  return {
+    {"iu", ':lua require"treesitter-unit".select()<CR>', mode = "x"},
+    {"au", ':lua require"treesitter-unit".select(true)<CR>', mode = "x"},
+    {"iu", ':<c-u>lua require"treesitter-unit".select()<CR>', mode = "o"},
+    {"au", ':<c-u>lua require"treesitter-unit".select(true)<CR>', mode = "o"}
+  }
 end
 
 M["telescope.nvim"] = function()
   local telescope = require("telescope.builtin")
 
   return {
-    ["<leader>"] = {
-      f = {telescope.find_files, "Find file"},
-      a = {telescope.live_grep, "Search in files"},
-      l = {telescope.current_buffer_fuzzy_find, "Search in current file"},
-      b = {telescope.buffers, "Find buffer"},
-      H = {telescope.help_tags, "Help pages"},
-      m = {telescope.keymaps, "Find keymaps"},
-    },
-    g = {
-      x = {telescope.lsp_references, "Show references"},
-      d = {telescope.lsp_definitions, "Goto definition"},
-      s = {telescope.lsp_document_symbols, "Show symbols"},
-    }
+    {"<leader>f", telescope.find_files, description = "Find file"},
+    {"<leader>a", telescope.live_grep, description = "Search in files"},
+    {"<leader>l", telescope.current_buffer_fuzzy_find, description = "Search in current file"},
+    {"<leader>b", telescope.buffers, description = "Find buffer"},
+    {"<leader>H", telescope.help_tags, description = "Help pages"},
+    {"<leader>m", telescope.keymaps, description = "Find keymaps"},
+    {"gx", telescope.lsp_references, description = "Show references"},
+    {"gd", telescope.lsp_definitions, description = "Goto definition"},
+    {"gs", telescope.lsp_document_symbols, description = "Show symbols"},
   }
 end
 
@@ -83,29 +76,29 @@ M["Navigator.nvim"] = function()
   local navigator = require("Navigator")
 
   return {
-    ["<M-h>"] = {navigator.left, "Tmux left"},
-    ["<M-j>"] = {navigator.down, "Tmux down"},
-    ["<M-k>"] = {navigator.up, "Tmux up"},
-    ["<M-l>"] = {navigator.right, "Tmux right"},
+    {"<M-h>", navigator.left, description = "Tmux left"},
+    {"<M-j>", navigator.down, description = "Tmux down"},
+    {"<M-k>", navigator.up, description = "Tmux up"},
+    {"<M-l>", navigator.right, description = "Tmux right"},
   }
 end
 
 M["vim-argwrap"] = function()
   return {
-    ga = {"<cmd>ArgWrap<CR>", "Spread arguments"}
+      {"ga", "<cmd>ArgWrap<CR>", description = "Spread arguments"}
   }
 end
 
 M["vim-easymotion"] = function()
   return {
-    ["<Space>"] = {"<Plug>(easymotion-prefix)", "Easymotion prefix"}
+    {"<Space>", "<Plug>(easymotion-prefix)", description = "Easymotion prefix"}
   }
 end
 
 paste_mode = false
 colorcolumn = nil
 
-M["which-key.nvim"] = function()
+M["legendary.nvim"] = function()
   local toggle_copy_mode = function()
     if paste_mode then
       vim.cmd("IndentBlanklineEnable")
@@ -126,38 +119,38 @@ M["which-key.nvim"] = function()
 
   return {
     -- General keybindings
-    [";"] = {"<nop>", ""},
-    ["\\"] = {";", ""},
+    {";", "<nop>", description = ""},
+    {"\\", ";", description = ""},
 
     -- Disable bad keys
-    ["<home>"] = {"<nop>", "Bad key"},
-    ["<end>"] = {"<nop>", "Bad key"},
-    ["<del>"] = {"<nop>", "Bad key"},
-    ["<insert>"] = {"<nop>", "Bad key"},
-    ["<left>"] = {"<nop>", "Bad key"},
-    ["<down>"] = {"<nop>", "Bad key"},
-    ["<up>"] = {"<nop>", "Bad key"},
-    ["<right>"] = {"<nop>", "Bad key"},
+    {"<home>", "<nop>", description = "Bad key"},
+    {"<end>", "<nop>", description = "Bad key"},
+    {"<del>", "<nop>", description = "Bad key"},
+    {"<insert>", "<nop>", description = "Bad key"},
+    {"<left>", "<nop>", description = "Bad key"},
+    {"<down>", "<nop>", description = "Bad key"},
+    {"<up>", "<nop>", description = "Bad key"},
+    {"<right>", "<nop>", description = "Bad key"},
 
     -- Tabs
-    ["<leader>tt"] = {"<cmd>tabnew<CR>", "New tab"},
-    gb = {"<cmd>tabprevious<CR>", "Previous tab"},
-    gf = {"<cmd>-tabmove<CR>", "Move tab left"},
-    gh = {"<cmd>+tabmove<CR>", "Move tab right"},
+    {"<leader>tt", "<cmd>tabnew<CR>", description = "New tab"},
+    {"gb", "<cmd>tabprevious<CR>", description = "Previous tab"},
+    {"gf", "<cmd>-tabmove<CR>", description = "Move tab left"},
+    {"gh", "<cmd>+tabmove<CR>", description = "Move tab right"},
 
-    ["<leader>p"] = {toggle_copy_mode, "Toggle copymode"},
+    {"<leader>p", toggle_copy_mode, description = "Toggle copymode"},
 
     -- Horizontal scroll
-    zl = {"zL", "Scroll right"},
-    zh = {"zH", "Scroll left"},
+    {"zl", "zL", description = "Scroll right"},
+    {"zh", "zH", description = "Scroll left"},
 
     -- Other
-    [">"] = {">gv", "Indent", mode="v"},
-    ["<"] = {"<gv", "Dedent", mode="v"},
+    {">", ">gv", description = "Indent", mode = "v"},
+    {"<", "<gv", description = "Dedent", mode = "v"},
 
     -- Center after search
-    n = {"nzz", "Search next"},
-    N = {"Nzz", "Search previous"},
+    {"n", "nzz", description = "Search next"},
+    {"N", "Nzz", description = "Search previous"},
   }
 end
 

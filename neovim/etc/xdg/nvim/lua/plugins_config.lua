@@ -11,13 +11,8 @@ local language_servers = {
   cmake = {}
 }
 
-M["which-key.nvim"] = function()
-  require("which-key").setup {
-    plugins = {
-      registers = false,
-      marks = false
-    }
-  }
+M["legendary.nvim"] = function()
+  require("legendary").setup()
 end
 
 M["nvim-lspconfig"] = function()

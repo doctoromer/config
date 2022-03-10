@@ -25,16 +25,11 @@ function require_or_value(module_name, value)
 end
 
 function call_config_and_keybinds(name)
-  local which_key = require_or_value("which-key", DUMMY_MODULE)
+  local legendary = require_or_value("legendary", DUMMY_MODULE)
 
   if config.keybindings[name] then
-    keybind_result = config.keybindings[name]()
-
-    if keybind_result[1] and keybind_result[2] then
-      which_key.register(keybind_result[1], keybind_result[2])
-    else
-      which_key.register(keybind_result)
-    end
+    keybinds = config.keybindings[name]()
+    legendary.bind_keymaps(keybinds)
   end
 
   if config.plugins_config[name] then
@@ -43,27 +38,21 @@ function call_config_and_keybinds(name)
 end
 
 local function generate_keybinds(keybindings)
-  local which_key_keys = require_or_value("which-key.keys", DUMMY_MODULE)
+  local legendary = require_or_value("legendary", DUMMY_MODULE)
 
   setfenv(keybindings, vim.tbl_extend("force", getfenv(), { require = function() return DUMMY_MODULE end}))
-  keybind_result = keybindings()
+  keymaps = keybindings()
   setfenv(keybindings, vim.tbl_extend("force", getfenv(), { require = require}))
 
-  mappings = which_key_keys.parse_mappings({}, keybind_result, "")
   result = {}
 
-  for _, mapping in pairs(mappings) do
-    if not mapping.group then
-      mode = mapping.mode or "n"
-      table.insert(result, {mode, mapping.prefix})
-    end
+  for _, keymap in pairs(keymaps) do
+    mode = keymap.mode or "n"
+    table.insert(result, {mode, keymap[1]})
   end
+
   -- Check if table is empty
-  if not next(result) then
-    return nil
-  else
-    return result
-  end
+  return result
 end
 
 M.setup = function(user_config)

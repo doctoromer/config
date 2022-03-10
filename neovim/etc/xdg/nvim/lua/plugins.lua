@@ -24,7 +24,7 @@ plugin_manager.setup {
 return packer.startup(plugin_manager.make_config {
   -- Base plugins
   {"wbthomason/packer.nvim", lock = true, config = false},
-  {"folke/which-key.nvim", keys = false},
+  {"mrjones2014/legendary.nvim", requires = "stevearc/dressing.nvim"},
 
   -- LSP
   {"neovim/nvim-lspconfig", keys = false},
@@ -38,7 +38,7 @@ return packer.startup(plugin_manager.make_config {
   "p00f/nvim-ts-rainbow",
   "nvim-treesitter/nvim-treesitter-textobjects",
   "windwp/nvim-ts-autotag",
-  "David-Kunz/treesitter-unit",
+  {"David-Kunz/treesitter-unit", keys = false},
   "RRethy/nvim-treesitter-endwise",
 
   -- Completion and searching

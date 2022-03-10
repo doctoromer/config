@@ -12,7 +12,9 @@ local language_servers = {
 }
 
 M["legendary.nvim"] = function()
-  require("legendary").setup()
+  legendary = require("legendary")
+  legendary.setup()
+  legendary.bind_keymaps(require("keybind").other_keymaps())
 end
 
 M["nvim-lspconfig"] = function()

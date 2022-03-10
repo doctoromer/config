@@ -110,7 +110,7 @@ end
 local paste_mode = false
 local colorcolumn = nil
 
-M["legendary.nvim"] = function()
+M["other_keymaps"] = function()
   local toggle_copy_mode = function()
     if paste_mode then
       vim.cmd("IndentBlanklineEnable")

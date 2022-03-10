@@ -64,14 +64,6 @@ M["telescope.nvim"] = function()
   }
 end
 
-M["vim-fugitive"] = function()
-  return {
-    ["<leader>"] = {
-      gb = {"<cmd>Git blame<CR>", "Git blame"}
-    }
-  }
-end
-
 M["Navigator.nvim"] = function()
   local navigator = require("Navigator")
 
@@ -95,8 +87,8 @@ M["vim-easymotion"] = function()
   }
 end
 
-paste_mode = false
-colorcolumn = nil
+local paste_mode = false
+local colorcolumn = nil
 
 M["legendary.nvim"] = function()
   local toggle_copy_mode = function()
@@ -147,10 +139,6 @@ M["legendary.nvim"] = function()
     -- Other
     {">", ">gv", description = "Indent", mode = "v"},
     {"<", "<gv", description = "Dedent", mode = "v"},
-
-    -- Center after search
-    {"n", "nzz", description = "Search next"},
-    {"N", "Nzz", description = "Search previous"},
   }
 end
 

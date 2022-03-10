@@ -376,6 +376,14 @@ M["vim-pasta"] = function()
   g.pasta_disabled_filetypes = {}
 end
 
+M["smart-pairs"] = function()
+  require('pairs'):setup {
+    indent = {
+      python = 1
+    }
+  }
+end
+
 M["nvim-comment"] = function()
   require("nvim_comment").setup()
 end

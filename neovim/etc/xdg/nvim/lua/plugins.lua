@@ -102,7 +102,7 @@ return packer.startup(plugin_manager.make_config {
   "wellle/targets.vim",
   "foosoft/vim-argwrap",
   "tpope/vim-unimpaired",
-  {"jiangmiao/auto-pairs", event = "InsertEnter"},
+  {"ZhiyuanLck/smart-pairs", event = 'InsertEnter'},
   {
     "terrortylor/nvim-comment",
     keys = {

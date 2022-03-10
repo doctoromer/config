@@ -47,8 +47,14 @@ local function generate_keybinds(keybindings)
   result = {}
 
   for _, keymap in pairs(keymaps) do
-    mode = keymap.mode or "n"
-    table.insert(result, {mode, keymap[1]})
+    if type(keymap.mode) == "table" then
+      for _, mode in pairs(keymap.mode) do
+        table.insert(result, {mode, keymap[1]})
+      end
+    else
+      mode = keymap.mode or "n"
+      table.insert(result, {mode, keymap[1]})
+    end
   end
 
   -- Check if table is empty

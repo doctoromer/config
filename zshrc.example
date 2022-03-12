@@ -1,0 +1,2 @@
+export CONFIG_ZSH_VI_MODE=true
+source /usr/share/zsh/config/init.zsh

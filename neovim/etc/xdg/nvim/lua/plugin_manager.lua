@@ -1,7 +1,7 @@
 local M = {}
 
 config = {
-  keybindings = nil,
+  keymaps_functions = nil,
   plugins_config = nil,
 }
 
@@ -24,12 +24,12 @@ function require_or_value(module_name, value)
   end
 end
 
-function call_config_and_keybinds(name)
+function call_config_and_bind_keymaps(name)
   local legendary = require_or_value("legendary", DUMMY_MODULE)
 
-  if config.keybindings[name] then
-    keybinds = config.keybindings[name]()
-    legendary.bind_keymaps(keybinds)
+  if config.keymaps_functions[name] then
+    keymaps = config.keymaps_functions[name]()
+    legendary.bind_keymaps(keymaps)
   end
 
   if config.plugins_config[name] then
@@ -37,12 +37,12 @@ function call_config_and_keybinds(name)
   end
 end
 
-local function generate_keybinds(keybindings)
+local function generate_packer_keymaps(keymaps_function)
   local legendary = require_or_value("legendary", DUMMY_MODULE)
 
-  setfenv(keybindings, vim.tbl_extend("force", getfenv(), { require = function() return DUMMY_MODULE end}))
-  keymaps = keybindings()
-  setfenv(keybindings, vim.tbl_extend("force", getfenv(), { require = require}))
+  setfenv(keymaps_function, vim.tbl_extend("force", getfenv(), { require = function() return DUMMY_MODULE end}))
+  keymaps = keymaps_function()
+  setfenv(keymaps_function, vim.tbl_extend("force", getfenv(), { require = require}))
 
   result = {}
 
@@ -83,12 +83,12 @@ M.make_config = function(plugins)
 
     repo_name = plugin[1]:gmatch("[^/]+/(.+)")()
 
-    if config.keybindings[repo_name] then
-      set_if_not_false(plugin, "keys", generate_keybinds(config.keybindings[repo_name]))
+    if config.keymaps_functions[repo_name] then
+      set_if_not_false(plugin, "keys", generate_packer_keymaps(config.keymaps_functions[repo_name]))
     end
 
-    if config.plugins_config[repo_name] or config.keybindings[repo_name] then
-      set_if_not_false(plugin, "config", call_config_and_keybinds)
+    if config.plugins_config[repo_name] or config.keymaps_functions[repo_name] then
+      set_if_not_false(plugin, "config", call_config_and_bind_keymaps)
     end
 
     table.insert(result, plugin)

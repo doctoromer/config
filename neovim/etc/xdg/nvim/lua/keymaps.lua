@@ -130,7 +130,7 @@ M["other_keymaps"] = function()
   end
 
   return {
-    -- General keybindings
+    -- General keymaps
     {";", "<nop>", description = ""},
     {"\\", ";", description = ""},
 

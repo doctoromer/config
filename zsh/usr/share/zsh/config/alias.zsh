@@ -18,6 +18,8 @@ alias la='exa -a'
 alias l='exa -F'
 alias tree="exa -T --color=always"
 
+alias tmux='tmux -u2'
+
 better_ll() {
     exa -l --color=always $* | less -RFX
 }

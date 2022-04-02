@@ -53,7 +53,7 @@ def get_release(repo_name, asset_regex, api_path):
     If the `asset_regex` is `SOURCE_CODE_ASSET`, it return the zip file of the source.
     returns the tuple (`asset_name`, `asset_content`).
     """
-    logger.info(f"Reading latest release of {repo_name}")
+    logger.debug(f"Reading latest release of {repo_name}")
     response_data = _get_from_release_endpoint(repo_name, api_path=api_path)
 
     if asset_regex == SOURCE_CODE_ASSET:
@@ -95,7 +95,7 @@ def match_file_map_entry(base_dir, entry_name, file_map):
 
 
 def _extract_tarball(name, data, base_dir, file_map):
-    logger.info(f"Extracting tar file: {name}")
+    logger.debug(f"Extracting tar file: {name}")
 
     with tarfile.open(fileobj=io.BytesIO(data), mode="r:gz") as tar_file:
         for member in tar_file.getmembers():
@@ -113,7 +113,7 @@ def _extract_tarball(name, data, base_dir, file_map):
 
 
 def _extract_zip(name, data, base_dir, file_map):
-    logger.info(f"Extracting zip file: {name}")
+    logger.debug(f"Extracting zip file: {name}")
 
     with zipfile.ZipFile(io.BytesIO(data), mode="r") as zip_file:
 
@@ -148,7 +148,7 @@ def write_or_extract_binaries(name, data, base_dir, file_map):
     elif name.endswith(".zip"):
         _extract_zip(name, data, base_dir, file_map)
     else:
-        logger.info(f"Saving regular file: {name}")
+        logger.debug(f"Saving regular file: {name}")
         output_path = base_dir / file_map[name]
         ensure_dirs(output_path)
         with output_path.open("wb") as output_file:
@@ -181,7 +181,7 @@ def download_binaries(binaries, base_dir):
                 asset_name, asset_data = get_latest_release(binary["repo"], binary["asset_regex"])
             write_or_extract_binaries(asset_name, asset_data, base_dir, binaries[name]["file_map"])
         else:
-            logger.info(f"Downloading {name} is not required")
+            logger.debug(f"Downloading {name} is not required")
 
 
 def download_vim_plugins():
@@ -192,11 +192,12 @@ def download_vim_plugins():
     env = dict(os.environ)
     env["XDG_CONFIG_HOME"] = str(xdg_base_path)
 
-    logger.info("Downloading neovim plugins")
     subprocess.check_call(
         ["binaries/usr/bin/vim", "--headless", "-c", "autocmd User PackerComplete quitall", "-c", "PackerSync"],
         env=env
     )
+    # The neovim command above doesn't print newline
+    print("")
 
 
 def download_zsh_plugins():
@@ -220,12 +221,16 @@ def fix_permissions():
 
 def download():
     """ Download all dependencies """
+    download_functions = [
+        ("Submodules", download_submodules, (), {}),
+        ("Binaries", download_binaries, (BINARIES, BINARIES_DIR), {}),
+        ("Vim plugins", download_vim_plugins, (), {}),
+        ("Tmux plugins", download_tmux_plugins, (), {})
+    ]
     try:
-        download_submodules()
-        download_binaries(BINARIES, BINARIES_DIR)
-        download_vim_plugins()
-        download_zsh_plugins()
-        download_tmux_plugins()
+        for name, function, args, kwargs in download_functions:
+            logger.info(f"Downloading {name}")
+            function(*args, **kwargs)
     finally:
         fix_permissions()
 
@@ -233,8 +238,7 @@ def download():
 def auto_remove():
     example_binary = Path("/usr/bin/vim")
     if example_binary.is_symlink():
-        # We resolve the symlink to vim binary,
-        # then go up to the root of the config dir to find the install.py script
+        # We resolve the symlink to vim binary, then go up to the root of the config dir to find the install.py script
         install_script_path = example_binary.resolve().parents[3] / "install.py"
         logger.info(f"Executing remove script in: {install_script_path}")
         subprocess.check_call(["python3", install_script_path, "remove"])
@@ -282,7 +286,7 @@ def main():
     args = parse_args()
     configure_logger(args.verbose)
 
-    logger.info(f"Executing {args.command} command")
+    logger.debug(f"Executing {args.command} command")
 
     if args.command in ("install", "remove"):
         if args.packages is None:

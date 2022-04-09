@@ -7,7 +7,18 @@ local language_servers = {
   pylsp = {
     init_options = {documentFormatting = false}
   },
-  clangd = {},
+  clangd = {
+    cmd = {
+      (function()
+        clangd_names = {"clangd", "clangd-12", "clangd-11", "clangd-10", "clangd-9"}
+        for _, x in ipairs(clangd_names) do
+          if fn.executable(x) == 1 then
+            return x
+          end
+        end
+      end)()
+    }
+  },
   cmake = {}
 }
 

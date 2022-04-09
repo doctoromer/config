@@ -22,10 +22,19 @@ M["nvim-lspconfig"] = function()
       vim.lsp.diagnostic.on_publish_diagnostics, {virtual_text = false}
   )
 
+  local capabilities = nil
+  pcall(
+    function()
+      local capabilities = require("cmp_nvim_lsp").update_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+      )
+    end
+  )
+
   for server_name, config in pairs(language_servers) do
+      config.capabilities = capabilities
       require("lspconfig")[server_name].setup(config)
   end
-
 end
 
 M["lspsaga.nvim"] = function()
@@ -192,14 +201,6 @@ M["nvim-cmp"] = function()
   cmp.setup.cmdline("/", {sources = {{name = "buffer"}}})
   cmp.setup.cmdline("?", {sources = {{name = "buffer"}}})
   cmp.setup.cmdline(":", {sources = cmp.config.sources({{name = "path"}}, {{name = "cmdline"}})})
-
-  -- setup lspconfig
-  local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  for server_name, _ in pairs(language_servers) do
-    require("lspconfig")[server_name].setup {
-      capabilities = capabilities
-    }
-  end
 end
 
 M["telescope.nvim"] = function()

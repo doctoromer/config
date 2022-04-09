@@ -3,25 +3,6 @@ local M = {}
 local g = vim.g
 local fn = vim.fn
 
-local language_servers = {
-  pylsp = {
-    init_options = {documentFormatting = false}
-  },
-  clangd = {
-    cmd = {
-      (function()
-        clangd_names = {"clangd", "clangd-12", "clangd-11", "clangd-10", "clangd-9"}
-        for _, x in ipairs(clangd_names) do
-          if fn.executable(x) == 1 then
-            return x
-          end
-        end
-      end)()
-    }
-  },
-  cmake = {}
-}
-
 M["legendary.nvim"] = function()
   legendary = require("legendary")
   legendary.setup()
@@ -29,6 +10,25 @@ M["legendary.nvim"] = function()
 end
 
 M["nvim-lspconfig"] = function()
+  local language_servers = {
+    pylsp = {
+      init_options = {documentFormatting = false}
+    },
+    clangd = {
+      cmd = {
+        (function()
+          clangd_names = {"clangd", "clangd-12", "clangd-11", "clangd-10", "clangd-9"}
+          for _, x in ipairs(clangd_names) do
+            if fn.executable(x) == 1 then
+              return x
+            end
+          end
+        end)()
+      },
+    },
+    cmake = {}
+  }
+
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {virtual_text = false}
   )

@@ -279,8 +279,7 @@ M["lualine.nvim"] = function()
         {
           "branch",
           icon = ""
-        },
-        "diagnostics",
+        }
       },
       lualine_c = {
         {

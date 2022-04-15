@@ -13,8 +13,11 @@ if colorama is not None:
     INVALID = colorama.Fore.LIGHTRED_EX + INVALID + colorama.Fore.RESET
 
 
-def check_command(command):
-    return shutil.which(command) is not None
+def check_commands(*commands):
+    for command in commands:
+        if shutil.which(command) is not None:
+            return True
+    return False
 
 
 def check_import(import_name):
@@ -27,12 +30,12 @@ def check_import(import_name):
 
 
 FEATURES = {
-    "ag": (check_command, "ag"),
-    "zsh": (check_command, "zsh"),
-    "git": (check_command, "git"),
-    "Python LSP": (check_command, "pylsp"),
-    "C/CPP LSP": (check_command, "clangd"),
-    "cmake LSP": (check_command, "cmake-language-server"),
+    "ag": (check_commands, "ag"),
+    "zsh": (check_commands, "zsh"),
+    "git": (check_commands, "git"),
+    "Python LSP": (check_commands, "pylsp"),
+    "C/CPP LSP": (check_commands, ("clangd", "clangd-12", "clangd-11", "clangd-10", "clangd-9")),
+    "cmake LSP": (check_commands, "cmake-language-server"),
     "requests": (check_import, "requests"),
     "dploy": (check_import, "dploy")
 }

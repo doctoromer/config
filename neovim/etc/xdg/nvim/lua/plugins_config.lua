@@ -108,7 +108,7 @@ M["nvim-treesitter"] = function()
 end
 
 M["nvim-treesitter-context"] = function()
-  require("treesitter-context.config").setup {enable = true}
+  require("treesitter-context").setup {enable = true}
 end
 
 M["nvim-ts-rainbow"] = function()

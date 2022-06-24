@@ -219,13 +219,18 @@ def fix_permissions():
         subprocess.call(["chown", "-f", "-R", real_user, SCRIPT_DIR, f"/home/{real_user}/.local/share/nvim"])
 
 
+def update_zsh_plugins():
+    subprocess.call(["zsh", "-c", "source /usr/share/zsh/config/zcomet/zcomet.zsh; zcomet update"])
+
+
 def download():
     """ Download all dependencies """
     download_functions = [
         ("Submodules", download_submodules, (), {}),
         ("Binaries", download_binaries, (BINARIES, BINARIES_DIR), {}),
         ("Vim plugins", download_vim_plugins, (), {}),
-        ("Tmux plugins", download_tmux_plugins, (), {})
+        ("Tmux plugins", download_tmux_plugins, (), {}),
+        ("Zsh plugins", update_zsh_plugins, (), {})
     ]
     try:
         for name, function, args, kwargs in download_functions:

@@ -39,7 +39,7 @@ most() {
 }
 
 iface() {
-    netstat -i | tail -n +3 | awk '{print $1;}'
+    ip a | grep -o "^[0-9]: [a-zA-Z0-9]*" | cut -d' ' -f2
 }
 
 netrst() {

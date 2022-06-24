@@ -16,6 +16,7 @@ o.colorcolumn = "120"
 o.lazyredraw = true
 o.completeopt = "menu,menuone,noselect"
 o.display = "lastline"
+o.laststatus = 3
 
 -- Persistentcy
 o.undofile = true

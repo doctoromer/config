@@ -305,51 +305,34 @@ M["lualine.nvim"] = function()
 end
 
 M["dashboard-nvim"] = function()
-  g.dashboard_default_executive = "telescope"
-  g.dashboard_custom_shortcut = {
-      last_session = "";
-      find_history = "";
-      find_file = "";
-      new_file = "";
-      change_colorscheme = "";
-      find_word = "";
-      book_marks = "";
+  dashboard = require("dashboard")
+  dashboard.custom_header = {
+    "               __                         ",
+    "             / /\\                       ",
+    "            / /  \\                      ",
+    "           / /    \\__________           ",
+    "         / /      \\        /\\         ",
+    "         /_/        \\      / /          ",
+    "    ___\\ \\      ___\\____/_/_        ",
+    "   /____\\ \\    /___________/\\       ",
+    "\\     \\ \\   \\           \\ \\   ",
+    " \\     \\ \\   \\____       \\ \\  ",
+    "  \\     \\ \\  /   /\\       \\ \\ ",
+    "    \\   / \\_\\/   / /        \\ \\ ",
+    "        \\ /        / /__________\\/    ",
+    "         /        / /     /             ",
+    "        /        / /     /              ",
+    "       /________/ /\\    /              ",
+    "    \\________\\/\\ \\  /            ",
+    "                  \\_\\/               ",
+    "", ""
   }
 
-  g.dashboard_custom_shortcut_icon = {
-      last_session = "";
-      find_history = "";
-      find_file = "";
-      new_file = "";
-      change_colorscheme = "";
-      find_word = "";
-      book_marks = "";
+  dashboard.custom_center = {
+    {icon = "* ", desc = "Find files", action = "Telescope find_files"},
+    {icon = "* ", desc = "New file", action = "enew"},
   }
-
-  g.dashboard_custom_header = {
-      "",
-      "         __                         ",
-      "        / /\\                       ",
-      "       / /  \\                      ",
-      "      / /    \\__________           ",
-      "     / /      \\        /\\         ",
-      "    /_/        \\      / /          ",
-      " ___\\ \\      ___\\____/_/_        ",
-      "/____\\ \\    /___________/\\       ",
-      "\\     \\ \\   \\           \\ \\   ",
-      " \\     \\ \\   \\____       \\ \\  ",
-      "  \\     \\ \\  /   /\\       \\ \\ ",
-      "   \\   / \\_\\/   / /        \\ \\ ",
-      "    \\ /        / /__________\\/    ",
-      "     /        / /     /             ",
-      "    /        / /     /              ",
-      "   /________/ /\\    /              ",
-      "   \\________\\/\\ \\  /            ",
-      "               \\_\\/               ",
-      ""
-  }
-
-  g.dashboard_custom_footer = {"🙃"}
+  dashboard.custom_footer = {"🙃"}
 end
 
 M["gitsigns.nvim"] = function()

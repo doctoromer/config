@@ -304,6 +304,20 @@ M["lualine.nvim"] = function()
   }
 end
 
+M["tabline.nvim"] = function()
+  require("tabline").setup {
+    enable = true,
+    options = {
+      section_separators = {"", ""},
+      component_separators = {"", ""},
+      show_tabs_always = false,
+      show_devicons = false,
+      show_filename_only = true,
+      show_tabs_only = true
+    }
+  }
+end
+
 M["dashboard-nvim"] = function()
   dashboard = require("dashboard")
   dashboard.custom_header = {

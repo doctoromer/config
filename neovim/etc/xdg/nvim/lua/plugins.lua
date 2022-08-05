@@ -67,7 +67,7 @@ return packer.startup(plugin_manager.make_config {
   "nvim-lualine/lualine.nvim",
   {"kdheepak/tabline.nvim"},
   "glepnir/dashboard-nvim",
-  {"lewis6991/gitsigns.nvim", requires = "nvim-lua/plenary.nvim"},
+  {"lewis6991/gitsigns.nvim", keys = false, requires = "nvim-lua/plenary.nvim"},
   {"machakann/vim-highlightedyank", event = "TextYankPost"},
   "ntpeters/vim-better-whitespace",
   "lukas-reineke/indent-blankline.nvim",

@@ -40,6 +40,7 @@ return packer.startup(plugin_manager.make_config {
   "windwp/nvim-ts-autotag",
   {"David-Kunz/treesitter-unit", keys = false},
   "RRethy/nvim-treesitter-endwise",
+  {"danymat/neogen", requires = "nvim-treesitter/nvim-treesitter"},
 
   -- Completion and searching
   {

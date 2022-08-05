@@ -48,6 +48,12 @@ M["treesitter-unit"] = function()
   }
 end
 
+M["neogen"] = function()
+  return {
+    {"<leader>n", require("neogen").generate, mode = "n"}
+  }
+end
+
 M["telescope.nvim"] = function()
   local telescope = require("telescope.builtin")
 

@@ -144,6 +144,10 @@ M["nvim-ts-autotag"] = function()
   }
 end
 
+M["neogen"] = function()
+  require("neogen").setup {}
+end
+
 M["nvim-treesitter-endwise"] = function()
   require("nvim-treesitter.configs").setup {
     endwise = {enable = true}

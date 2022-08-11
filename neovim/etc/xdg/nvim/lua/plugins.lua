@@ -28,7 +28,7 @@ return packer.startup(plugin_manager.make_config {
 
   -- LSP
   {"neovim/nvim-lspconfig", keys = false},
-  {"tami5/lspsaga.nvim", requires = "neovim/nvim-lspconfig"},
+  {"glepnir/lspsaga.nvim", requires = "neovim/nvim-lspconfig"},
 
   {"mhartington/formatter.nvim", cmd = {"Format", "FormatWrite"}},
 

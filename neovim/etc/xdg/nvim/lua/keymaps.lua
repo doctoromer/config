@@ -14,27 +14,22 @@ M["nvim-lspconfig"] = function()
 end
 
 M["lspsaga.nvim"] = function()
-  local saga_provider = require("lspsaga.provider")
+  local saga_finder = require("lspsaga.finder")
+  local saga_definition = require("lspsaga.definition")
   local saga_hover = require("lspsaga.hover")
   local saga_rename = require("lspsaga.rename")
   local saga_diagnostic = require("lspsaga.diagnostic")
   local saga_floaterm = require("lspsaga.floaterm")
 
-  vim.api.nvim_set_keymap(
-    "t",
-    "<C-t>",
-    "<C-\\><C-n>:lua require('lspsaga.floaterm').close_float_terminal()<CR>",
-    {noremap = true, silent = true}
-  )
-
   return {
-    {"<leader>gd", saga_provider.lsp_finder, description = "Show definition and references"},
+    {"<leader>gd", function() saga_finder:lsp_finder() end, description = "Show definition and references"},
     {"K", saga_hover.render_hover_doc, description = "Show hover information"},
-    {"gr", saga_rename.rename, description = "Rename symbol"},
-    {"gp", saga_provider.preview_definition, description = "Preview definition"},
-    {"[d", saga_diagnostic.navigate("prev"), description = "Previous diagnostic"},
-    {"]d", saga_diagnostic.navigate("next"), description = "Next diagnostic"},
+    {"gr", saga_rename.lsp_rename, description = "Rename symbol"},
+    {"gp", saga_definition.preview_definition, description = "Preview definition"},
+    {"[d", saga_diagnostic.goto_next, description = "Previous diagnostic"},
+    {"]d", saga_diagnostic.goto_prev, description = "Next diagnostic"},
     {"<C-t>", saga_floaterm.open_float_terminal, description = "Toggle float terminal"},
+    {"<C-t>", saga_floaterm.close_float_terminal, mode = "t", description = "Toggle float terminal"},
   }
 end
 

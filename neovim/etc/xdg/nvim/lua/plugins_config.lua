@@ -274,7 +274,8 @@ M["tabline.nvim"] = function()
       show_tabs_always = false,
       show_devicons = false,
       show_filename_only = true,
-      show_tabs_only = true
+      show_tabs_only = true,
+      modified_icon = "+ "
     }
   }
 end

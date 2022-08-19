@@ -156,58 +156,15 @@ end
 
 M["nvim-cmp"] = function()
   local cmp = require("cmp")
-  local feedkey = function(key, mode)
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes(key, true, true, true),
-      mode,
-      true
-    )
-  end
-
-  local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-  end
-
-  local tab = function(fallback)
-    if cmp.visible() then
-        cmp.select_next_item()
-    elseif fn["vsnip#jumpable"](1) == 1 then
-        feedkey("<Plug>(vsnip-jump-next)", "")
-    elseif has_words_before() then
-        cmp.complete()
-    else
-        fallback()
-    end
-  end
-
-  local shift_tab = function()
-    if cmp.visible() then
-      cmp.select_prev_item()
-    elseif fn["vsnip#jumpable"](-1) == 1 then
-      feedkey("<Plug>(vsnip-jump-prev)", "")
-    end
-  end
-
-  local c_space = function()
-    if fn["vsnip#available"](1) == 1 or fn["vsnip#jumpable"](1) == 1 then
-      feedkey("<Plug>(vsnip-expand-or-jump)", "")
-    end
-  end
 
   cmp.setup {
     snippet = {
       expand = function(args)
-        fn["vsnip#anonymous"](args.body)
+        require("luasnip").lsp_expand(args.body)
       end,
     },
-    mapping = {
-      ["<Tab>"] = cmp.mapping(tab, {"i", "s"}),
-      ["<S-Tab>"] = cmp.mapping(shift_tab, {"i", "s"}),
-      ["<C-space>"] = cmp.mapping(c_space, {"i", "s"}),
-    },
     sources = cmp.config.sources(
-      {{name = "vsnip"}, {name = "nvim_lsp"}, {name = "nvim_lsp_signature_help"}},
+      {{name = "luasnip"}, {name = "nvim_lsp"}, {name = "nvim_lsp_signature_help"}},
       {{name = "buffer"}},
       {{name = "path"}}
     )
@@ -376,10 +333,9 @@ M["virt-column.nvim"] = function()
   require("virt-column").setup()
 end
 
-M["vim-vsnip"] = function()
-  -- This sets the snippets dir to be relative to this file.
-  -- Then, it is possible to use this in user's home directory or as a system wide configuration.
-  g.vsnip_snippet_dir = fn.fnamemodify(vim.call("resolve", fn.expand("<sfile>:p")), ":h") .. "/../snippets"
+M["LuaSnip"] = function()
+  local snippets_dir = fn.fnamemodify(vim.call("resolve", fn.expand("<sfile>:p")), ":h") .. "/../snippets"
+  require("luasnip.loaders.from_vscode").lazy_load({ paths = { snippets_dir } })
 end
 
 M["Navigator.nvim"] = function()

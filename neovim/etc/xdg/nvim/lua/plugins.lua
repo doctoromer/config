@@ -45,6 +45,7 @@ return packer.startup(plugin_manager.make_config {
   -- Completion and searching
   {
     "hrsh7th/nvim-cmp",
+    keys = false,
     requires = {
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-path",
@@ -52,7 +53,7 @@ return packer.startup(plugin_manager.make_config {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "neovim/nvim-lspconfig",
-      {"hrsh7th/cmp-vsnip", requires = "hrsh7th/vim-vsnip"}
+      {"saadparwaiz1/cmp_luasnip", require = "L3MON4D3/LuaSnip"}
     }
   },
   {
@@ -75,7 +76,7 @@ return packer.startup(plugin_manager.make_config {
 
   -- Utilities
   "tpope/vim-sleuth",
-  "hrsh7th/vim-vsnip",
+  {"L3MON4D3/LuaSnip", keys = false},
   {"whiteinge/diffconflicts", cmd = "DiffConflicts"},
   {"Vimjas/vim-python-pep8-indent", ft = "python"},
   "numToStr/Navigator.nvim",

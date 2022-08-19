@@ -49,6 +49,41 @@ M["neogen"] = function()
   }
 end
 
+M["nvim-cmp"] = function()
+  local luasnip = require("luasnip")
+  local cmp = require("cmp")
+
+  local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  end
+
+  local tab = function()
+    if cmp.visible() then
+	cmp.select_next_item()
+    elseif luasnip.expand_or_jumpable() then
+	luasnip.jump(1)
+    elseif has_words_before() then
+	cmp.complete()
+    else
+      vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, true, true), "n")
+    end
+  end
+
+  local shift_tab = function()
+    if cmp.visible() then
+      cmp.select_prev_item()
+    elseif luasnip.jumpable() then
+      luasnip.jump(-1)
+    end
+  end
+
+  return {
+    {"<Tab>", tab, mode = {"i", "s"}},
+    {"<S-Tab>", shift_tab, mode = {"i", "s"}}
+  }
+end
+
 M["telescope.nvim"] = function()
   local telescope = require("telescope.builtin")
 
@@ -82,6 +117,12 @@ M["gitsigns.nvim"] = function()
     {"<leader>hD", function() gitsigns.diffthis("~") end, description = ""},
     {"<leader>td", gitsigns.toggle_deleted, description = ""},
     {"ih", ":<C-U>Gitsigns select_hunk<CR>", description = "", mode = {"o", "x"}},
+  }
+end
+
+M["LuaSnip"] = function()
+  return {
+    {"<C-space>", require("luasnip").expand_or_jump, mode = {"i", "s"}}
   }
 end
 

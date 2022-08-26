@@ -117,6 +117,7 @@ return packer.startup(plugin_manager.make_config {
       {"n", "gcu"}
     },
   },
+  "gaoDean/autolist.nvim",
   "easymotion/vim-easymotion",
   "michaeljsmith/vim-indent-object",
   {"Julian/vim-textobj-variable-segment", requires = "kana/vim-textobj-user"}

@@ -359,4 +359,8 @@ M["nvim-comment"] = function()
   require("nvim_comment").setup()
 end
 
+M["autolist.nvim"] = function()
+  require("autolist").setup({})
+end
+
 return M

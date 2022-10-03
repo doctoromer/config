@@ -1,16 +1,8 @@
 #!/usr/bin/env python3
 import shutil
 
-try:
-    import colorama
-except ImportError:
-    colorama = None
-
-VALID = "Valid"
-INVALID = "Invalid"
-if colorama is not None:
-    VALID = colorama.Fore.LIGHTGREEN_EX + VALID + colorama.Fore.RESET
-    INVALID = colorama.Fore.LIGHTRED_EX + INVALID + colorama.Fore.RESET
+VALID = "\x1b[92mValid\x1b[39m"
+INVALID = "\x1b[91mInvalid\x1b[39m"
 
 
 def check_commands(*commands):

@@ -209,7 +209,12 @@ def download_zsh_plugins():
 def download_tmux_plugins():
     """ Download tmux plugins using tpm """
     download_script_path = SCRIPT_DIR / "misc/usr/share/tmux/tpm/bin/install_plugins"
-    subprocess.check_call(["bash", download_script_path])
+
+    # Add tmux to path to allow using tpm
+    new_env = os.environ.copy()
+    new_env["PATH"] += ":" + str(SCRIPT_DIR.absolute() / "binaries/usr/bin")
+
+    subprocess.check_call(["bash", download_script_path], env=new_env)
 
 
 def fix_permissions():

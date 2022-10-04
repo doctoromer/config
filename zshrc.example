@@ -1,2 +1,3 @@
-export CONFIG_ZSH_VI_MODE=true
+### Uncomment this to enable command line vim keybindings
+# export CONFIG_ZSH_VI_MODE=true
 source /usr/share/zsh/config/init.zsh

@@ -25,7 +25,7 @@
         }
     },
     "vim": {
-        "repo": "neovim/neovim",
+        "repo": "antoineco/neovim-neovim",
         "asset_regex": "nvim.appimage",
         "file_map": {
             "nvim.appimage": "usr/bin/vim"

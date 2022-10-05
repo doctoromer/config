@@ -17,7 +17,13 @@ main ()
     python3 install.py install
 
     export HOME=$(sh -c "echo ~${SUDO_USER:-}")
-    cp -n zshrc.example $HOME/.zshrc
+    export ZSHRC=$HOME/.zshrc
+    if [ -f $ZSHRC ]; then
+        echo "Copy to $ZSHRC:\n"
+        cat zshrc.example
+    else
+        cp -n zshrc.example $ZSHRC
+    fi
 }
 
 main $*

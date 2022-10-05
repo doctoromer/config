@@ -12,7 +12,13 @@ alias la='exa -a'
 alias l='exa -F'
 alias tree="exa -T --color=always"
 
-alias tmux='tmux -u2'
+
+if [ -f /.dockerenv ]; then
+    alias vim="vim --appimage-extract-and-run"
+    alias tmux="tmux --appimage-extract-and-run -u2"
+else
+    alias tmux="tmux -u2"
+fi
 
 better_ll() {
     exa -l --color=always $* | less -RFX

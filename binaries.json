@@ -48,10 +48,10 @@
         }
     },
     "tmux": {
-        "repo": "pythops/tmux-linux-binary",
-        "asset_regex": "tmux",
+        "repo": "nelsonenzo/tmux-appimage",
+        "asset_regex": "tmux.appimage$",
         "file_map": {
-            "tmux": "usr/bin/tmux"
+            "tmux.appimage": "usr/bin/tmux"
         }
     }
 }

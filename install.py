@@ -225,7 +225,7 @@ def fix_permissions():
 
 
 def update_zsh_plugins():
-    subprocess.call(["zsh", "-c", "source /usr/share/zsh/config/zcomet/zcomet.zsh; zcomet update"])
+    subprocess.call(["zsh", "-c", "-i", "zcomet update"])
 
 
 def download():

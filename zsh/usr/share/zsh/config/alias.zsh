@@ -6,13 +6,7 @@ alias clean='sudo apt -y autoclean'
 alias autorm='sudo apt -y autoremove'
 alias maintain='update && depend && upgrade && clean && autorm'
 
-# aliases for common programs replacements
-if which batcat > /dev/null; then
-    alias cat=batcat
-elif which bat > /dev/null; then
-    alias cat=bat
-fi
-
+alias cat=bat
 alias ls=exa
 alias la='exa -a'
 alias l='exa -F'

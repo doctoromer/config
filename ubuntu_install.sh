@@ -2,7 +2,7 @@
 
 main ()
 {
-    if [[ ! $(id -u -n) == "root" ]]; then
+    if [ "$(id -u -n)" != "root" ]; then
         echo Please execute this script as root\!
         exit 1
     fi
@@ -10,7 +10,7 @@ main ()
     apt update
     apt install -y silversearcher-ag zsh git python3-pip
     # Required for install.py
-    pip3 install -q dploy
+    pip3 install -q requests dploy
     # This packages collide with some of the binaries
     apt purge -y vim vim-common vim-runtime vim-tiny tmux
 

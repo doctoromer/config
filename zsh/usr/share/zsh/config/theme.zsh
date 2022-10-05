@@ -13,7 +13,7 @@ autoload -U add-zsh-hook
 autoload -Uz vcs_info
 autoload -U colors && colors
 
-#use extended color palette if available
+# use extended color palette if available
 if [[ $terminfo[colors] -ge 256 ]]; then
     turquoise="%F{81}"
     orange="%F{166}"
@@ -29,7 +29,7 @@ else
 fi
 
 # enable VCS systems you use
-zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:*' enable git
 
 # check-for-changes can be really slow.
 # you should disable it, if you work with large repositories
@@ -55,21 +55,17 @@ zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
 zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
 
 
+# Update vcs info when git command is executed
 function kyoshi_preexec {
     case "$2" in
         *git*)
-            PR_GIT_UPDATE=1
-            ;;
-        *hub*)
-            PR_GIT_UPDATE=1
-            ;;
-        *svn*)
             PR_GIT_UPDATE=1
             ;;
     esac
 }
 add-zsh-hook preexec kyoshi_preexec
 
+# Update vcs info when changing directory
 function kyoshi_chpwd {
     PR_GIT_UPDATE=1
 }
@@ -84,6 +80,8 @@ function kyoshi_precmd {
         else
             FMT_BRANCH="(%{$turquoise%}%b %u%c${PR_RST})"
         fi
+
+        # This sets the $vcs_info_msg_0_ part of the PROMPT
         zstyle ':vcs_info:*:prompt:*' formats "${FMT_BRANCH} "
 
         vcs_info 'prompt'

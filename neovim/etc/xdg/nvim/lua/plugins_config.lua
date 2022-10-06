@@ -282,27 +282,10 @@ end
 
 M["dashboard-nvim"] = function()
   dashboard = require("dashboard")
-  dashboard.custom_header = {
-    "               __                         ",
-    "             / /\\                       ",
-    "            / /  \\                      ",
-    "           / /    \\__________           ",
-    "         / /      \\        /\\         ",
-    "         /_/        \\      / /          ",
-    "    ___\\ \\      ___\\____/_/_        ",
-    "   /____\\ \\    /___________/\\       ",
-    "\\     \\ \\   \\           \\ \\   ",
-    " \\     \\ \\   \\____       \\ \\  ",
-    "  \\     \\ \\  /   /\\       \\ \\ ",
-    "    \\   / \\_\\/   / /        \\ \\ ",
-    "        \\ /        / /__________\\/    ",
-    "         /        / /     /             ",
-    "        /        / /     /              ",
-    "       /________/ /\\    /              ",
-    "    \\________\\/\\ \\  /            ",
-    "                  \\_\\/               ",
-    "", ""
-  }
+
+  ascii_art = require("ascii_art")
+  math.randomseed(os.time())
+  dashboard.custom_header = ascii_art[math.random(#ascii_art)]
 
   dashboard.custom_center = {
     {icon = "* ", desc = "Find files", action = "Telescope find_files"},

@@ -284,8 +284,12 @@ M["dashboard-nvim"] = function()
   dashboard = require("dashboard")
 
   ascii_art = require("ascii_art")
-  math.randomseed(os.time())
-  dashboard.custom_header = ascii_art[math.random(#ascii_art)]
+  if vim.env.NVIM_RANDOM_DASHBOARD_ASCII_ART then
+    math.randomseed(os.time())
+    dashboard.custom_header = ascii_art[math.random(#ascii_art)]
+  else
+    dashboard.custom_header = ascii_art[1]
+  end
 
   dashboard.custom_center = {
     {icon = "* ", desc = "Find files", action = "Telescope find_files"},

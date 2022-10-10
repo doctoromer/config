@@ -1,3 +1,6 @@
+### Uncomment this to enable random ascii art when running neovim
+# export NVIM_RANDOM_DASHBOARD_ASCII_ART=true
+
 ### Uncomment this to enable command line vim keybindings
 # export CONFIG_ZSH_VI_MODE=true
 source /usr/share/zsh/config/init.zsh

@@ -79,8 +79,8 @@ M["nvim-cmp"] = function()
   end
 
   return {
-    {"<Tab>", tab, mode = {"i", "s"}},
-    {"<S-Tab>", shift_tab, mode = {"i", "s"}}
+    {"<Tab>", tab, mode = {"i", "s"}, description = "Smart tab completion"},
+    {"<S-Tab>", shift_tab, mode = {"i", "s"}, description = "Smart shift-tab completion"}
   }
 end
 

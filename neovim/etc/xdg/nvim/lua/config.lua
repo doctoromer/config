@@ -63,19 +63,17 @@ g.loaded_rrhelper = 1
 
 -- Other configurations
 vim.api.nvim_create_autocmd("VimResized", {
-  pattern = "*",
-  callback = function()
-    vim.cmd("wincmd =")
-  end,
-  desc = "Auto resize windows when terminal sized is changed"
+    pattern = "*",
+    callback = function()
+        vim.cmd("wincmd =")
+    end,
+    desc = "Auto resize windows when terminal sized is changed",
 })
 
-local misspelled_commands = {"W", "Wq", "WQ", "Q", "Qa", "QA", "Wqa", "WQa", "WQA"}
+local misspelled_commands = { "W", "Wq", "WQ", "Q", "Qa", "QA", "Wqa", "WQa", "WQA" }
 
 for _, command in pairs(misspelled_commands) do
-  vim.api.nvim_create_user_command(
-    command,
-    function() vim.cmd(string.lower(command)) end,
-    {bang = true}
-  )
+    vim.api.nvim_create_user_command(command, function()
+        vim.cmd(string.lower(command))
+    end, { bang = true })
 end

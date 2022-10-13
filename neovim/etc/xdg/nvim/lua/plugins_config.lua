@@ -27,6 +27,7 @@ M["nvim-lspconfig"] = function()
             },
         },
         cmake = {},
+        zls = {},
     }
 
     vim.lsp.handlers["textDocument/publishDiagnostics"] =
@@ -343,7 +344,9 @@ M["smart-pairs"] = function()
 end
 
 M["nvim-comment"] = function()
-    require("nvim_comment").setup()
+    require("nvim_comment").setup({
+        comment_empty = false,
+    })
 end
 
 M["autolist.nvim"] = function()

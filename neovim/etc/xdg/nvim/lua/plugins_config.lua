@@ -33,10 +33,7 @@ M["nvim-lspconfig"] = function()
     vim.lsp.handlers["textDocument/publishDiagnostics"] =
         vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false })
 
-    local capabilities = nil
-    pcall(function()
-        local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-    end)
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
     for server_name, config in pairs(language_servers) do
         config.capabilities = capabilities

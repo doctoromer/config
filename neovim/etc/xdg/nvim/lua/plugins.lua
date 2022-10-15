@@ -15,8 +15,8 @@ packer.init({
     },
     git = {
         -- This is an alias from the global gitconfig, used to overwrite force local changes in plugins
-        subcommands = { update = "pull-force" }
-    }
+        subcommands = { update = "pull-force" },
+    },
 })
 
 local plugin_manager = require("plugin_manager")
@@ -81,7 +81,7 @@ return packer.startup(plugin_manager.make_config({
     -- Utilities
     "tpope/vim-sleuth",
     { "L3MON4D3/LuaSnip", keys = false },
-    { "whiteinge/diffconflicts", cmd = "DiffConflicts" },
+    { "sindrets/diffview.nvim", cmd = "DiffviewOpen", requires = "nvim-lua/plenary.nvim" },
     { "Vimjas/vim-python-pep8-indent", ft = "python" },
     "numToStr/Navigator.nvim",
 

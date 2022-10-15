@@ -327,6 +327,12 @@ M["LuaSnip"] = function()
     require("luasnip.loaders.from_vscode").lazy_load({ paths = { snippets_dir } })
 end
 
+M["diffview.nvim"] = function()
+    require("diffview").setup({
+        use_icons = false,
+    })
+end
+
 M["Navigator.nvim"] = function()
     require("Navigator").setup()
 end

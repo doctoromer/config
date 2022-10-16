@@ -70,7 +70,7 @@ return packer.startup(plugin_manager.make_config({
     -- UI and display
     "navarasu/onedark.nvim",
     "nvim-lualine/lualine.nvim",
-    { "kdheepak/tabline.nvim" },
+    "nanozuki/tabby.nvim",
     "glepnir/dashboard-nvim",
     { "lewis6991/gitsigns.nvim", keys = false, requires = "nvim-lua/plenary.nvim" },
     { "machakann/vim-highlightedyank", event = "TextYankPost" },

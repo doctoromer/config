@@ -263,19 +263,73 @@ M["lualine.nvim"] = function()
     })
 end
 
-M["tabline.nvim"] = function()
-    require("tabline").setup({
-        enable = true,
-        options = {
-            section_separators = { "", "" },
-            component_separators = { "", "" },
-            show_tabs_always = false,
-            show_devicons = false,
-            show_filename_only = true,
-            show_tabs_only = true,
-            modified_icon = "+ ",
-        },
+M["tabby.nvim"] = function()
+    local lualine_theme = require("lualine.themes.onedark")
+    local mode_theme = {
+        n = lualine_theme.normal.a,
+        c = lualine_theme.command.a,
+        i = lualine_theme.insert.a,
+
+        v = lualine_theme.visual.a,
+        V = lualine_theme.visual.a,
+        ["CTRL-V"] = lualine_theme.visual.a,
+
+        t = lualine_theme.terminal.a,
+        R = lualine_theme.replace.a,
+    }
+    local inactive_theme = lualine_theme.inactive.a
+
+    -- This makes the tabline update when changing modes (not including visual modes)
+    vim.api.nvim_create_autocmd({ "CmdlineEnter", "CmdlineLeave", "InsertEnter", "InsertLeave", "CursorHold" }, {
+        callback = function()
+            vim.cmd("redrawtabline")
+        end,
     })
+
+    -- Renders one tab label from tabby's tab object
+    local function tab_render(tab)
+        local hl = tab.is_current() and mode_theme[fn.mode()] or inactive_theme
+        local modified = vim.api.nvim_buf_get_option(tab.current_win().buf().id, "modified") and " +" or ""
+        return {
+            " ",
+            tab.name(),
+            modified,
+            " ",
+            hl = hl,
+        }
+    end
+
+    -- Renders one dindow label from tabby's window object
+    local function window_render(window)
+        local hl = window.is_current() and mode_theme[fn.mode()] or inactive_theme
+        return { " ", window.buf_name(), " ", hl = hl }
+    end
+
+    -- Renders the entire tabline from tabby's line object
+    local function tabline_render(line)
+        return {
+            line.tabs().foreach(tab_render),
+            line.spacer(),
+            line.wins_in_tab(line.api.get_current_tab()).foreach(window_render),
+            hl = "TabLineFill",
+        }
+    end
+
+    -- Renders the label's name string from neovim's tab_id
+    local function tab_label_render(tab_id)
+        local current_window = vim.api.nvim_tabpage_get_win(tab_id)
+        if vim.api.nvim_win_get_config(current_window).relative ~= "" then
+            return "[Floating]"
+        else
+            return require("tabby.feature.buf_name").get(current_window)
+        end
+        return name
+    end
+
+    require("tabby.tabline").set(
+        tabline_render,
+        { tab_name = { name_fallback = tab_label_render }, buf_name = { mode = "unique" } }
+    )
 end
 
 M["dashboard-nvim"] = function()

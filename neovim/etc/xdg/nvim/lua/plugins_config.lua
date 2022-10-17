@@ -42,13 +42,52 @@ M["nvim-lspconfig"] = function()
 end
 
 M["lspsaga.nvim"] = function()
+    local colors = require("lspsaga.lspkind").colors
     require("lspsaga").init_lsp_saga({
+        move_in_saga = { prev = "<C-u>", next = "<C-d>" },
+        finder_icons = {
+            def = "⌘ ",
+            ref = "➜ ",
+            link = "➤ "
+        },
         finder_action_keys = {
             vsplit = "v",
             split = "s",
             quit = { "q", "<esc>", "<C-c>" },
             open = "<CR>",
         },
+        custom_kind = {
+            File = { "π ", colors.fg },
+            Module = { "δ ", colors.blue },
+            Namespace = { "ν ", colors.orange },
+            Package = { "Π ", colors.violet },
+            Class = { "κ ", colors.violet },
+            Method = { "μ ", colors.violet },
+            Property = { "ρ ", colors.cyan },
+            Field = { "λ ", colors.teal },
+            Constructor = { "ξ ", colors.blue },
+            Enum = { "ε ", colors.green },
+            Interface = { "ι ", colors.orange },
+            Function = { "Φ ", colors.violet },
+            Variable = { "Ω ", colors.blue },
+            Constant = { "Σ ", colors.cyan },
+            String = { "σ ", colors.green },
+            Number = { "ν ", colors.green },
+            Boolean = { "β ", colors.orange },
+            Array = { "α ", colors.blue },
+            Object = { "ω ", colors.orange },
+            Key = { "υ ", colors.red },
+            Null = { "Θ ", colors.red },
+            EnumMember = { "ζ ", colors.green },
+            Struct = { "ς ", colors.violet },
+            Event = { "Δ ", colors.violet },
+            Operator = { "ψ ", colors.green },
+            TypeParameter = { "Ξ ", colors.green },
+            TypeAlias = { "δ ", colors.green },
+            Parameter = { "γ ", colors.blue },
+            StaticMethod = { "θ ", colors.orange },
+            Macro = { "η ", colors.red },
+        }
     })
 end
 

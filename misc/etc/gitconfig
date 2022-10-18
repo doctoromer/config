@@ -29,7 +29,6 @@
 	fresh = clean -f -d -X
 	fixup = commit --amend --no-edit
 	count = "!git log --oneline --branches | wc -l"
-	pull-force = !"git fetch --all && git reset --hard HEAD && git merge"
 [merge]
 	tool = diffconflicts
 	conflictstyle = diff3

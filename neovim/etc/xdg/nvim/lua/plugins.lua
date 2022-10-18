@@ -13,10 +13,6 @@ packer.init({
     display = {
         open_fn = require("packer.util").float,
     },
-    git = {
-        -- This is an alias from the global gitconfig, used to overwrite force local changes in plugins
-        subcommands = { update = "pull-force" },
-    },
 })
 
 local plugin_manager = require("plugin_manager")

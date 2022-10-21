@@ -193,21 +193,24 @@ def download_vim_plugins():
     env["XDG_CONFIG_HOME"] = str(xdg_base_path)
 
     nvim_dir = f"{SCRIPT_DIR}/neovim/etc/xdg/nvim"
-    subprocess.check_call(
-        [
-            "binaries/usr/bin/vim",
-            "--cmd", f"let &runtimepath.=',{nvim_dir}'",
-            "--cmd", f"let &packpath.=',{nvim_dir}'",
-            "--cmd", "packadd packer.nvim",
-            "-u", f"{nvim_dir}/init.vim",
-            "--headless",
-            "-c",
-            "autocmd User PackerComplete quitall",
-            "-c",
-            "PackerSync"
-        ],
-        env=env
-    )
+    download_command = ["binaries/usr/bin/vim"]
+
+    if os.path.exists("/.dockerenv"):
+        download_command.append("--appimage-extract-and-run")
+
+    download_command.extend([
+        "--cmd", f"let &runtimepath.=',{nvim_dir}'",
+        "--cmd", f"let &packpath.=',{nvim_dir}'",
+        "--cmd", "packadd packer.nvim",
+        "-u", f"{nvim_dir}/init.vim",
+        "--headless",
+        "-c",
+        "autocmd User PackerComplete quitall",
+        "-c",
+        "PackerSync"
+    ])
+    subprocess.check_call(download_command, env=env)
+
     # The neovim command above doesn't print newline
     print("")
 

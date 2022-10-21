@@ -307,6 +307,13 @@ def configure_logger(verbose):
     )
 
 
+def execute_dploy(action, packages):
+    try:
+        getattr(dploy, action)(packages, "/")
+    except PermissionError:
+        print("Please run again with root")
+
+
 def main():
     args = parse_args()
     configure_logger(args.verbose)
@@ -320,9 +327,9 @@ def main():
             packages = args.packages.split(",")
 
     if args.command == "install":
-        dploy.stow(packages, "/")
+        execute_dploy("stow", packages)
     elif args.command == "remove":
-        dploy.unstow(packages, "/")
+        execute_dploy("unstow", packages)
     elif args.command == "auto-remove":
         auto_remove()
     elif args.command == "download":

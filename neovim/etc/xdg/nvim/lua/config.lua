@@ -8,6 +8,7 @@ o.foldenable = false
 o.lazyredraw = true
 o.clipboard = "unnamed"
 o.hidden = true
+o.mouse = nil
 
 -- Window display
 o.number = true

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# This script is a wrapper for tmux to allow transparently executing tmux command and plugins inside docker
+
+if [ -f /.dockerenv ]; then
+    tmux-bin --appimage-extract-and-run "$@"
+else
+    tmux-bin "$@"
+fi

@@ -4,6 +4,3 @@
 [submodule "zcomet"]
 	path = zsh/usr/share/zsh/config/zcomet
 	url = https://github.com/agkozak/zcomet
-[submodule "tpm"]
-	path = misc/usr/share/tmux/tpm
-	url = https://github.com/tmux-plugins/tpm

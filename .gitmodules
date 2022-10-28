@@ -4,3 +4,6 @@
 [submodule "zcomet"]
 	path = zsh/usr/share/zsh/config/zcomet
 	url = https://github.com/agkozak/zcomet
+[submodule "dracula"]
+	path = misc/usr/share/tmux/dracula
+	url = https://github.com/dracula/tmux

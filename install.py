@@ -6,9 +6,9 @@ import logging
 import os
 import re
 import subprocess
-from pathlib import Path
 import tarfile
 import zipfile
+from pathlib import Path
 
 import dploy
 import requests
@@ -229,17 +229,6 @@ def download_zsh_plugins():
     subprocess.check_call(["zsh", str(zsh_init_path)])
 
 
-def download_tmux_plugins():
-    """ Download tmux plugins using tpm """
-    download_script_path = SCRIPT_DIR / "misc/usr/share/tmux/tpm/bin/install_plugins"
-
-    # Add tmux to path to allow using tpm
-    new_env = os.environ.copy()
-    new_env["PATH"] += ":" + str(SCRIPT_DIR.absolute() / "binaries/usr/bin")
-
-    subprocess.check_call(["bash", download_script_path], env=new_env)
-
-
 def fix_permissions():
     """ Change ownership to the directory of this script if it is executed with sudo. """
     real_user = os.environ.get("SUDO_USER", None)
@@ -257,7 +246,6 @@ def download():
         ("Submodules", download_submodules, (), {}),
         ("Binaries", download_binaries, (BINARIES, BINARIES_DIR), {}),
         ("Vim plugins", download_vim_plugins, (), {}),
-        ("Tmux plugins", download_tmux_plugins, (), {}),
         ("Zsh plugins", update_zsh_plugins, (), {})
     ]
     try:

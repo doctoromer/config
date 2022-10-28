@@ -1,3 +1,5 @@
+CURRENT_DIR=$(dirname $(realpath $0))
+
 zstyle ':zcomet:*' repos-dir $CURRENT_DIR/repos
 zstyle ':zcomet:*' snippets-dir $CURRENT_DIR/snippets
 

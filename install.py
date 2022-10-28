@@ -5,6 +5,7 @@ import json
 import logging
 import os
 import re
+import shutil
 import subprocess
 import tarfile
 import zipfile
@@ -237,7 +238,12 @@ def fix_permissions():
 
 
 def update_zsh_plugins():
-    subprocess.call(["zsh", "-c", "-i", "zcomet update"])
+    if shutil.which("zsh") is None:
+        logger.error("Please install zsh to download zsh plugins")
+        return
+
+    zsh_init_path = SCRIPT_DIR / "zsh/usr/share/zsh/config/plugins.zsh"
+    subprocess.call(["zsh", "-c", f"source {zsh_init_path}", "-c", "zcomet update"])
 
 
 def download():
@@ -307,7 +313,7 @@ def execute_dploy(action, packages):
     try:
         getattr(dploy, action)(packages, "/")
     except PermissionError:
-        print("Please run again with root")
+        logger.error("Please run again with root")
 
 
 def main():

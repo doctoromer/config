@@ -171,16 +171,16 @@ def download_submodules():
     subprocess.check_call(["git", "submodule", "update", "--init"])
 
 
-def download_binaries(binaries, base_dir):
+def download_binaries():
     """ Download all binaries specified in `binaries` into `base_dir` """
-    for name, binary in binaries.items():
-        if is_download_required(binaries, base_dir, name):
+    for name, binary in BINARIES.items():
+        if is_download_required(BINARIES, BINARIES_DIR, name):
             logger.info(f"Downloading {name}")
             if "tag" in binary:
                 asset_name, asset_data = get_release_by_tag(binary["repo"], binary["asset_regex"], binary["tag"])
             else:
                 asset_name, asset_data = get_latest_release(binary["repo"], binary["asset_regex"])
-            write_or_extract_binaries(asset_name, asset_data, base_dir, binaries[name]["file_map"])
+            write_or_extract_binaries(asset_name, asset_data, BINARIES_DIR, BINARIES[name]["file_map"])
         else:
             logger.debug(f"Downloading {name} is not required")
 
@@ -208,12 +208,7 @@ def download_vim_plugins():
     ])
 
     packer_download_command = list(base_custom_command)
-    packer_download_command.extend([
-        "-c",
-        "autocmd User PackerComplete quitall",
-        "-c",
-        "PackerSync"
-    ])
+    packer_download_command.extend(["-c", "autocmd User PackerComplete quitall", "-c", "PackerSync"])
     subprocess.check_call(packer_download_command, env=env)
 
     treesitter_download_command = list(base_custom_command)
@@ -249,15 +244,15 @@ def update_zsh_plugins():
 def download():
     """ Download all dependencies """
     download_functions = [
-        ("Submodules", download_submodules, (), {}),
-        ("Binaries", download_binaries, (BINARIES, BINARIES_DIR), {}),
-        ("Vim plugins", download_vim_plugins, (), {}),
-        ("Zsh plugins", update_zsh_plugins, (), {})
+        ("Submodules", download_submodules),
+        ("Binaries", download_binaries),
+        ("Vim plugins", download_vim_plugins),
+        ("Zsh plugins", update_zsh_plugins)
     ]
     try:
-        for name, function, args, kwargs in download_functions:
+        for name, function in download_functions:
             logger.info(f"Downloading {name}")
-            function(*args, **kwargs)
+            function()
     finally:
         fix_permissions()
 

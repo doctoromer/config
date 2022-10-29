@@ -102,47 +102,31 @@ M["gitsigns.nvim"] = function()
         if vim.wo.diff then
             return "]c"
         end
-        vim.schedule(function()
-            gitsigns.next_hunk()
-        end)
+        vim.schedule(gitsigns.next_hunk)
         return "<Ignore>"
     end
 
     local function previous_hunk()
         if vim.wo.diff then
-            return "]c"
+            return "[c"
         end
-        vim.schedule(function()
-            gitsigns.prev_hunk()
-        end)
+        vim.schedule(gitsigns.prev_hunk)
         return "<Ignore>"
     end
 
     return {
         {"]c", next_hunk, description = "Goto next hunk", opts = { expr = true }},
-        {"[c", preview_hunk, description = "Goto previous hunk", opts = { expr = true },},
+        {"[c", previous_hunk, description = "Goto previous hunk", opts = { expr = true },},
         { "<leader>hs", gitsigns.stage_hunk, description = "Git stage hunk", mode = { "n", "v" } },
         { "<leader>hr", gitsigns.reset_hunk, description = "Git reset hunk", mode = { "n", "v" } },
         { "<leader>hS", gitsigns.stage_buffer, description = "Git stage buffer" },
         { "<leader>hu", gitsigns.undo_stage_hunk, description = "Git undo stage buffer" },
         { "<leader>hR", gitsigns.reset_buffer, description = "Git reset buffer" },
         { "<leader>hp", gitsigns.preview_hunk, description = "Git preview hunk" },
-        {
-            "<leader>hb",
-            function()
-                gitsigns.blame_line({ full = true })
-            end,
-            description = "Git blame line",
-        },
+        {"<leader>hb", function() gitsigns.blame_line({ full = true }) end, description = "Git blame line"},
         { "<leader>ht", gitsigns.toggle_current_line_blame, description = "Toggle current git line blame" },
         { "<leader>hd", gitsigns.diffthis, description = "Show diff of current changes" },
-        {
-            "<leader>hD",
-            function()
-                gitsigns.diffthis("~")
-            end,
-            description = "Show diff from previous commit",
-        },
+        {"<leader>hD", function() gitsigns.diffthis("~") end, description = "Show diff from previous commit"},
         { "ih", ":<C-U>Gitsigns select_hunk<CR>", description = "Git hunk text object", mode = { "o", "x" } },
     }
 end

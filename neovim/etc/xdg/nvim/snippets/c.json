@@ -35,12 +35,12 @@
     "description": "Code snippet for enum"
   },
   "#ifdef": {
-    "prefix": "ifdef",
+    "prefix": "#ifdef",
     "body": ["#ifdef ${DEBUG}", "$1", "#endif /* ${DEBUG} */"],
     "description": "Code snippet for #ifdef"
   },
   "#ifndef": {
-    "prefix": "ifndef",
+    "prefix": "#ifndef",
     "body": ["#ifndef ${1:1}", "$2", "#endif /* !$1 */"],
     "description": "Code snippet for #ifndef"
   },
@@ -64,18 +64,18 @@
     "body": ["case $1:", "\t$2", "\tbreak;$3"],
     "description": "Code snippet for case branch"
   },
-  "#inc": {
-    "prefix": "inc",
+  "#inc\"": {
+    "prefix": "#inc\"",
     "body": ["#include \"$1\"$0"],
     "description": "Code snippet for #include \" \""
   },
-  "#inc<": {
-    "prefix": "inc<",
+  "#inc": {
+    "prefix": "#inc",
     "body": ["#include <$1>$0"],
     "description": "Code snippet for #include < >"
   },
   "#def": {
-    "prefix": "def",
+    "prefix": "#def",
     "body": ["#define $1 $2"],
     "description": "Code snippet for #define \" \""
   },

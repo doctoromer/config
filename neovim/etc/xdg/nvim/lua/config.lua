@@ -76,3 +76,7 @@ for _, command in pairs(misspelled_commands) do
         vim.cmd(string.lower(command))
     end, { bang = true })
 end
+
+return {
+    nvim_root_dir = vim.fn.fnamemodify(vim.call("resolve", vim.fn.expand("<sfile>:p")), ":h")
+}

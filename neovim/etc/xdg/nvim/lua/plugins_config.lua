@@ -415,7 +415,7 @@ M["virt-column.nvim"] = function()
 end
 
 M["LuaSnip"] = function()
-    local snippets_dir = fn.fnamemodify(vim.call("resolve", fn.expand("<sfile>:p")), ":h") .. "/../snippets"
+    local snippets_dir = require("config").nvim_root_dir .. "/snippets"
     require("luasnip.loaders.from_vscode").lazy_load({ paths = { snippets_dir } })
 end
 

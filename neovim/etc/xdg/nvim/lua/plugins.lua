@@ -1,15 +1,12 @@
-local fn = vim.fn
-
 local packer = require("packer")
 local util = require("packer.util")
 local plugin_manager = require("plugin_manager")
-
-local script_directory = fn.fnamemodify(vim.call("resolve", fn.expand("<sfile>:p")), ":h")
+local config = require("config")
 
 -- This makes the plugins to work in user's home directory, system wide directory or as symlinked files.
 packer.init({
-    package_root = util.join_paths(script_directory, "pack"),
-    compile_path = util.join_paths(script_directory, "plugin", "packer_compiled.lua"),
+    package_root = util.join_paths(config.nvim_root_dir, "pack"),
+    compile_path = util.join_paths(config.nvim_root_dir, "plugin", "packer_compiled.lua"),
     display = {
         open_fn = require("packer.util").float,
     },

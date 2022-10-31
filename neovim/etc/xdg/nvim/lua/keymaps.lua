@@ -22,8 +22,8 @@ M["lspsaga.nvim"] = function()
         { "<leader>so", "<cmd>LSoutlineToggle<CR>", description = "Preview definition" },
         { "K", "<cmd>Lspsaga hover_doc<CR>", description = "Show hover information" },
         { "gr", "<cmd>Lspsaga rename<CR>", description = "Rename symbol" },
-        { "[d", saga_diagnostic.goto_next, description = "Previous diagnostic" },
-        { "]d", saga_diagnostic.goto_prev, description = "Next diagnostic" },
+        { "]d", saga_diagnostic.goto_next, description = "Previous diagnostic" },
+        { "[d", saga_diagnostic.goto_prev, description = "Next diagnostic" },
         { "<C-t>", "<cmd>Lspsaga open_floaterm<CR>", description = "Toggle float terminal" },
         { "<C-t>", "<cmd>Lspsaga close_floaterm<CR>", mode = "t", description = "Toggle float terminal" },
     }

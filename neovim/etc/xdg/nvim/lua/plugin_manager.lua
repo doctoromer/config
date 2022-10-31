@@ -7,16 +7,16 @@ config = {
 
 DUMMY_MODULE = {}
 setmetatable(DUMMY_MODULE, {
-    __index = function(dummy_module, key)
+    __index = function(dummy_module)
         return dummy_module
     end,
-    __call = function(dummy_module, args)
+    __call = function(dummy_module)
         return dummy_module
     end,
 })
 
 function require_or_value(module_name, value)
-    success, module = pcall(require, module_name)
+    local success, module = pcall(require, module_name)
     if success then
         return module
     else
@@ -28,7 +28,7 @@ function call_config_and_bind_keymaps(name)
     local legendary = require_or_value("legendary", DUMMY_MODULE)
 
     if config.keymaps_functions[name] then
-        keymaps = config.keymaps_functions[name]()
+        local keymaps = config.keymaps_functions[name]()
         legendary.bind_keymaps(keymaps)
     end
 
@@ -38,8 +38,6 @@ function call_config_and_bind_keymaps(name)
 end
 
 local function generate_packer_keymaps(keymaps_function)
-    local legendary = require_or_value("legendary", DUMMY_MODULE)
-
     setfenv(
         keymaps_function,
         vim.tbl_extend("force", getfenv(), {
@@ -48,10 +46,10 @@ local function generate_packer_keymaps(keymaps_function)
             end,
         })
     )
-    keymaps = keymaps_function()
+    local keymaps = keymaps_function()
     setfenv(keymaps_function, vim.tbl_extend("force", getfenv(), { require = require }))
 
-    result = {}
+    local result = {}
 
     for _, keymap in pairs(keymaps) do
         if type(keymap.mode) == "table" then
@@ -59,7 +57,7 @@ local function generate_packer_keymaps(keymaps_function)
                 table.insert(result, { mode, keymap[1] })
             end
         else
-            mode = keymap.mode or "n"
+            local mode = keymap.mode or "n"
             table.insert(result, { mode, keymap[1] })
         end
     end
@@ -87,7 +85,7 @@ M.make_config = function(plugins)
             end
         end
 
-        repo_name = plugin[1]:gmatch("[^/]+/(.+)")()
+        local repo_name = plugin[1]:gmatch("[^/]+/(.+)")()
 
         if config.keymaps_functions[repo_name] then
             set_if_not_false(plugin, "keys", generate_packer_keymaps(config.keymaps_functions[repo_name]))

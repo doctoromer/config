@@ -4,7 +4,8 @@ source $CURRENT_DIR/plugins.zsh
 source $CURRENT_DIR/alias.zsh
 source $CURRENT_DIR/theme.zsh
 
-export EDITOR="vim"
+bindkey "${terminfo[kRIT5]}" forward-word
+bindkey "${terminfo[kLFT5]}" backward-word
 
 # History options
 export HISTFILE=~/.zsh_history
@@ -22,7 +23,7 @@ zstyle ':completion:*' menu select
 
 # Allow shift-tab completion
 zmodload zsh/complist
-bindkey -M menuselect '^[[Z' reverse-menu-complete
+bindkey -M menuselect "${terminfo[kcbt]}" reverse-menu-complete
 
 # Smarter completion
 zstyle ':completion:*' matcher-list '' '+m:{a-zA-Z}={A-Za-z}' '+r:|[.,_-]=* r:|=*' '+l:|=* r:|=*'

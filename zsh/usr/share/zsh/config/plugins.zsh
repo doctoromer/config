@@ -21,6 +21,8 @@ zcomet load Tarrasch/zsh-bd
 zcomet load MichaelAquilina/zsh-you-should-use
 
 if [[ "$CONFIG_ZSH_VI_MODE" = true ]]; then
+    export EDITOR="vim"
+
     # To prevent zsh-vi-mode from overriding other keybindings (like fzf's ctrl-r)
     function zvm_config() {
         ZVM_INIT_MODE=sourcing

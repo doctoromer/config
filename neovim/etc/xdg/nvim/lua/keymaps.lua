@@ -17,7 +17,7 @@ M["lspsaga.nvim"] = function()
     local saga_diagnostic = require("lspsaga.diagnostic")
 
     return {
-        {"<leader>sf", "<cmd>Lspsaga lsp_finder<CR>", description = "Show definition and references"},
+        { "<leader>sf", "<cmd>Lspsaga lsp_finder<CR>", description = "Show definition and references" },
         { "<leader>sp", "<cmd>Lspsaga peek_definition<CR>", description = "Preview definition" },
         { "<leader>so", "<cmd>LSoutlineToggle<CR>", description = "Preview definition" },
         { "K", "<cmd>Lspsaga hover_doc<CR>", description = "Show hover information" },
@@ -115,18 +115,30 @@ M["gitsigns.nvim"] = function()
     end
 
     return {
-        {"]c", next_hunk, description = "Goto next hunk", opts = { expr = true }},
-        {"[c", previous_hunk, description = "Goto previous hunk", opts = { expr = true },},
+        { "]c", next_hunk, description = "Goto next hunk", opts = { expr = true } },
+        { "[c", previous_hunk, description = "Goto previous hunk", opts = { expr = true } },
         { "<leader>hs", gitsigns.stage_hunk, description = "Git stage hunk", mode = { "n", "v" } },
-        { "<leader>hr", gitsigns.reset_hunk, description = "Git reset hunk", mode = { "n", "v" } },
+        { "<leader>hr", gitsigns.reset_hunk, description = "Git reset hunk", mode = { "n", "v" }, favorite = true },
         { "<leader>hS", gitsigns.stage_buffer, description = "Git stage buffer" },
         { "<leader>hu", gitsigns.undo_stage_hunk, description = "Git undo stage buffer" },
         { "<leader>hR", gitsigns.reset_buffer, description = "Git reset buffer" },
         { "<leader>hp", gitsigns.preview_hunk, description = "Git preview hunk" },
-        {"<leader>hb", function() gitsigns.blame_line({ full = true }) end, description = "Git blame line"},
+        {
+            "<leader>hb",
+            function()
+                gitsigns.blame_line({ full = true })
+            end,
+            description = "Git blame line",
+        },
         { "<leader>ht", gitsigns.toggle_current_line_blame, description = "Toggle current git line blame" },
         { "<leader>hd", gitsigns.diffthis, description = "Show diff of current changes" },
-        {"<leader>hD", function() gitsigns.diffthis("~") end, description = "Show diff from previous commit"},
+        {
+            "<leader>hD",
+            function()
+                gitsigns.diffthis("~")
+            end,
+            description = "Show diff from previous commit",
+        },
         { "ih", ":<C-U>Gitsigns select_hunk<CR>", description = "Git hunk text object", mode = { "o", "x" } },
     }
 end

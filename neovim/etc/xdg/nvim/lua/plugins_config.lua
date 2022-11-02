@@ -21,7 +21,7 @@ M["lspsaga.nvim"] = function()
         finder_icons = {
             def = "⌘ ",
             ref = "➜ ",
-            link = "➤ "
+            link = "➤ ",
         },
         finder_action_keys = {
             vsplit = "v",
@@ -60,7 +60,7 @@ M["lspsaga.nvim"] = function()
             Parameter = { "γ ", colors.blue },
             StaticMethod = { "θ ", colors.orange },
             Macro = { "η ", colors.red },
-        }
+        },
     })
 end
 
@@ -70,15 +70,15 @@ M["mason.nvim"] = function()
 
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
     require("mason-lspconfig").setup({
-        ensure_installed = {"clangd", "pylsp", "cmake", "sumneko_lua", "taplo", "zls"}
+        ensure_installed = { "clangd", "pylsp", "cmake", "sumneko_lua", "taplo", "zls" },
     })
     require("mason-lspconfig").setup_handlers({
-        function (server_name)
-            require("lspconfig")[server_name].setup { capabilities = capabilities }
+        function(server_name)
+            require("lspconfig")[server_name].setup({ capabilities = capabilities })
         end,
         pylsp = function()
             require("lspconfig").pylsp.setup({ init_options = { documentFormatting = false } })
-        end
+        end,
     })
 end
 

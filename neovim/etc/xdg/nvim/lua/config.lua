@@ -83,5 +83,5 @@ function p(...)
 end
 
 return {
-    nvim_root_dir = vim.fn.fnamemodify(vim.call("resolve", vim.fn.expand("<sfile>:p")), ":h")
+    nvim_root_dir = vim.fn.fnamemodify(vim.call("resolve", vim.fn.expand("<sfile>:p")), ":h"),
 }

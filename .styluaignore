@@ -1,2 +1,3 @@
 neovim/etc/xdg/nvim/pack/packer/
+neovim/etc/xdg/nvim/mason
 packer_compiled.lua

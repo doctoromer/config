@@ -2,5 +2,6 @@ binaries/*
 __pycache__
 packer_compiled.lua
 neovim/etc/xdg/nvim/pack
+neovim/etc/xdg/nvim/mason
 zsh/usr/share/zsh/config/repos
 misc/usr/share/tmux

@@ -10,35 +10,8 @@ M["legendary.nvim"] = function()
 end
 
 M["nvim-lspconfig"] = function()
-    local language_servers = {
-        pylsp = {
-            init_options = { documentFormatting = false },
-        },
-        clangd = {
-            cmd = {
-                (function()
-                    clangd_names = { "clangd", "clangd-12", "clangd-11", "clangd-10", "clangd-9" }
-                    for _, x in ipairs(clangd_names) do
-                        if fn.executable(x) == 1 then
-                            return x
-                        end
-                    end
-                end)(),
-            },
-        },
-        cmake = {},
-        zls = {},
-    }
-
     vim.lsp.handlers["textDocument/publishDiagnostics"] =
         vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false })
-
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-    for server_name, config in pairs(language_servers) do
-        config.capabilities = capabilities
-        require("lspconfig")[server_name].setup(config)
-    end
 end
 
 M["lspsaga.nvim"] = function()
@@ -88,6 +61,24 @@ M["lspsaga.nvim"] = function()
             StaticMethod = { "θ ", colors.orange },
             Macro = { "η ", colors.red },
         }
+    })
+end
+
+M["mason.nvim"] = function()
+    vim.g.python3_host_prog = fn.exepath("python3.8")
+    require("mason").setup({ install_root_dir = require("config").nvim_root_dir .. "/mason" })
+
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    require("mason-lspconfig").setup({
+        ensure_installed = {"clangd", "pylsp", "cmake", "sumneko_lua", "taplo", "zls"}
+    })
+    require("mason-lspconfig").setup_handlers({
+        function (server_name)
+            require("lspconfig")[server_name].setup { capabilities = capabilities }
+        end,
+        pylsp = function()
+            require("lspconfig").pylsp.setup({ init_options = { documentFormatting = false } })
+        end
     })
 end
 

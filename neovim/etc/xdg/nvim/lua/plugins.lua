@@ -24,7 +24,8 @@ return packer.startup(plugin_manager.make_config({
     { "mrjones2014/legendary.nvim", requires = "stevearc/dressing.nvim" },
 
     -- LSP
-    { "neovim/nvim-lspconfig", keys = false },
+    { "williamboman/mason.nvim", requires = "williamboman/mason-lspconfig.nvim" },
+    { "neovim/nvim-lspconfig", keys = false, requires = { "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp" } },
     { "glepnir/lspsaga.nvim", requires = "neovim/nvim-lspconfig" },
 
     { "mhartington/formatter.nvim", cmd = { "Format", "FormatWrite" } },

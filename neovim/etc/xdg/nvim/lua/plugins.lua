@@ -32,12 +32,12 @@ return packer.startup(plugin_manager.make_config({
 
     -- Treesitter
     "nvim-treesitter/nvim-treesitter",
-    "romgrk/nvim-treesitter-context",
-    "p00f/nvim-ts-rainbow",
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    "windwp/nvim-ts-autotag",
+    {"romgrk/nvim-treesitter-context", requires = "nvim-treesitter/nvim-treesitter"},
+    {"p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter"},
+    {"nvim-treesitter/nvim-treesitter-textobjects", requires = "nvim-treesitter/nvim-treesitter"},
+    {"windwp/nvim-ts-autotag", requires = "nvim-treesitter/nvim-treesitter"},
     { "David-Kunz/treesitter-unit", keys = false },
-    "RRethy/nvim-treesitter-endwise",
+    {"RRethy/nvim-treesitter-endwise", requires = "nvim-treesitter/nvim-treesitter"},
     { "danymat/neogen", requires = "nvim-treesitter/nvim-treesitter" },
 
     -- Completion and searching

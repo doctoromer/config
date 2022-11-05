@@ -25,9 +25,8 @@ FEATURES = {
     "ag": (check_commands, "ag"),
     "zsh": (check_commands, "zsh"),
     "git": (check_commands, "git"),
-    "Python LSP": (check_commands, "pylsp"),
-    "C/CPP LSP": (check_commands, ("clangd", "clangd-12", "clangd-11", "clangd-10", "clangd-9")),
-    "cmake LSP": (check_commands, "cmake-language-server"),
+    "unzip": (check_commands, "unzip"),
+    "wget": (check_commands, "unzip"),
     "requests": (check_import, "requests"),
     "dploy": (check_import, "dploy")
 }

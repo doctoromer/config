@@ -240,22 +240,25 @@ def fix_permissions():
 
 
 def update_zsh_plugins():
-    if shutil.which("zsh") is None:
-        logger.error("Please install zsh to download zsh plugins")
-        return
-
     zsh_init_path = SCRIPT_DIR / "zsh/usr/share/zsh/config/plugins.zsh"
     subprocess.call(["zsh", "-c", f"source {zsh_init_path}", "-c", "zcomet update"])
 
 
 def download():
     """ Download all dependencies """
+    required_commands = ["git", "zsh", "wget", "unzip"]
+    missing_commands = [command for command in required_commands if shutil.which(command) is None]
+    if len(missing_commands) > 0:
+        logger.error(f"Please install the following commands: {', '.join(missing_commands)}")
+        return
+
     download_functions = [
         ("Submodules", download_submodules),
         ("Binaries", download_binaries),
         ("Vim plugins", download_vim_plugins),
         ("Zsh plugins", update_zsh_plugins)
     ]
+
     try:
         for name, function in download_functions:
             logger.info(f"Downloading {name}")

@@ -25,6 +25,7 @@ return packer.startup(plugin_manager.make_config({
 
     -- LSP
     { "williamboman/mason.nvim", requires = "williamboman/mason-lspconfig.nvim" },
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
     { "neovim/nvim-lspconfig", keys = false, requires = { "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp" } },
     { "glepnir/lspsaga.nvim", requires = "neovim/nvim-lspconfig" },
 

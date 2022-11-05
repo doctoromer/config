@@ -215,6 +215,13 @@ def download_vim_plugins():
     treesitter_download_command.extend(["-c", "TSUpdateSync", "-c", "q"])
     subprocess.check_call(treesitter_download_command, env=env)
 
+    treesitter_download_command = list(base_custom_command)
+    treesitter_download_command.extend([
+        "-c", "autocmd User MasonToolsUpdateCompleted quitall",
+        "-c", "MasonToolsInstall"
+    ])
+    subprocess.check_call(treesitter_download_command, env=env)
+
     # The neovim command above doesn't print newline
     print("")
 

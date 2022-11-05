@@ -69,9 +69,7 @@ M["mason.nvim"] = function()
     require("mason").setup({ install_root_dir = require("config").nvim_root_dir .. "/mason" })
 
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
-    require("mason-lspconfig").setup({
-        ensure_installed = { "clangd", "pylsp", "cmake", "sumneko_lua", "taplo", "zls" },
-    })
+    require("mason-lspconfig").setup({})
     require("mason-lspconfig").setup_handlers({
         function(server_name)
             require("lspconfig")[server_name].setup({ capabilities = capabilities })
@@ -82,8 +80,22 @@ M["mason.nvim"] = function()
     })
 end
 
-M["formatter.nvim"] = function(formatter)
-    formatters = {}
+M["mason-tool-installer.nvim"] = function()
+    require("mason-tool-installer").setup({
+        ensure_installed = {
+            "clangd",
+            "python-lsp-server",
+            "cmake-language-server",
+            "lua-language-server",
+            "taplo",
+        },
+        auto_update = false,
+        run_on_start = false,
+    })
+end
+
+M["formatter.nvim"] = function()
+    local formatters = {}
 
     if fn.executable("autopep8") == 1 then
         formatters.python = {

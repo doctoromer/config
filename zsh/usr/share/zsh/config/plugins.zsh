@@ -19,6 +19,13 @@ zcomet load zsh-users/zsh-autosuggestions
 zcomet load zsh-users/zsh-syntax-highlighting
 zcomet load Tarrasch/zsh-bd
 zcomet load MichaelAquilina/zsh-you-should-use
+zcomet load zsh-users/zsh-history-substring-search
+
+export HISTORY_SUBSTRING_SEARCH_PREFIXED=true
+
+# $terminfo doesn't work for some reason for up and down keys
+bindkey "^[[A" history-substring-search-up
+bindkey "^[[B" history-substring-search-down
 
 if [[ "$CONFIG_ZSH_VI_MODE" = true ]]; then
     export EDITOR="vim"

@@ -12,7 +12,6 @@ packer.init({
     },
 })
 
-local plugin_manager = require("plugin_manager")
 plugin_manager.setup({
     keymaps_functions = require("keymaps"),
     plugins_config = require("plugins_config"),

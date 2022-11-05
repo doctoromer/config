@@ -4,7 +4,7 @@ local g = vim.g
 local fn = vim.fn
 
 M["legendary.nvim"] = function()
-    legendary = require("legendary")
+    local legendary = require("legendary")
     legendary.setup()
     legendary.bind_keymaps(require("keymaps").other_keymaps())
 end
@@ -367,7 +367,6 @@ M["tabby.nvim"] = function()
         else
             return require("tabby.feature.buf_name").get(current_window)
         end
-        return name
     end
 
     require("tabby.tabline").set(
@@ -377,9 +376,9 @@ M["tabby.nvim"] = function()
 end
 
 M["dashboard-nvim"] = function()
-    dashboard = require("dashboard")
+    local dashboard = require("dashboard")
 
-    ascii_art = require("ascii_art")
+    local ascii_art = require("ascii_art")
     if vim.env.NVIM_RANDOM_DASHBOARD_ASCII_ART then
         math.randomseed(os.time())
         dashboard.custom_header = ascii_art[math.random(#ascii_art)]

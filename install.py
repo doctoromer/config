@@ -334,7 +334,14 @@ def main():
             packages = args.packages.split(",")
 
     if args.command == "install":
-        execute_dploy("stow", packages)
+        try:
+            execute_dploy("stow", packages)
+        except Exception as err:
+            logger.error(err.args[0])
+            return 1
+        else:
+            logger.info("Finish installation successfully")
+            return 0
     elif args.command == "remove":
         execute_dploy("unstow", packages)
     elif args.command == "auto-remove":
@@ -345,7 +352,8 @@ def main():
         verify.verify_environment()
     else:
         logger.error(f"Unknown command: {args.command}")
+        return 1
 
 
 if __name__ == "__main__":
-    main()
+    exit(main())

@@ -7,14 +7,22 @@ It contains 4 components:
 * miscellaneous configurations (Currently git and tmux)
 
 # Installation
-If this is a fresh clone of this repo, first you need to download stuff with:
+If this is a fresh clone of this repo, first you need to download stuff.
+Before running the download script, Install some commands:
+```sh
+sudo apt install git unzip wget zsh
+```
+
+Then, download the stuff:
 ```sh
 ./install.py download
 ```
+
 Then, on ubuntu computers execute:
 ```sh
 sudo ./ubuntu_install.sh
 ```
+
 # How it works
 ## install.py
 The most importent script is `./install.py`. It perfroms several actions:
@@ -29,10 +37,16 @@ This command downloads the following files:
 * Git submodules of this repo
 	* packer.nvim - neovim's plugin manager
 	* zcomet - zsh's plugin manager
-	* tpm - tmux's plugin manager
+	* dracula - tmux theme
 * Required binaries
+	* fzf - for cool CLI search and other fun things
+	* exa - better ls. ls, ll and l are aliased to this
+	* vim - but actually neovim. This is the more powerful sibling of vim
+	* diff-so-fancy - makes git diff look so fancy
+	* bat - better cat
+	* tmux - latest version of tmux
 * neovim plugins
-* tmux plugins
+	* LSP servers - the mason plugin is used to automatically download them
 * zsh plugins
 
 ### install
@@ -72,3 +86,8 @@ It does the following actions:
 * Create `.zshrc` in user's home directory
 
 This script is tested in ubuntu 18.
+
+# Known issues
+* The download process is very fragile and often breaks
+* When staring tmux without a server running, it can take a few seconds
+* Other spooky and odd stuff

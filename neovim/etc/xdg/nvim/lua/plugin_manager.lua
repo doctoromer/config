@@ -29,7 +29,7 @@ function call_config_and_bind_keymaps(name)
 
     if config.keymaps_functions[name] then
         local keymaps = config.keymaps_functions[name]()
-        legendary.bind_keymaps(keymaps)
+        legendary.keymaps(keymaps)
     end
 
     if config.plugins_config[name] then

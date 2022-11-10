@@ -6,7 +6,7 @@ local fn = vim.fn
 M["legendary.nvim"] = function()
     local legendary = require("legendary")
     legendary.setup()
-    legendary.bind_keymaps(require("keymaps").other_keymaps())
+    legendary.keymaps(require("keymaps").other_keymaps())
 end
 
 M["nvim-lspconfig"] = function()
@@ -116,6 +116,9 @@ M["formatter.nvim"] = function()
 end
 
 M["nvim-treesitter"] = function()
+    local parsers_dir = require("config").nvim_root_dir .. "/ts_parsers"
+    vim.opt.runtimepath:prepend(parsers_dir)
+
     require("nvim-treesitter.configs").setup({
         ensure_installed = {
             "c",
@@ -129,10 +132,12 @@ M["nvim-treesitter"] = function()
             "lua",
             "regex",
             "toml",
+            "help",
         },
         -- This makes the installation synchronous if neovim is executed with --headless:w
         sync_install = #vim.api.nvim_list_uis() == 0,
         highlight = { enable = true },
+        parser_install_dir = parsers_dir,
         incremental_selection = {
             enable = true,
             keymaps = {

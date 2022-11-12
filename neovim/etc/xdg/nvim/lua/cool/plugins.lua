@@ -1,7 +1,7 @@
 local packer = require("packer")
 local util = require("packer.util")
-local plugin_manager = require("plugin_manager")
-local config = require("config")
+local plugin_manager = require("cool.plugin_manager")
+local config = require("cool.config")
 
 -- This makes the plugins to work in user's home directory, system wide directory or as symlinked files.
 packer.init({
@@ -13,8 +13,8 @@ packer.init({
 })
 
 plugin_manager.setup({
-    keymaps_functions = require("keymaps"),
-    plugins_config = require("plugins_config"),
+    keymaps_functions = require("cool.keymaps"),
+    plugins_config = require("cool.plugins_config"),
 })
 
 return packer.startup(plugin_manager.make_config({

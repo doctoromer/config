@@ -6,7 +6,7 @@ local fn = vim.fn
 M["legendary.nvim"] = function()
     local legendary = require("legendary")
     legendary.setup()
-    legendary.keymaps(require("keymaps").other_keymaps())
+    legendary.keymaps(require("cool.keymaps").other_keymaps())
 end
 
 M["nvim-lspconfig"] = function()
@@ -67,7 +67,7 @@ end
 M["mason.nvim"] = function()
     vim.g.python3_host_prog = fn.exepath("python3.8")
 
-    require("mason").setup({ install_root_dir = require("config").nvim_root_dir .. "/mason" })
+    require("mason").setup({ install_root_dir = require("cool.config").nvim_root_dir .. "/mason" })
 
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
     require("mason-lspconfig").setup({})
@@ -118,7 +118,7 @@ M["formatter.nvim"] = function()
 end
 
 M["nvim-treesitter"] = function()
-    local parsers_dir = require("config").nvim_root_dir
+    local parsers_dir = require("cool.config").nvim_root_dir
     vim.opt.runtimepath:prepend(parsers_dir)
 
     require("nvim-treesitter.configs").setup({
@@ -385,7 +385,7 @@ end
 M["dashboard-nvim"] = function()
     local dashboard = require("dashboard")
 
-    local ascii_art = require("ascii_art")
+    local ascii_art = require("cool.ascii_art")
     if vim.env.NVIM_RANDOM_DASHBOARD_ASCII_ART then
         math.randomseed(os.time())
         dashboard.custom_header = ascii_art[math.random(#ascii_art)]
@@ -424,7 +424,7 @@ M["virt-column.nvim"] = function()
 end
 
 M["LuaSnip"] = function()
-    local snippets_dir = require("config").nvim_root_dir .. "/snippets"
+    local snippets_dir = require("cool.config").nvim_root_dir .. "/snippets"
     require("luasnip.loaders.from_vscode").lazy_load({ paths = { snippets_dir } })
 end
 

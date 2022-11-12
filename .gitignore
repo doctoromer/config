@@ -4,4 +4,4 @@ packer_compiled.lua
 zsh/usr/share/zsh/config/repos
 neovim/etc/xdg/nvim/pack
 neovim/etc/xdg/nvim/mason
-neovim/etc/xdg/nvim/ts_parsers/
+neovim/etc/xdg/nvim/parser

@@ -20,7 +20,11 @@ plugin_manager.setup({
 return packer.startup(plugin_manager.make_config({
     -- Base plugins
     { "wbthomason/packer.nvim", lock = true, config = false },
-    { "mrjones2014/legendary.nvim", requires = "stevearc/dressing.nvim" },
+    {
+        "mrjones2014/legendary.nvim",
+        requires = { "stevearc/dressing.nvim", require = "nvim-telescope/telescope.nvim" },
+        module = "legendary"
+    },
 
     -- LSP
     { "williamboman/mason.nvim", requires = "williamboman/mason-lspconfig.nvim" },

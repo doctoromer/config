@@ -66,10 +66,12 @@ end
 
 M["mason.nvim"] = function()
     vim.g.python3_host_prog = fn.exepath("python3.8")
+
     require("mason").setup({ install_root_dir = require("config").nvim_root_dir .. "/mason" })
 
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
     require("mason-lspconfig").setup({})
+
     require("mason-lspconfig").setup_handlers({
         function(server_name)
             require("lspconfig")[server_name].setup({ capabilities = capabilities })
@@ -116,7 +118,7 @@ M["formatter.nvim"] = function()
 end
 
 M["nvim-treesitter"] = function()
-    local parsers_dir = require("config").nvim_root_dir .. "/ts_parsers"
+    local parsers_dir = require("config").nvim_root_dir
     vim.opt.runtimepath:prepend(parsers_dir)
 
     require("nvim-treesitter.configs").setup({

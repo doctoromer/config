@@ -29,6 +29,12 @@ M["lspsaga.nvim"] = function()
     }
 end
 
+M["formatter.nvim"] = function()
+    return {
+        { "<leader>F", "<cmd>Format<CR>", description = "Autoformat current file" },
+    }
+end
+
 M["treesitter-unit"] = function()
     return {
         { "iu", ":lua require'treesitter-unit'.select()<CR>", mode = "x" },

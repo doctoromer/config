@@ -90,6 +90,7 @@ M["mason-tool-installer.nvim"] = function()
             "cmake-language-server",
             "lua-language-server",
             "taplo",
+            "stylua",
         },
         auto_update = false,
         run_on_start = false,
@@ -97,7 +98,9 @@ M["mason-tool-installer.nvim"] = function()
 end
 
 M["formatter.nvim"] = function()
-    local formatters = {}
+    local formatters = {
+        lua = { require("formatter.filetypes.lua").stylua },
+    }
 
     if fn.executable("autopep8") == 1 then
         formatters.python = {

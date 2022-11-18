@@ -25,11 +25,14 @@ function require_or_value(module_name, value)
 end
 
 function call_config_and_bind_keymaps(name)
-    local legendary = require_or_value("legendary", DUMMY_MODULE)
+    local Keymap = require("legendary.data.keymap")
 
     if config.keymaps_functions[name] then
         local keymaps = config.keymaps_functions[name]()
-        legendary.keymaps(keymaps)
+        for _, keymap in pairs(keymaps) do
+            Keymap:parse(keymap):apply()
+        end
+
     end
 
     if config.plugins_config[name] then
@@ -37,18 +40,7 @@ function call_config_and_bind_keymaps(name)
     end
 end
 
-local function generate_packer_keymaps(keymaps_function)
-    setfenv(
-        keymaps_function,
-        vim.tbl_extend("force", getfenv(), {
-            require = function()
-                return DUMMY_MODULE
-            end,
-        })
-    )
-    local keymaps = keymaps_function()
-    setfenv(keymaps_function, vim.tbl_extend("force", getfenv(), { require = require }))
-
+local function generate_packer_keymaps(keymaps)
     local result = {}
 
     for _, keymap in pairs(keymaps) do
@@ -66,38 +58,61 @@ local function generate_packer_keymaps(keymaps_function)
     return result
 end
 
-M.setup = function(user_config)
-    config = user_config
+local function set_if_not_false(table, key, value)
+    if table[key] == nil then
+        table[key] = value
+    elseif table[key] == false then
+        table[key] = nil
+    end
+end
+
+local function map_keymaps_without_keys(keymaps)
+    local legendary = require("legendary")
+    local keymaps_without_callbacks = vim.deepcopy(keymaps)
+    for _, keymap in pairs(keymaps_without_callbacks) do
+        keymap[2] = nil
+    end
+    -- p(keymaps_without_callbacks)
+    legendary.keymaps(keymaps_without_callbacks)
 end
 
 M.make_config = function(plugins)
+    vim.cmd("packadd legendary.nvim")
     local result = {}
+
     for _, plugin in pairs(plugins) do
         if type(plugin) == "string" then
             plugin = { plugin }
         end
 
-        local function set_if_not_false(table, key, value)
-            if table[key] == nil then
-                table[key] = value
-            elseif table[key] == false then
-                table[key] = nil
-            end
-        end
-
+        -- Extract from <plugin_author>/<plugin_name> the <plugin_name>
         local repo_name = plugin[1]:gmatch("[^/]+/(.+)")()
 
-        if config.keymaps_functions[repo_name] then
-            set_if_not_false(plugin, "keys", generate_packer_keymaps(config.keymaps_functions[repo_name]))
+        local keymaps_function = config.keymaps_functions[repo_name]
+
+        if keymaps_function then
+
+          -- Get the keymaps table without requiring the actual plugin
+          setfenv(keymaps_function, vim.tbl_extend("force", getfenv(), {require = DUMMY_MODULE}))
+          local keymaps = keymaps_function()
+          setfenv(keymaps_function, vim.tbl_extend("force", getfenv(), {require = require}))
+
+          map_keymaps_without_keys(keymaps)
+
+          set_if_not_false(plugin, "keys", generate_packer_keymaps(keymaps))
         end
 
-        if config.plugins_config[repo_name] or config.keymaps_functions[repo_name] then
+        if config.plugins_config[repo_name] or keymaps_function then
             set_if_not_false(plugin, "config", call_config_and_bind_keymaps)
         end
 
         table.insert(result, plugin)
     end
     return { result }
+end
+
+M.setup = function(user_config)
+    config = user_config
 end
 
 return M

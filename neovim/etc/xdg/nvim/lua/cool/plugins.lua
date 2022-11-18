@@ -23,7 +23,7 @@ return packer.startup(plugin_manager.make_config({
     {
         "mrjones2014/legendary.nvim",
         requires = { "stevearc/dressing.nvim", require = "nvim-telescope/telescope.nvim" },
-        module = "legendary"
+        keys = false
     },
 
     -- LSP

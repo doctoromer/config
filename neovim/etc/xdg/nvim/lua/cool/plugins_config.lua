@@ -5,7 +5,10 @@ local fn = vim.fn
 
 M["legendary.nvim"] = function()
     local legendary = require("legendary")
-    legendary.setup()
+    legendary.setup({
+        include_builtin = false,
+        include_legendary_cmds = false,
+    })
     legendary.keymaps(require("cool.keymaps").other_keymaps())
 end
 

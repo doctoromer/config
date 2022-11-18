@@ -2,14 +2,20 @@ local M = {}
 
 vim.g.mapleader = ";"
 
+M["legendary.nvim"] = function()
+    return {
+        { "<leader>m", require("legendary").find, description = "Show all keymaps" },
+    }
+end
+
 M["nvim-lspconfig"] = function()
     return {
         { "<leader>gD", vim.lsp.buf.type_definition, description = "Goto type definition" },
-        { "<leader>gf", vim.lsp.buf.formatting, description = "Format all file" },
-        { "<leader>ca", vim.lsp.buf.code_action, description = "Code action" },
-        { "<leader>gf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", description = "Format range", mode = "v" },
-        { "gD", vim.lsp.buf.declaration, description = "Goto decleration" },
-        { "gi", vim.lsp.buf.implementation, description = "Goto implementation" },
+        -- { "<leader>gf", vim.lsp.buf.formatting, description = "Format the entire file" },
+        { "<leader>ca", vim.lsp.buf.code_action, description = "Perform code action" },
+        { "<leader>gf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", mode = "v", description = "Format code in range" },
+        { "gD", vim.lsp.buf.declaration, description = "Goto symbol decleration" },
+        { "gi", vim.lsp.buf.implementation, description = "Goto symbol implementation" },
     }
 end
 
@@ -17,15 +23,15 @@ M["lspsaga.nvim"] = function()
     local saga_diagnostic = require("lspsaga.diagnostic")
 
     return {
-        { "<leader>sf", "<cmd>Lspsaga lsp_finder<CR>", description = "Show definition and references" },
-        { "<leader>sp", "<cmd>Lspsaga peek_definition<CR>", description = "Preview definition" },
-        { "<leader>so", "<cmd>LSoutlineToggle<CR>", description = "Preview definition" },
-        { "K", "<cmd>Lspsaga hover_doc<CR>", description = "Show hover information" },
+        { "<leader>sf", "<cmd>Lspsaga lsp_finder<CR>", description = "Show symbol definition and references" },
+        { "<leader>sp", "<cmd>Lspsaga peek_definition<CR>", description = "Preview symbol definition" },
+        { "<leader>so", "<cmd>LSoutlineToggle<CR>", description = "Show file symbols" },
+        { "K", "<cmd>Lspsaga hover_doc<CR>", description = "Show symbol hover information" },
         { "gr", "<cmd>Lspsaga rename<CR>", description = "Rename symbol" },
-        { "]d", saga_diagnostic.goto_next, description = "Previous diagnostic" },
-        { "[d", saga_diagnostic.goto_prev, description = "Next diagnostic" },
+        { "]d", saga_diagnostic.goto_next, description = "Goto previous diagnostic" },
+        { "[d", saga_diagnostic.goto_prev, description = "Goto next diagnostic" },
         { "<C-t>", "<cmd>Lspsaga open_floaterm<CR>", description = "Toggle float terminal" },
-        { "<C-t>", "<cmd>Lspsaga close_floaterm<CR>", mode = "t", description = "Toggle float terminal" },
+        { "<C-t>", "<cmd>Lspsaga close_floaterm<CR>", mode = "t" },
     }
 end
 
@@ -46,7 +52,7 @@ end
 
 M["neogen"] = function()
     return {
-        { "<leader>n", require("neogen").generate, mode = "n" },
+        { "<leader>n", require("neogen").generate, mode = "n", description = "Autogenerate documentation" },
     }
 end
 
@@ -80,8 +86,8 @@ M["nvim-cmp"] = function()
     end
 
     return {
-        { "<Tab>", tab, mode = { "i", "s" }, description = "Smart tab completion" },
-        { "<S-Tab>", shift_tab, mode = { "i", "s" }, description = "Smart shift-tab completion" },
+        { "<Tab>", tab, mode = { "i", "s" } },
+        { "<S-Tab>", shift_tab, mode = { "i", "s" } },
     }
 end
 
@@ -90,13 +96,11 @@ M["telescope.nvim"] = function()
 
     return {
         { "<leader>f", telescope.find_files, description = "Find file" },
-        { "<leader>a", telescope.live_grep, description = "Search in files" },
-        { "<leader>l", telescope.current_buffer_fuzzy_find, description = "Search in current file" },
-        { "<leader>b", telescope.buffers, description = "Find buffer" },
-        { "<leader>H", telescope.help_tags, description = "Help pages" },
-        { "<leader>m", telescope.keymaps, description = "Find keymaps" },
-        { "gx", telescope.lsp_references, description = "Show references" },
-        { "gd", telescope.lsp_definitions, description = "Goto definition" },
+        { "<leader>a", telescope.live_grep, description = "Search inside all files recursively" },
+        { "<leader>l", telescope.current_buffer_fuzzy_find, description = "Search in current file's lines" },
+        { "<leader>H", telescope.help_tags, description = "Search help pages" },
+        { "gx", telescope.lsp_references, description = "Show symbol references" },
+        { "gd", telescope.lsp_definitions, description = "Goto symbol definition" },
         { "gs", telescope.lsp_document_symbols, description = "Show symbols" },
     }
 end
@@ -123,8 +127,8 @@ M["gitsigns.nvim"] = function()
     return {
         { "]c", next_hunk, description = "Goto next hunk", opts = { expr = true } },
         { "[c", previous_hunk, description = "Goto previous hunk", opts = { expr = true } },
-        { "<leader>hs", gitsigns.stage_hunk, description = "Git stage hunk", mode = { "n", "v" } },
-        { "<leader>hr", gitsigns.reset_hunk, description = "Git reset hunk", mode = { "n", "v" }, favorite = true },
+        { "<leader>hs", gitsigns.stage_hunk, mode = { "n", "v" }, description = "Git stage hunk" },
+        { "<leader>hr", gitsigns.reset_hunk, mode = { "n", "v" }, description = "Git reset hunk", favorite = true },
         { "<leader>hS", gitsigns.stage_buffer, description = "Git stage buffer" },
         { "<leader>hu", gitsigns.undo_stage_hunk, description = "Git undo stage buffer" },
         { "<leader>hR", gitsigns.reset_buffer, description = "Git reset buffer" },
@@ -145,13 +149,13 @@ M["gitsigns.nvim"] = function()
             end,
             description = "Show diff from previous commit",
         },
-        { "ih", ":<C-U>Gitsigns select_hunk<CR>", description = "Git hunk text object", mode = { "o", "x" } },
+        { "ih", ":<C-U>Gitsigns select_hunk<CR>", mode = { "o", "x" }, description = "Git hunk text object" },
     }
 end
 
 M["LuaSnip"] = function()
     return {
-        { "<C-space>", require("luasnip").expand_or_jump, mode = { "i", "s" } },
+        { "<C-space>", require("luasnip").expand_or_jump, mode = { "i", "s" }, description = "Expand snippets" },
     }
 end
 
@@ -161,8 +165,8 @@ M["diffview.nvim"] = function()
         vim.ui.input({ prompt = "Enter git commit: " }, diffview.open)
     end
     return {
-        { ";do", open_diffview, description = "Open diffview on given commit or commit-like" },
-        { ";dc", diffview.close, description = "Close diffview" },
+        { "<leader>do", open_diffview, description = "Open diffview on given commit or commit-like" },
+        { "<leader>dc", diffview.close, description = "Close diffview" },
     }
 end
 
@@ -179,13 +183,13 @@ end
 
 M["vim-argwrap"] = function()
     return {
-        { "ga", "<cmd>ArgWrap<CR>", description = "Spread arguments" },
+        { "ga", "<cmd>ArgWrap<CR>", description = "Spread or unspread arguments, Use inside parenthesis" },
     }
 end
 
 M["vim-easymotion"] = function()
     return {
-        { "<Space>", "<Plug>(easymotion-prefix)", description = "Easymotion prefix" },
+        { "<Space>", "<Plug>(easymotion-prefix)", description = "Prefix for movements (For example, <space>w)" },
     }
 end
 
@@ -227,8 +231,7 @@ M["other_keymaps"] = function()
 
     return {
         -- General keymaps
-        { ";", "<nop>", description = "" },
-        { "\\", ";", description = "" },
+        { "\\", ";" },
 
         -- Disable bad keys
         { "<home>", "<nop>", description = "Bad key" },
@@ -246,16 +249,16 @@ M["other_keymaps"] = function()
         { "gf", "<cmd>-tabmove<CR>", description = "Move tab left" },
         { "gh", "<cmd>+tabmove<CR>", description = "Move tab right" },
 
-        { "<leader>p", toggle_copy_mode, description = "Toggle copymode" },
-        { "dd", delete_special, description = "Delete without yank empty lines" },
+        { "<leader>p", toggle_copy_mode, description = "Toggle copymode to allow copying from the vim inside the terminal" },
+        { "dd", delete_special },
 
         -- Horizontal scroll
         { "zl", "zL", description = "Scroll right" },
         { "zh", "zH", description = "Scroll left" },
 
         -- Other
-        { ">", ">gv", description = "Indent", mode = "v" },
-        { "<", "<gv", description = "Dedent", mode = "v" },
+        { ">", ">gv", mode = "v", description = "Indent" },
+        { "<", "<gv", mode = "v", description = "Dedent" },
     }
 end
 

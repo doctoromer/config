@@ -203,7 +203,14 @@ M["nvim-ts-autotag"] = function()
 end
 
 M["neogen"] = function()
-    require("neogen").setup({})
+    require("neogen").setup({
+        snippet_engine = "luasnip",
+        languages = {
+            python = {
+                template = { annotation_convention = "google_docstrings" }
+            }
+        }
+    })
 end
 
 M["nvim-treesitter-endwise"] = function()

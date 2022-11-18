@@ -67,7 +67,12 @@ end
 M["mason.nvim"] = function()
     vim.g.python3_host_prog = fn.exepath("python3.8")
 
-    require("mason").setup({ install_root_dir = require("cool.config").nvim_root_dir .. "/mason" })
+    require("mason").setup({
+        install_root_dir = require("cool.config").nvim_root_dir .. "/mason",
+        pip = {
+            upgrade_pip = true,
+        },
+    })
 
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
     require("mason-lspconfig").setup({})

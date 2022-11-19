@@ -9,7 +9,6 @@ M["legendary.nvim"] = function()
         include_builtin = false,
         include_legendary_cmds = false,
     })
-    legendary.keymaps(require("cool.keymaps").other_keymaps())
 end
 
 M["nvim-lspconfig"] = function()

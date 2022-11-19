@@ -11,9 +11,7 @@ end
 M["nvim-lspconfig"] = function()
     return {
         { "<leader>gD", vim.lsp.buf.type_definition, description = "Goto type definition" },
-        -- { "<leader>gf", vim.lsp.buf.formatting, description = "Format the entire file" },
         { "<leader>ca", vim.lsp.buf.code_action, description = "Perform code action" },
-        { "<leader>gf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", mode = "v", description = "Format code in range" },
         { "gD", vim.lsp.buf.declaration, description = "Goto symbol decleration" },
         { "gi", vim.lsp.buf.implementation, description = "Goto symbol implementation" },
     }

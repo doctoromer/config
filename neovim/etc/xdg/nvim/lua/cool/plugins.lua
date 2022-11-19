@@ -17,7 +17,7 @@ plugin_manager.setup({
     plugins_config = require("cool.plugins_config"),
 })
 
-return packer.startup(plugin_manager.make_config({
+packer.startup(plugin_manager.make_config({
     -- Base plugins
     { "wbthomason/packer.nvim", lock = true, config = false },
     {
@@ -124,3 +124,6 @@ return packer.startup(plugin_manager.make_config({
     "michaeljsmith/vim-indent-object",
     { "Julian/vim-textobj-variable-segment", requires = "kana/vim-textobj-user" },
 }))
+
+-- Map keymaps that aren't plugin-related
+require("legendary").keymaps(require("cool.keymaps").other_keymaps())

@@ -206,9 +206,9 @@ M["neogen"] = function()
         snippet_engine = "luasnip",
         languages = {
             python = {
-                template = { annotation_convention = "google_docstrings" }
-            }
-        }
+                template = { annotation_convention = "google_docstrings" },
+            },
+        },
     })
 end
 
@@ -348,7 +348,7 @@ M["tabby.nvim"] = function()
     local inactive_theme = lualine_theme.inactive.a
 
     -- This makes the tabline update when changing modes (not including visual modes)
-    vim.api.nvim_create_autocmd({ "CmdlineEnter", "CmdlineLeave", "InsertEnter", "InsertLeave", "CursorHold" }, {
+    vim.api.nvim_create_autocmd({ "ModeChanged" }, {
         callback = function()
             vim.cmd("redrawtabline")
         end,
@@ -397,6 +397,7 @@ M["tabby.nvim"] = function()
         tabline_render,
         { tab_name = { name_fallback = tab_label_render }, buf_name = { mode = "unique" } }
     )
+    vim.o.showtabline = true
 end
 
 M["dashboard-nvim"] = function()

@@ -157,17 +157,6 @@ M["LuaSnip"] = function()
     }
 end
 
-M["diffview.nvim"] = function()
-    local diffview = require("diffview")
-    local function open_diffview()
-        vim.ui.input({ prompt = "Enter git commit: " }, diffview.open)
-    end
-    return {
-        { "<leader>do", open_diffview, description = "Open diffview on given commit or commit-like" },
-        { "<leader>dc", diffview.close, description = "Close diffview" },
-    }
-end
-
 M["Navigator.nvim"] = function()
     local navigator = require("Navigator")
 

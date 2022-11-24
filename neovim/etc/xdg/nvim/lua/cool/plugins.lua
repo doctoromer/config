@@ -79,7 +79,7 @@ packer.startup(plugin_manager.make_config({
     -- Utilities
     "tpope/vim-sleuth",
     { "L3MON4D3/LuaSnip", keys = false },
-    { "sindrets/diffview.nvim", cmd = "DiffviewOpen", requires = "nvim-lua/plenary.nvim" },
+    { "whiteinge/diffconflicts", cmd = "DiffConflicts" },
     { "Vimjas/vim-python-pep8-indent", ft = "python" },
     "numToStr/Navigator.nvim",
 

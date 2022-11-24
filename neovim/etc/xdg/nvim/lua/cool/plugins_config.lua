@@ -340,7 +340,7 @@ M["tabby.nvim"] = function()
 
         v = lualine_theme.visual.a,
         V = lualine_theme.visual.a,
-        ["CTRL-V"] = lualine_theme.visual.a,
+        [""] = lualine_theme.visual.a,
 
         t = lualine_theme.terminal.a,
         R = lualine_theme.replace.a,

@@ -45,7 +45,7 @@
 [pull]
 	rebase = false
 [mergetool "diffconflicts"]
-	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
+	cmd = vim -c DiffConflicts \"$MERGED\"
 	trustExitCode = true
 [init]
 	defaultBranch = master

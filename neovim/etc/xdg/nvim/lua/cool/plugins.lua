@@ -1,24 +1,8 @@
-local packer = require("packer")
-local util = require("packer.util")
 local plugin_manager = require("cool.plugin_manager")
 local config = require("cool.config")
 
--- This makes the plugins to work in user's home directory, system wide directory or as symlinked files.
-packer.init({
-    package_root = util.join_paths(config.nvim_root_dir, "pack"),
-    compile_path = util.join_paths(config.nvim_root_dir, "plugin", "packer_compiled.lua"),
-    display = {
-        open_fn = require("packer.util").float,
-    },
-})
-
-plugin_manager.setup({
-    keymaps_functions = require("cool.keymaps"),
-    plugins_config = require("cool.plugins_config"),
-})
-
-packer.startup(plugin_manager.make_config({
-    -- Base plugins
+local plugins = {
+    -- plugins
     { "wbthomason/packer.nvim", lock = true, config = false },
     {
         "mrjones2014/legendary.nvim",
@@ -123,7 +107,68 @@ packer.startup(plugin_manager.make_config({
     "easymotion/vim-easymotion",
     "michaeljsmith/vim-indent-object",
     { "Julian/vim-textobj-variable-segment", requires = "kana/vim-textobj-user" },
-}))
+}
 
--- Map keymaps that aren't plugin-related
-require("legendary").keymaps(require("cool.keymaps").other_keymaps())
+function bootstrap_base_plugins()
+    local was_bootstrapped = false
+    local base_plugins = {
+        ["wbthomason/packer.nvim"] = "packer.nvim",
+        ["mrjones2014/legendary.nvim"] = "legendary.nvim",
+
+    }
+
+    vim.o.packpath = vim.o.packpath .. "," .. config.nvim_root_dir
+
+    for full_name, short_name in pairs(base_plugins) do
+
+        local url = "https://github.com/" .. full_name
+        local plugin_path = config.nvim_root_dir .. "/pack/packer/start/" .. short_name
+
+        if vim.fn.empty(vim.fn.glob(plugin_path)) ~= 0 then
+            vim.fn.system({
+                "git",
+                "clone",
+                "--depth", "1",
+                url,
+                plugin_path
+            })
+            vim.cmd("packadd " .. short_name)
+            was_bootstrapped = true
+        end
+    end
+    return was_bootstrapped
+end
+
+local function init_packer(plugins)
+    local packer = require("packer")
+    local util = require("packer.util")
+
+    -- This makes the plugins to work in user's home directory, system wide directory or as symlinked files.
+    packer.init({
+        package_root = util.join_paths(config.nvim_root_dir, "pack"),
+        compile_path = util.join_paths(config.nvim_root_dir, "plugin", "packer_compiled.lua"),
+        display = {
+            open_fn = require("packer.util").float,
+        },
+    })
+
+    plugin_manager.setup({
+        keymaps_functions = require("cool.keymaps"),
+        plugins_config = require("cool.plugins_config"),
+    })
+
+    packer.startup(plugin_manager.make_config(plugins))
+
+    -- Map keymaps that aren't plugin-related
+    require("legendary").keymaps(require("cool.keymaps").other_keymaps())
+end
+
+local function plugins_setup(plugins)
+    local was_bootstrapped = bootstrap_base_plugins()
+    init_packer(plugins)
+    if was_bootstrapped then
+        require("packer").sync()
+    end
+end
+
+plugins_setup(plugins)

@@ -142,6 +142,7 @@ M["nvim-treesitter"] = function()
             "java",
             "json",
             "lua",
+            "vim",
             "regex",
             "toml",
             "help",
@@ -179,16 +180,16 @@ M["nvim-treesitter-textobjects"] = function()
                     ["if"] = "@function.inner",
                     ac = "@class.outer",
                     ic = "@class.inner",
-                },
-            },
-        },
+                    il = "@loop.inner",
+                    al = "@loop.outer"
+                }
+            }
+        }
     })
 end
 
 M["nvim-ts-autotag"] = function()
-    require("nvim-treesitter.configs").setup({
-        autotag = { enable = true },
-    })
+    require("nvim-ts-autotag").setup()
 end
 
 M["neogen"] = function()

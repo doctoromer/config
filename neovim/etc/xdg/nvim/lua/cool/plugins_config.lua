@@ -168,16 +168,6 @@ M["nvim-treesitter-context"] = function()
     require("treesitter-context").setup({ enable = true })
 end
 
-M["nvim-ts-rainbow"] = function()
-    require("nvim-treesitter.configs").setup({
-        rainbow = {
-            enable = true,
-            extended_mode = true,
-            max_file_lines = nil,
-        },
-    })
-end
-
 M["nvim-treesitter-textobjects"] = function()
     require("nvim-treesitter.configs").setup({
         textobjects = {

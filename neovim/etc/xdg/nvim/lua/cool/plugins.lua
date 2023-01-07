@@ -21,7 +21,6 @@ local plugins = {
     -- Treesitter
     "nvim-treesitter/nvim-treesitter",
     { "romgrk/nvim-treesitter-context", requires = "nvim-treesitter/nvim-treesitter" },
-    { "p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter" },
     { "nvim-treesitter/nvim-treesitter-textobjects", requires = "nvim-treesitter/nvim-treesitter" },
     { "windwp/nvim-ts-autotag", requires = "nvim-treesitter/nvim-treesitter" },
     { "David-Kunz/treesitter-unit", keys = false },

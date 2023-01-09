@@ -19,7 +19,13 @@ local plugins = {
     { "mhartington/formatter.nvim", cmd = { "Format", "FormatWrite" } },
 
     -- Treesitter
-    "nvim-treesitter/nvim-treesitter",
+    {
+        "nvim-treesitter/nvim-treesitter",
+        run = function()
+            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            ts_update()
+        end,
+    },
     { "romgrk/nvim-treesitter-context", requires = "nvim-treesitter/nvim-treesitter" },
     { "nvim-treesitter/nvim-treesitter-textobjects", requires = "nvim-treesitter/nvim-treesitter" },
     { "windwp/nvim-ts-autotag", requires = "nvim-treesitter/nvim-treesitter" },

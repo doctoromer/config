@@ -114,7 +114,7 @@ local plugins = {
     { "Julian/vim-textobj-variable-segment", requires = "kana/vim-textobj-user" },
 }
 
-function bootstrap_base_plugins()
+local function bootstrap_base_plugins()
     local was_bootstrapped = false
     local base_plugins = {
         ["wbthomason/packer.nvim"] = "packer.nvim",
@@ -144,7 +144,7 @@ function bootstrap_base_plugins()
     return was_bootstrapped
 end
 
-local function init_packer(plugins)
+local function init_packer(plugins_table, was_bootstrapped)
     local packer = require("packer")
     local util = require("packer.util")
 
@@ -154,6 +154,7 @@ local function init_packer(plugins)
         compile_path = util.join_paths(config.nvim_root_dir, "plugin", "packer_compiled.lua"),
         display = {
             open_fn = require("packer.util").float,
+            non_interactive = was_bootstrapped,
         },
     })
 
@@ -162,15 +163,15 @@ local function init_packer(plugins)
         plugins_config = require("cool.plugins_config"),
     })
 
-    packer.startup(plugin_manager.make_config(plugins))
+    packer.startup(plugin_manager.make_config(plugins_table))
 
     -- Map keymaps that aren't plugin-related
     require("legendary").keymaps(require("cool.keymaps").other_keymaps())
 end
 
-local function plugins_setup(plugins)
+local function plugins_setup(plugins_table)
     local was_bootstrapped = bootstrap_base_plugins()
-    init_packer(plugins)
+    init_packer(plugins_table, was_bootstrapped)
     if was_bootstrapped then
         require("packer").sync()
     end

@@ -145,7 +145,7 @@ M["nvim-treesitter"] = function()
             "vim",
             "regex",
             "toml",
-            "help",
+            "vimdoc",
         },
         -- This makes the installation synchronous if neovim is executed with --headless:w
         sync_install = #vim.api.nvim_list_uis() == 0,

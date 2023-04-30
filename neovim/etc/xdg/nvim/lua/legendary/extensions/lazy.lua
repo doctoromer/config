@@ -1,11 +1,9 @@
-toolbox = require("legendary.toolbox")
-
 local function init(config)
     local keymaps_functions = config.keymaps
     local lazy_plugins = require("lazy.core.config").plugins
 
-    for plugin_name, plugin_spec in pairs(lazy_plugins) do
-        keymaps_function = keymaps_functions[plugin_name]
+    for plugin_name, _ in pairs(lazy_plugins) do
+        local keymaps_function = keymaps_functions[plugin_name]
 
         if keymaps_function then
 

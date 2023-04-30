@@ -23,13 +23,12 @@ M["lspsaga.nvim"] = function()
     return {
         { "<leader>sf", "<cmd>Lspsaga lsp_finder<CR>", description = "Show symbol definition and references" },
         { "<leader>sp", "<cmd>Lspsaga peek_definition<CR>", description = "Preview symbol definition" },
-        { "<leader>so", "<cmd>LSoutlineToggle<CR>", description = "Show file symbols" },
         { "K", "<cmd>Lspsaga hover_doc<CR>", description = "Show symbol hover information" },
         { "gr", "<cmd>Lspsaga rename<CR>", description = "Rename symbol" },
-        { "]d", saga_diagnostic.goto_next, description = "Goto previous diagnostic" },
-        { "[d", saga_diagnostic.goto_prev, description = "Goto next diagnostic" },
-        { "<C-t>", "<cmd>Lspsaga open_floaterm<CR>", description = "Toggle float terminal" },
-        { "<C-t>", "<cmd>Lspsaga close_floaterm<CR>", mode = "t" },
+        { "]d", function() saga_diagnostic:goto_next() end, description = "Goto previous diagnostic" },
+        { "[d", function() saga_diagnostic:goto_prev() end, description = "Goto next diagnostic" },
+        { "<C-t>", "<cmd>Lspsaga term_toggle<CR>", description = "Toggle float terminal" },
+        { "<C-t>", "<cmd>Lspsaga term_toggle<CR>", mode = "t" },
     }
 end
 

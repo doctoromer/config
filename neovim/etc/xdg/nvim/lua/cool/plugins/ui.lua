@@ -151,7 +151,8 @@ end
 local function better_whitespace_config()
     vim.g.better_whitespace_enabled = true
     vim.g.strip_whitespace_on_save = false
-    vim.g.better_whitespace_filetypes_blacklist = { "dashboard", "help", "markdown" }
+    -- The "" filetype is the filetype of terminal buffers
+    vim.g.better_whitespace_filetypes_blacklist = { "dashboard", "help", "markdown", "" }
 end
 
 return {

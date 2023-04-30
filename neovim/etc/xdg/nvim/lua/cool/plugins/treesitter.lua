@@ -17,6 +17,9 @@ local function treesitter_config()
             "regex",
             "toml",
             "vimdoc",
+            -- Used also for lspsaga hover feature
+            "markdown",
+            "markdown_inline"
         },
         -- This makes the installation synchronous if neovim is executed with --headless:w
         sync_install = #vim.api.nvim_list_uis() == 0,

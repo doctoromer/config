@@ -37,7 +37,6 @@ local function init_lazy()
     )
 
     require("lazy").setup(
-        --plugin_manager.make_config(plugins_plugins),
         "cool.plugins",
         {
             root = plugins_path,
@@ -56,6 +55,9 @@ local function init_lazy()
             },
         }
     )
+
+    -- Set keymaps that aren't part of any plugins
+    require("legendary").keymaps(require("cool.keymaps").other_keymaps())
 end
 
 bootstrap_lazy_nvim()

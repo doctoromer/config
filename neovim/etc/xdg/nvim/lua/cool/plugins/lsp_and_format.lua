@@ -4,7 +4,7 @@ local function mason_config()
     mason_lspconfig = require("mason-lspconfig")
 
     require("mason").setup({
-        install_root_dir = require("cool.config").nvim_root_dir .. "/mason",
+        install_root_dir = require("cool.options").nvim_root_dir .. "/mason",
         pip = {
             upgrade_pip = true,
         },

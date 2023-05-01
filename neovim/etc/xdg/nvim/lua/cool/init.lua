@@ -1,11 +1,9 @@
-require("cool.config")
-
-local config = require("cool.config")
-local plugins_path = config.nvim_root_dir .. "/lazy_plugins"
+local nvim_root_dir = require("cool.options").nvim_root_dir
+local plugins_path = nvim_root_dir .. "/lazy_plugins"
+local lazy_path = nvim_root_dir .. "/lazy/lazy.nvim"
 
 local function bootstrap_lazy_nvim()
     local was_bootstrapped = false
-    local lazy_path = config.nvim_root_dir .. "/lazy/lazy.nvim"
 
     if vim.fn.empty(vim.fn.glob(lazy_path)) ~= 0 then
         vim.fn.system({

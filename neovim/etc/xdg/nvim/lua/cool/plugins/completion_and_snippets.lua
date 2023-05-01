@@ -20,7 +20,7 @@ local function cmp_config()
 end
 
 local function luasnip_config()
-    local snippets_dir = require("cool.config").nvim_root_dir .. "/snippets"
+    local snippets_dir = require("cool.options").nvim_root_dir .. "/snippets"
     require("luasnip.loaders.from_vscode").lazy_load({ paths = { snippets_dir } })
 end
 

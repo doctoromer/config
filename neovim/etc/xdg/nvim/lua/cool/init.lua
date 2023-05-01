@@ -25,12 +25,6 @@ local function bootstrap_lazy_nvim()
 end
 
 local function init_lazy()
-    local plugin_manager = require("cool.plugin_manager")
-    plugin_manager.setup({
-        keymaps_functions = require("cool.keymaps"),
-        plugins_config = require("cool.plugins_config"),
-    })
-
     xdg_config_dirs = vim.tbl_map(
         function(item) return item .. "/nvim" end,
         vim.fn.split(vim.env.XDG_CONFIG_DIRS or "/etc/xdg", ":")
@@ -40,19 +34,10 @@ local function init_lazy()
         "cool.plugins",
         {
             root = plugins_path,
-            install = {
-                -- missing = false
-            },
-            change_detection = {
-                -- For some reason it notifies that file are deleted, when it is not true
-                notify = false
-            },
-            performance = {
-                rtp = {
-                    -- For some reason the system-wide path is not included in the runtimepath
-                    paths = xdg_config_dirs
-                },
-            },
+            -- For some reason it notifies that file are deleted, when it is not true
+            change_detection = { notify = false },
+            -- For some reason the system-wide path is not included in the runtimepath
+            performance = { rtp = { paths = xdg_config_dirs } },
         }
     )
 

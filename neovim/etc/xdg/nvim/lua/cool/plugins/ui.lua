@@ -162,6 +162,7 @@ return {
     { "nvimdev/dashboard-nvim", config = dashboard_config },
     { "lewis6991/gitsigns.nvim", dependencies = "nvim-lua/plenary.nvim", config = true },
     { "machakann/vim-highlightedyank", event = "TextYankPost" },
+    { "asiryk/auto-hlsearch.nvim", config = true },
     { "ntpeters/vim-better-whitespace", config = better_whitespace_config },
     {
         "lukas-reineke/indent-blankline.nvim",

@@ -100,9 +100,10 @@ return {
             run_on_start = false
         }
     },
+    { "folke/neodev.nvim", config = true },
     {
         "neovim/nvim-lspconfig",
-        dependencies = { "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp" },
+        dependencies = { "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp", "folke/neodev.nvim" },
         config = lsp_config
     },
     { "nvimdev/lspsaga.nvim", dependencies = "neovim/nvim-lspconfig", config = lspsaga_config },

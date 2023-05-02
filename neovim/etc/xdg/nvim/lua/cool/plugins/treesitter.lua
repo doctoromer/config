@@ -70,6 +70,7 @@ return {
             }
         },
     },
+    { "HiPhish/nvim-ts-rainbow2", main = "nvim-treesitter.configs", opts = { rainbow = { enable = true } } },
     { "windwp/nvim-ts-autotag", dependencies = "nvim-treesitter/nvim-treesitter", config = true },
     { "David-Kunz/treesitter-unit", keys = false },
     {

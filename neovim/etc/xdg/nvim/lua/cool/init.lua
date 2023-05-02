@@ -36,6 +36,26 @@ local function init_lazy()
             change_detection = { notify = false },
             -- For some reason the system-wide path is not included in the runtimepath
             performance = { rtp = { paths = xdg_config_dirs } },
+            ui = {
+                icons = {
+                    cmd = "✼ ",
+                    config = "✠",
+                    event = "✇",
+                    ft = "࿋ ",
+                    init = "➤ ",
+                    import = "⎌ ",
+                    keys = "྿ ",
+                    lazy = "⌘ ",
+                    loaded = "●",
+                    not_loaded = "○",
+                    plugin = "☘ ",
+                    runtime = "☸ ",
+                    source = "⬠ ",
+                    start = "⇧",
+                    task = "✔ ",
+                    list = {"●", "➜", "★", "‒", }
+                },
+            }
         }
     )
 

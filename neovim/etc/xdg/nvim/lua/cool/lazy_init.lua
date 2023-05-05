@@ -30,6 +30,9 @@ local function init_lazy()
         vim.fn.split(vim.env.XDG_CONFIG_DIRS or "/etc/xdg", ":")
     )
 
+    -- Lazy neet the mapleader setted, which is defined in keymaps module
+    require("cool.keymaps")
+
     require("lazy").setup(
         "cool.plugins",
         {

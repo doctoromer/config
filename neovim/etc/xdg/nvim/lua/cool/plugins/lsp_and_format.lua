@@ -1,7 +1,7 @@
 local function mason_config()
     vim.g.python3_host_prog = vim.fn.exepath("python3.8")
-    lspconfig = require("lspconfig")
-    mason_lspconfig = require("mason-lspconfig")
+    local lspconfig = require("lspconfig")
+    local mason_lspconfig = require("mason-lspconfig")
 
     require("mason").setup({
         install_root_dir = require("cool.options").nvim_root_dir .. "/mason",
@@ -42,22 +42,6 @@ local function lsp_config()
         vim.lsp.diagnostic.on_publish_diagnostics,
         { virtual_text = false }
     )
-end
-
-local function lspsaga_config()
-    -- local colors = require("lspsaga.lspkind").colors
-    require("lspsaga").setup({
-        scroll_preview = {
-            scroll_down = "<C-d>",
-            scroll_up = "<C-u>",
-        },
-        finder = {
-            vsplit = "v",
-            split = "s",
-            quit = { "q", "<esc>", "<C-c>" },
-        },
-        symbol_in_winbar = { enable = false },
-    })
 end
 
 local function formatter_config()
@@ -107,6 +91,22 @@ return {
         dependencies = { "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp", "folke/neodev.nvim" },
         config = lsp_config
     },
-    { "nvimdev/lspsaga.nvim", dependencies = "neovim/nvim-lspconfig", config = lspsaga_config },
+    {
+        "nvimdev/lspsaga.nvim",
+        dependencies = "neovim/nvim-lspconfig",
+        opts = {
+            scroll_preview = {
+                scroll_down = "<C-d>",
+                scroll_up = "<C-u>"
+            },
+            finder = {
+                vsplit = "v",
+                split = "s",
+                quit = { "q", "<esc>", "<C-c>" }
+            },
+            symbol_in_winbar = { enable = false },
+            lightbulb = { enable = false }
+        }
+    },
     { "mhartington/formatter.nvim", cmd = { "Format", "FormatWrite" }, config = formatter_config },
 }

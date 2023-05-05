@@ -167,9 +167,9 @@ M["Navigator.nvim"] = function()
     }
 end
 
-M["vim-argwrap"] = function()
+M["treesj"] = function()
     return {
-        { "ga", "<cmd>ArgWrap<CR>", description = "Spread or unspread arguments, Use inside parenthesis" },
+        { "ga", require("treesj").toggle, description = "Spread or unspread arguments, Use inside parenthesis" },
     }
 end
 

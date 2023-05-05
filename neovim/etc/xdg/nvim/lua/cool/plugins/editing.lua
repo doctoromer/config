@@ -10,7 +10,15 @@ return {
         keys = {"ds", "cs", "cS", "ys", "yS", "yss", "ySs", "ySS", "S", "gS", "<C-S>", "<C-G>s", "<C-G>S"},
     },
     "wellle/targets.vim",
-    "foosoft/vim-argwrap",
+    {
+        "Wansmer/treesj",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        opts = {
+            use_default_keymaps = false,
+            -- Practically disable max line length
+            max_join_length = 1000
+        }
+    },
     "tpope/vim-unimpaired",
     { "m4xshen/autoclose.nvim", event = "InsertEnter", config = true },
     {

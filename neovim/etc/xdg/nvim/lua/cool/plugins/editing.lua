@@ -12,6 +12,7 @@ return {
     "wellle/targets.vim",
     {
         "Wansmer/treesj",
+        event = "VeryLazy",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
         opts = {
             use_default_keymaps = false,
@@ -24,16 +25,14 @@ return {
     {
         "terrortylor/nvim-comment",
         main = "nvim_comment",
-        opts = {
-            comment_empty = false,
-        },
+        opts = { comment_empty = false },
         keys = {
             { "gc", mode = { "n", "o", "x" } },
             "gcc",
         }
     },
-    { "gaoDean/autolist.nvim", config = true },
-    "easymotion/vim-easymotion",
-    "michaeljsmith/vim-indent-object",
-    { "Julian/vim-textobj-variable-segment", dependencies = "kana/vim-textobj-user" },
+    { "gaoDean/autolist.nvim", config = true, event = "InsertEnter" },
+    { "easymotion/vim-easymotion", event = "VeryLazy" },
+    { "michaeljsmith/vim-indent-object", event = "VeryLazy" },
+    { "Julian/vim-textobj-variable-segment", dependencies = "kana/vim-textobj-user", event = "VeryLazy" },
 }

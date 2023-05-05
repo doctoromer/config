@@ -87,6 +87,7 @@ return {
     { "williamboman/mason.nvim", dependencies = "williamboman/mason-lspconfig.nvim", config = mason_config },
     {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
+        cmd = { "MasonToolsInstall", "MasonToolsUpdate" },
         opts = {
             ensure_installed = {
                 "clangd",

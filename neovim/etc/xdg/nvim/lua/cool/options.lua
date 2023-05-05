@@ -90,11 +90,6 @@ for _, command in pairs(misspelled_commands) do
     end, { bang = true })
 end
 
--- Used for debugging
-function p(...)
-    print(vim.inspect(...))
-end
-
 return {
     nvim_root_dir = vim.fn.fnamemodify(vim.call("resolve", vim.fn.expand("<sfile>:p")), ":h"),
 }

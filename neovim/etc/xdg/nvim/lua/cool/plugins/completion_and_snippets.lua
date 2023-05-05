@@ -36,8 +36,9 @@ return {
             "neovim/nvim-lspconfig",
             { "saadparwaiz1/cmp_luasnip", dependencies = "L3MON4D3/LuaSnip" },
         },
+        event = "InsertEnter",
         config = cmp_config
     },
-    { "L3MON4D3/LuaSnip", config = luasnip_config },
+    { "L3MON4D3/LuaSnip", config = luasnip_config, event = "InsertEnter" },
 
 }

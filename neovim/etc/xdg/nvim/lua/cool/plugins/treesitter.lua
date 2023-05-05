@@ -52,6 +52,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
         dependencies = "nvim-treesitter/nvim-treesitter",
+        event = "VeryLazy",
         main = "nvim-treesitter.configs",
         opts = {
             textobjects = {
@@ -71,11 +72,12 @@ return {
         },
     },
     { "HiPhish/nvim-ts-rainbow2", main = "nvim-treesitter.configs", opts = { rainbow = { enable = true } } },
-    { "windwp/nvim-ts-autotag", dependencies = "nvim-treesitter/nvim-treesitter", config = true },
-    { "David-Kunz/treesitter-unit", keys = false },
+    { "windwp/nvim-ts-autotag", dependencies = "nvim-treesitter/nvim-treesitter", config = true, event = "VeryLazy" },
+    { "David-Kunz/treesitter-unit", event = "VeryLazy" },
     {
         "RRethy/nvim-treesitter-endwise",
         dependencies = "nvim-treesitter/nvim-treesitter",
+        event = "VeryLazy",
         main = "nvim-treesitter.configs",
         opts = {
             endwise = { enable = true },
@@ -84,6 +86,7 @@ return {
     {
         "danymat/neogen",
         dependencies = "nvim-treesitter/nvim-treesitter",
+        event = "VeryLazy",
         opts = {
             snippet_engine = "luasnip",
             languages = {

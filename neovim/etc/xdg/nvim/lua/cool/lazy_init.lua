@@ -25,7 +25,7 @@ local function bootstrap_lazy_nvim()
 end
 
 local function init_lazy()
-    xdg_config_dirs = vim.tbl_map(
+    local xdg_config_dirs = vim.tbl_map(
         function(item) return item .. "/nvim" end,
         vim.fn.split(vim.env.XDG_CONFIG_DIRS or "/etc/xdg", ":")
     )
@@ -60,9 +60,6 @@ local function init_lazy()
             }
         }
     )
-
-    -- Set keymaps that aren't part of any plugins
-    require("legendary").keymaps(require("cool.keymaps").other_keymaps())
 end
 
 M.setup = function()

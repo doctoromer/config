@@ -124,6 +124,8 @@ local function dashboard_config()
     local dashboard = require("dashboard")
 
     local ascii_art = require("cool.ascii_art")
+    local header
+
     if vim.env.NVIM_RANDOM_DASHBOARD_ASCII_ART then
         math.randomseed(os.time())
         header = ascii_art[math.random(#ascii_art)]
@@ -162,7 +164,7 @@ return {
     { "nvimdev/dashboard-nvim", config = dashboard_config },
     { "lewis6991/gitsigns.nvim", dependencies = "nvim-lua/plenary.nvim", config = true },
     { "machakann/vim-highlightedyank", event = "TextYankPost" },
-    { "asiryk/auto-hlsearch.nvim", config = true },
+    { "asiryk/auto-hlsearch.nvim", config = true, keys = { "/", "?", "*", "#" } },
     { "ntpeters/vim-better-whitespace", config = better_whitespace_config },
     {
         "lukas-reineke/indent-blankline.nvim",

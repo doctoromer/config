@@ -231,6 +231,7 @@ M["other_keymaps"] = function()
 
         -- Tabs
         { "<leader>tt", "<cmd>tabnew<CR>", description = "New tab" },
+        { "<leader>to", "<cmd>tabonly<CR>", description = "Close all other tabs" },
         { "gb", "<cmd>tabprevious<CR>", description = "Previous tab" },
         { "gf", "<cmd>-tabmove<CR>", description = "Move tab left" },
         { "gh", "<cmd>+tabmove<CR>", description = "Move tab right" },

@@ -2,12 +2,20 @@ return {
     {
         "mrjones2014/legendary.nvim",
         dependencies = { "stevearc/dressing.nvim", dependencies = "nvim-telescope/telescope.nvim" },
-        opts = {
-            include_builtin = false,
-            include_legendary_cmds = false,
-            extensions = {
-                lazy = { keymaps = require("cool.keymaps") }
-            }
-        }
+        event = "VeryLazy",
+        config = function()
+            local legendary = require("legendary")
+
+            legendary.setup({
+                include_builtin = false,
+                include_legendary_cmds = false,
+                extensions = {
+                    lazy = { keymaps = require("cool.keymaps") }
+                }
+            })
+
+            -- Set keymaps that aren't part of any plugins
+            legendary.keymaps(require("cool.keymaps").other_keymaps())
+        end
     },
 }

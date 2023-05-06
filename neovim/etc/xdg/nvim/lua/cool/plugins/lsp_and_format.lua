@@ -21,19 +21,6 @@ local function mason_config()
             -- Maybe add cmp_nvim_lsp capabilities?
             lspconfig.pylsp.setup({ init_options = { documentFormatting = false } })
         end,
-        lua_ls = function()
-            lspconfig.lua_ls.setup({
-                settings = {
-                    Lua = {
-                        runtime = { version = "LuaJIT" },
-                        -- Make the server aware of Neovim runtime files
-                        -- workspace = { library = vim.api.nvim_get_runtime_file("", true) },
-                        telemetry = { enable = false },
-                        diagnostics = { globals = "vim" },
-                    },
-                },
-            })
-        end,
     })
 end
 
@@ -66,7 +53,14 @@ local function formatter_config()
 end
 
 return {
-    { "williamboman/mason.nvim", dependencies = "williamboman/mason-lspconfig.nvim", config = mason_config },
+    {
+        "williamboman/mason.nvim",
+        dependencies = {
+            "williamboman/mason-lspconfig.nvim",
+            dependencies = { "folke/neodev.nvim", config = true, ft = "lua" },
+        },
+        config = mason_config,
+    },
     {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
         cmd = { "MasonToolsInstall", "MasonToolsUpdate" },
@@ -83,15 +77,15 @@ return {
             run_on_start = false,
         },
     },
-    { "folke/neodev.nvim", config = true },
     {
         "neovim/nvim-lspconfig",
-        dependencies = { "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp", "folke/neodev.nvim" },
+        dependencies = { "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp" },
         config = lsp_config,
     },
     {
         "nvimdev/lspsaga.nvim",
         dependencies = "neovim/nvim-lspconfig",
+        event = "VeryLazy",
         opts = {
             scroll_preview = {
                 scroll_down = "<C-d>",

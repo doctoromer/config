@@ -35,6 +35,7 @@ local function init_lazy()
 
     require("lazy").setup("cool.plugins", {
         root = plugins_path,
+        lockfile = nvim_root_dir .. "/lazy-lock.json",
         -- For some reason it notifies that file are deleted, when it is not true
         change_detection = { notify = false },
         -- For some reason the system-wide path is not included in the runtimepath

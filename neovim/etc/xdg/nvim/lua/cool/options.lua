@@ -9,14 +9,14 @@ o.clipboard = "unnamedplus"
 g.clipboard = {
     name = "tmux",
     copy = {
-        ["+"] = {"tmux", "load-buffer", "-"},
-        ["*"] = {"tmux", "load-buffer", "-"}
+        ["+"] = { "tmux", "load-buffer", "-" },
+        ["*"] = { "tmux", "load-buffer", "-" },
     },
     paste = {
-        ["+"] = {"tmux", "save-buffer", "-"},
-        ["*"] = {"tmux", "save-buffer", "-"}
+        ["+"] = { "tmux", "save-buffer", "-" },
+        ["*"] = { "tmux", "save-buffer", "-" },
     },
-    cache_enabled = true
+    cache_enabled = true,
 }
 
 o.hidden = true

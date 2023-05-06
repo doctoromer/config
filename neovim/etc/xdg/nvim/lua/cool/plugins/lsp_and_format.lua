@@ -31,17 +31,15 @@ local function mason_config()
                         telemetry = { enable = false },
                         diagnostics = { globals = "vim" },
                     },
-                }
+                },
             })
-        end
+        end,
     })
 end
 
 local function lsp_config()
-    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics,
-        { virtual_text = false }
-    )
+    vim.lsp.handlers["textDocument/publishDiagnostics"] =
+        vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false })
 end
 
 local function formatter_config()
@@ -79,17 +77,17 @@ return {
                 "cmake-language-server",
                 "lua-language-server",
                 "taplo",
-                "stylua"
+                "stylua",
             },
             auto_update = false,
-            run_on_start = false
-        }
+            run_on_start = false,
+        },
     },
     { "folke/neodev.nvim", config = true },
     {
         "neovim/nvim-lspconfig",
         dependencies = { "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp", "folke/neodev.nvim" },
-        config = lsp_config
+        config = lsp_config,
     },
     {
         "nvimdev/lspsaga.nvim",
@@ -97,16 +95,16 @@ return {
         opts = {
             scroll_preview = {
                 scroll_down = "<C-d>",
-                scroll_up = "<C-u>"
+                scroll_up = "<C-u>",
             },
             finder = {
                 vsplit = "v",
                 split = "s",
-                quit = { "q", "<esc>", "<C-c>" }
+                quit = { "q", "<esc>", "<C-c>" },
             },
             symbol_in_winbar = { enable = false },
-            lightbulb = { enable = false }
-        }
+            lightbulb = { enable = false },
+        },
     },
     { "mhartington/formatter.nvim", cmd = { "Format", "FormatWrite" }, config = formatter_config },
 }

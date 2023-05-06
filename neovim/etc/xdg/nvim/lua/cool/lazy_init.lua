@@ -11,11 +11,12 @@ local function bootstrap_lazy_nvim()
         vim.fn.system({
             "git",
             "clone",
-            "--depth", "1",
+            "--depth",
+            "1",
             "--filter=blob:none",
             "--branch=stable", -- latest stable release
             "https://github.com/folke/lazy.nvim.git",
-            lazy_path
+            lazy_path,
         })
         was_bootstrapped = true
     end
@@ -25,44 +26,40 @@ local function bootstrap_lazy_nvim()
 end
 
 local function init_lazy()
-    local xdg_config_dirs = vim.tbl_map(
-        function(item) return item .. "/nvim" end,
-        vim.fn.split(vim.env.XDG_CONFIG_DIRS or "/etc/xdg", ":")
-    )
+    local xdg_config_dirs = vim.tbl_map(function(item)
+        return item .. "/nvim"
+    end, vim.fn.split(vim.env.XDG_CONFIG_DIRS or "/etc/xdg", ":"))
 
     -- Lazy neet the mapleader setted, which is defined in keymaps module
     require("cool.keymaps")
 
-    require("lazy").setup(
-        "cool.plugins",
-        {
-            root = plugins_path,
-            -- For some reason it notifies that file are deleted, when it is not true
-            change_detection = { notify = false },
-            -- For some reason the system-wide path is not included in the runtimepath
-            performance = { rtp = { paths = xdg_config_dirs } },
-            ui = {
-                icons = {
-                    cmd = "✼ ",
-                    config = "✠",
-                    event = "✇",
-                    ft = "࿋ ",
-                    init = "➤ ",
-                    import = "⎌ ",
-                    keys = "྿ ",
-                    lazy = "⌘ ",
-                    loaded = "●",
-                    not_loaded = "○",
-                    plugin = "☘ ",
-                    runtime = "☸ ",
-                    source = "⬠ ",
-                    start = "⇧",
-                    task = "✔ ",
-                    list = {"●", "➜", "★", "‒", }
-                },
-            }
-        }
-    )
+    require("lazy").setup("cool.plugins", {
+        root = plugins_path,
+        -- For some reason it notifies that file are deleted, when it is not true
+        change_detection = { notify = false },
+        -- For some reason the system-wide path is not included in the runtimepath
+        performance = { rtp = { paths = xdg_config_dirs } },
+        ui = {
+            icons = {
+                cmd = "✼ ",
+                config = "✠",
+                event = "✇",
+                ft = "࿋ ",
+                init = "➤ ",
+                import = "⎌ ",
+                keys = "྿ ",
+                lazy = "⌘ ",
+                loaded = "●",
+                not_loaded = "○",
+                plugin = "☘ ",
+                runtime = "☸ ",
+                source = "⬠ ",
+                start = "⇧",
+                task = "✔ ",
+                list = { "●", "➜", "★", "‒" },
+            },
+        },
+    })
 end
 
 M.setup = function()

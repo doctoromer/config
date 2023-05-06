@@ -10,12 +10,12 @@ return {
                 include_builtin = false,
                 include_legendary_cmds = false,
                 extensions = {
-                    lazy = { keymaps = require("cool.keymaps") }
-                }
+                    lazy = { keymaps = require("cool.keymaps") },
+                },
             })
 
             -- Set keymaps that aren't part of any plugins
             legendary.keymaps(require("cool.keymaps").other_keymaps())
-        end
+        end,
     },
 }

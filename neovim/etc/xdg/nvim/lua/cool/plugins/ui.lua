@@ -1,3 +1,5 @@
+local full_char_seperator = "│"
+
 local function onedark_config()
     require("onedark").setup({
         style = "darker",
@@ -10,8 +12,8 @@ local function lualine_config()
         options = {
             theme = require("lualine.themes.onedark"),
             component_separators = {
-                left = "│",
-                right = "│",
+                left = full_char_seperator,
+                right = full_char_seperator,
             },
             section_separators = {
                 left = "",
@@ -145,8 +147,8 @@ local function dashboard_config()
                 { icon = "* ", desc = "Find files", action = "Telescope find_files" },
                 { icon = "* ", desc = "New file", action = "enew" },
             },
-            footer = { "🙃" }
-        }
+            footer = { "🙃" },
+        },
     })
 end
 
@@ -169,12 +171,12 @@ return {
     {
         "lukas-reineke/indent-blankline.nvim",
         opts = {
-            char = "│",
+            char = full_char_seperator,
             filetype_exclude = { "dashboard", "help" },
             show_first_indent_level = false,
             show_trailing_blankline_indent = false,
             show_current_context = true,
-        }
+        },
     },
     { "lukas-reineke/virt-column.nvim", config = true },
 }

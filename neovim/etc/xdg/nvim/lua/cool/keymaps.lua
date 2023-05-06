@@ -25,8 +25,20 @@ M["lspsaga.nvim"] = function()
         { "<leader>sp", "<cmd>Lspsaga peek_definition<CR>", description = "Preview symbol definition" },
         { "K", "<cmd>Lspsaga hover_doc<CR>", description = "Show symbol hover information" },
         { "gr", "<cmd>Lspsaga rename<CR>", description = "Rename symbol" },
-        { "]d", function() saga_diagnostic:goto_next() end, description = "Goto previous diagnostic" },
-        { "[d", function() saga_diagnostic:goto_prev() end, description = "Goto next diagnostic" },
+        {
+            "]d",
+            function()
+                saga_diagnostic:goto_next()
+            end,
+            description = "Goto previous diagnostic",
+        },
+        {
+            "[d",
+            function()
+                saga_diagnostic:goto_prev()
+            end,
+            description = "Goto next diagnostic",
+        },
         { "<C-t>", "<cmd>Lspsaga term_toggle<CR>", description = "Toggle float terminal" },
         { "<C-t>", "<cmd>Lspsaga term_toggle<CR>", mode = "t" },
     }
@@ -236,7 +248,11 @@ M["other_keymaps"] = function()
         { "gf", "<cmd>-tabmove<CR>", description = "Move tab left" },
         { "gh", "<cmd>+tabmove<CR>", description = "Move tab right" },
 
-        { "<leader>p", toggle_copy_mode, description = "Toggle copymode to allow copying from the vim inside the terminal" },
+        {
+            "<leader>p",
+            toggle_copy_mode,
+            description = "Toggle copymode to allow copying from the vim inside the terminal",
+        },
         { "dd", delete_special },
 
         -- Horizontal scroll

@@ -19,7 +19,7 @@ local function treesitter_config()
             "vimdoc",
             -- Used also for lspsaga hover feature
             "markdown",
-            "markdown_inline"
+            "markdown_inline",
         },
         -- This makes the installation synchronous if neovim is executed with --headless:w
         sync_install = #vim.api.nvim_list_uis() == 0,
@@ -43,7 +43,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = function()
-            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
             ts_update()
         end,
         config = treesitter_config,
@@ -65,10 +65,10 @@ return {
                         ac = "@class.outer",
                         ic = "@class.inner",
                         il = "@loop.inner",
-                        al = "@loop.outer"
-                    }
-                }
-            }
+                        al = "@loop.outer",
+                    },
+                },
+            },
         },
     },
     { "HiPhish/nvim-ts-rainbow2", main = "nvim-treesitter.configs", opts = { rainbow = { enable = true } } },
@@ -81,7 +81,7 @@ return {
         main = "nvim-treesitter.configs",
         opts = {
             endwise = { enable = true },
-        }
+        },
     },
     {
         "danymat/neogen",
@@ -94,6 +94,6 @@ return {
                     template = { annotation_convention = "google_docstrings" },
                 },
             },
-        }
+        },
     },
 }

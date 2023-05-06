@@ -21,7 +21,7 @@ return {
         },
     },
     "tpope/vim-unimpaired",
-    { "m4xshen/autoclose.nvim", event = "InsertEnter", config = true },
+    { "altermo/ultimate-autopair.nvim", event = "InsertEnter", config = true },
     {
         "terrortylor/nvim-comment",
         main = "nvim_comment",

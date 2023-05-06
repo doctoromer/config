@@ -1,9 +1,7 @@
 local full_char_seperator = "│"
 
 local function onedark_config()
-    require("onedark").setup({
-        style = "darker",
-    })
+    require("onedark").setup({ style = "darker" })
     vim.cmd("colorscheme onedark")
 end
 
@@ -11,31 +9,18 @@ local function lualine_config()
     require("lualine").setup({
         options = {
             theme = require("lualine.themes.onedark"),
-            component_separators = {
-                left = full_char_seperator,
-                right = full_char_seperator,
-            },
-            section_separators = {
-                left = "",
-                right = "",
-            },
+            component_separators = { left = full_char_seperator, right = full_char_seperator },
+            section_separators = { left = "", right = "" },
         },
         sections = {
             lualine_a = { "mode" },
             lualine_b = {
-                {
-                    "branch",
-                    icon = "",
-                },
+                { "branch", icon = "" },
             },
             lualine_c = {
                 {
                     "filename",
-                    symbols = {
-                        modified = " +",
-                        readonly = "",
-                        unnamed = "",
-                    },
+                    symbols = { modified = " +", readonly = "", unnamed = "" },
                 },
             },
             lualine_x = { "endcoding" },

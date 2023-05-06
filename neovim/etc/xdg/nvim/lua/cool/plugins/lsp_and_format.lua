@@ -104,6 +104,11 @@ return {
             },
             symbol_in_winbar = { enable = false },
             lightbulb = { enable = false },
+            ui = {
+                incoming = "⬊ ",
+                outgoing = "⬉ ",
+                hover = "⭐ ",
+            },
         },
     },
     { "mhartington/formatter.nvim", cmd = { "Format", "FormatWrite" }, config = formatter_config },

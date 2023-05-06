@@ -12,6 +12,10 @@ return {
                 extensions = {
                     lazy = { keymaps = require("cool.keymaps") },
                 },
+                icons = {
+                    itemgroup = "➤ ",
+                },
+                select_prompt = "⌘  Keymaps Explorer ⌘",
             })
 
             -- Set keymaps that aren't part of any plugins

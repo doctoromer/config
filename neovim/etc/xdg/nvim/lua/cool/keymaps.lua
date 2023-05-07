@@ -306,6 +306,21 @@ M["other_keymaps"] = function()
         vim.api.nvim_feedkeys(delete_command, "n", false)
     end
 
+    local function insert_spaces(is_before)
+        return function()
+            local current_line = vim.api.nvim_win_get_cursor(0)[1]
+            if is_before then
+                current_line = current_line - 1
+            end
+            local new_lines = {}
+
+            for _ = 1, vim.v.count1 do
+                table.insert(new_lines, "")
+            end
+            vim.api.nvim_buf_set_lines(0, current_line, current_line, false, new_lines)
+        end
+    end
+
     return {
         -- General keymaps
         { "\\", ";" },
@@ -354,6 +369,9 @@ M["other_keymaps"] = function()
         { "dd", delete_special },
         { ">", ">gv", mode = "v" },
         { "<", "<gv", mode = "v" },
+
+        { "[<space>", insert_spaces(true) },
+        { "]<space>", insert_spaces(false) },
     }
 end
 

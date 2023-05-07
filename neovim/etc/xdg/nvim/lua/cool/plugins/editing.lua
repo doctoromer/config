@@ -20,7 +20,6 @@ return {
             max_join_length = 1000,
         },
     },
-    "tpope/vim-unimpaired",
     { "altermo/ultimate-autopair.nvim", event = "InsertEnter", config = true },
     {
         "terrortylor/nvim-comment",

@@ -186,44 +186,8 @@ def download_binaries():
 
 
 def download_vim_plugins():
-    """ Download vim plugins using packer.nvim """
-    xdg_base_path = SCRIPT_DIR / Path("neovim", "etc", "xdg")
-    xdg_base_path = xdg_base_path.absolute()
-
-    env = dict(os.environ)
-    env["XDG_CONFIG_HOME"] = str(xdg_base_path)
-
-    nvim_dir = f"{SCRIPT_DIR}/neovim/etc/xdg/nvim"
-    base_custom_command = ["binaries/usr/bin/vim"]
-
-    if os.path.exists("/.dockerenv"):
-        base_custom_command.append("--appimage-extract-and-run")
-
-    base_custom_command.extend([
-        "--cmd", f"let &runtimepath.=',{nvim_dir}'",
-        "--cmd", f"let &packpath.=',{nvim_dir}'",
-        "--cmd", "packadd packer.nvim",
-        "-u", f"{nvim_dir}/init.vim",
-        "--headless"
-    ])
-
-    packer_download_command = list(base_custom_command)
-    packer_download_command.extend(["-c", "autocmd User PackerComplete quitall", "-c", "PackerSync"])
-    subprocess.check_call(packer_download_command, env=env)
-
-    treesitter_download_command = list(base_custom_command)
-    treesitter_download_command.extend(["-c", "TSUpdateSync", "-c", "q"])
-    subprocess.check_call(treesitter_download_command, env=env)
-
-    treesitter_download_command = list(base_custom_command)
-    treesitter_download_command.extend([
-        "-c", "autocmd User MasonToolsUpdateCompleted quitall",
-        "-c", "MasonToolsInstall"
-    ])
-    subprocess.check_call(treesitter_download_command, env=env)
-
-    # The neovim command above doesn't print newline
-    print("")
+    """ Download vim plugins and tools """
+    subprocess.check_call(["binaries/usr/bin/vim", "--cmd", 'lua vim.g.download_mode = true', "--headless"])
 
 
 def download_zsh_plugins():

@@ -2,8 +2,7 @@ local function treesitter_config()
     local parsers_dir = require("cool.options").nvim_root_dir
     vim.opt.runtimepath:prepend(parsers_dir)
 
-    require("nvim-treesitter.configs").setup({
-        ensure_installed = {
+    local default_parser = {
             "c",
             "cpp",
             "cmake",
@@ -17,12 +16,15 @@ local function treesitter_config()
             "regex",
             "toml",
             "vimdoc",
-            -- Used also for lspsaga hover feature
+            -- used also for lspsaga hover feature
             "markdown",
             "markdown_inline",
-        },
-        -- This makes the installation synchronous if neovim is executed with --headless:w
-        sync_install = #vim.api.nvim_list_uis() == 0,
+        }
+
+    require("nvim-treesitter.configs").setup({
+        ensure_installed = vim.g.download_mode and default_parser or {},
+        sync_install = true,
+        auto_install = false,
         highlight = { enable = true },
         parser_install_dir = parsers_dir,
         incremental_selection = {
@@ -35,6 +37,7 @@ local function treesitter_config()
             },
         },
     })
+
     vim.wo.foldmethod = "expr"
     vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 end

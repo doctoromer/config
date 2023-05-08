@@ -355,6 +355,9 @@ M["other_keymaps"] = function()
                     toggle_copy_mode,
                     description = "Toggle copymode to allow copying from vim to outside of the terminal",
                 },
+
+                { "[<space>", insert_spaces(true), description = "Add new lines before current line" },
+                { "]<space>", insert_spaces(false), description = "Add new lines after current line" },
             }
         },
         {
@@ -369,9 +372,6 @@ M["other_keymaps"] = function()
         { "dd", delete_special },
         { ">", ">gv", mode = "v" },
         { "<", "<gv", mode = "v" },
-
-        { "[<space>", insert_spaces(true) },
-        { "]<space>", insert_spaces(false) },
     }
 end
 

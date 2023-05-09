@@ -21,7 +21,7 @@ local function bootstrap_lazy_nvim()
                 "https://github.com/folke/lazy.nvim.git",
                 lazy_path,
             })
-            local return_code = vim.fn.jobwait({job_id})[1]
+            local return_code = vim.fn.jobwait({ job_id })[1]
 
             if return_code ~= 0 then
                 vim.notify("Failed to download git! Exit code: " .. return_code, vim.log.levels.WARN)
@@ -63,7 +63,7 @@ local function init_lazy()
         performance = { rtp = { paths = xdg_config_dirs } },
         install = {
             missing = download_mode,
-            colorscheme = { "onedark" }
+            colorscheme = { "onedark" },
         },
         ui = {
             icons = {
@@ -97,8 +97,8 @@ local function quit()
 end
 
 local function download_mason_tools()
-    vim.api.nvim_create_autocmd('User', {
-        pattern = 'MasonToolsUpdateCompleted',
+    vim.api.nvim_create_autocmd("User", {
+        pattern = "MasonToolsUpdateCompleted",
         callback = function()
             quit()
         end,
@@ -110,7 +110,6 @@ end
 
 local function download()
     if download_mode then
-
         vim.notify("Updating plugins...", vim.log.levels.INFO)
         require("lazy").sync()
 
@@ -122,7 +121,7 @@ local function download()
                 callback = function()
                     download_mason_tools()
                 end,
-                once = true
+                once = true,
             })
         end
     end
@@ -140,7 +139,6 @@ M.setup = function()
     end
 
     download()
-
 end
 
 return M

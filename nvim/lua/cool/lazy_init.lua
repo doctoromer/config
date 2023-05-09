@@ -45,12 +45,6 @@ local function init_lazy()
         return item .. "/nvim"
     end, vim.fn.split(vim.env.XDG_CONFIG_DIRS or "/etc/xdg", ":"))
 
-    local is_lazy_available, _ = pcall(require, "lazy")
-    if not is_lazy_available then
-        vim.notify("Lazy is not available! Please use download mode to get it.", vim.log.levels.WARN)
-        return false
-    end
-
     -- Lazy need the mapleader setted, which is defined in keymaps module
     require("cool.keymaps")
 

@@ -47,4 +47,9 @@ return {
         ft = "dashboard",
     },
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make", event = "VeryLazy" },
+    {
+        "princejoogie/dir-telescope.nvim",
+        dependencies = { "nvim-telescope/telescope.nvim" },
+        config = true,
+    },
 }

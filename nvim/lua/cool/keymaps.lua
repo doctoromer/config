@@ -156,6 +156,23 @@ M["telescope.nvim"] = function()
     }
 end
 
+M["dir-telescope.nvim"] = function()
+    local dir_telescope = require("telescope").extensions.dir
+
+    return {
+        {
+            itemgroup = "Finders",
+            keymaps = {
+                { "<leader>df", dir_telescope.find_files, description = "Find a file in a sub directory" },
+                {
+                    "<leader>da",
+                    dir_telescope.live_grep,
+                    description = "Search inside all files recursively in a sub directory",
+                },
+            },
+        },
+    }
+end
 M["gitsigns.nvim"] = function()
     local gitsigns = require("gitsigns")
 

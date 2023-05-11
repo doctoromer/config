@@ -60,7 +60,7 @@ M["lspsaga.nvim"] = function()
             keymaps = {
                 { "<C-t>", "<cmd>Lspsaga term_toggle<CR>", description = "Toggle float terminal" },
                 { "<C-t>", "<cmd>Lspsaga term_toggle<CR>", mode = "t" },
-            }
+            },
         },
     }
 end
@@ -91,8 +91,8 @@ M["neogen"] = function()
             itemgroup = "Miscellaneous",
             keymaps = {
                 { "<leader>n", require("neogen").generate, mode = "n", description = "Autogenerate documentation" },
-            }
-        }
+            },
+        },
     }
 end
 
@@ -238,9 +238,14 @@ M["LuaSnip"] = function()
         {
             itemgroup = "Miscellaneous",
             keymaps = {
-                { "<C-space>", require("luasnip").expand_or_jump, mode = { "i", "s" }, description = "Expand snippets" },
-            }
-        }
+                {
+                    "<C-space>",
+                    require("luasnip").expand_or_jump,
+                    mode = { "i", "s" },
+                    description = "Expand snippets",
+                },
+            },
+        },
     }
 end
 
@@ -267,8 +272,8 @@ M["treesj"] = function()
             itemgroup = "Miscellaneous",
             keymaps = {
                 { "ga", require("treesj").toggle, description = "Spread and join arguments, Use inside parenthesis" },
-            }
-        }
+            },
+        },
     }
 end
 
@@ -375,7 +380,7 @@ M["other_keymaps"] = function()
 
                 { "[<space>", insert_spaces(true), description = "Add new lines before current line" },
                 { "]<space>", insert_spaces(false), description = "Add new lines after current line" },
-            }
+            },
         },
         {
             itemgroup = "Navigation",

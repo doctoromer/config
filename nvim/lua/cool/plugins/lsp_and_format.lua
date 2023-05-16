@@ -85,7 +85,7 @@ return {
     {
         "nvimdev/lspsaga.nvim",
         dependencies = "neovim/nvim-lspconfig",
-        event = "VeryLazy",
+        event = "LspAttach",
         opts = {
             scroll_preview = {
                 scroll_down = "<C-d>",

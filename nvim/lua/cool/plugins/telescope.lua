@@ -71,6 +71,10 @@ local function telescope_config()
     })
 end
 
+local function telescope_fzf_native_config()
+    require("telescope").load_extension("fzf")
+end
+
 return {
     {
         "nvim-telescope/telescope.nvim",
@@ -80,7 +84,13 @@ return {
         config = telescope_config,
         ft = "dashboard",
     },
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make", event = "VeryLazy" },
+    {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        dependencies = "nvim-telescope/telescope.nvim",
+        config = telescope_fzf_native_config,
+        build = "make",
+        event = "VeryLazy",
+    },
     {
         "princejoogie/dir-telescope.nvim",
         dependencies = { "nvim-telescope/telescope.nvim" },

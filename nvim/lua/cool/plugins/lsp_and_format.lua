@@ -5,12 +5,11 @@ local function mason_config()
 
     require("mason").setup({
         install_root_dir = require("cool.options").nvim_root_dir .. "/mason",
-        pip = {
-            upgrade_pip = true,
-        },
+        pip = { upgrade_pip = true },
     })
 
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
     mason_lspconfig.setup({})
 
     mason_lspconfig.setup_handlers({
@@ -32,6 +31,7 @@ end
 local function formatter_config()
     local formatters = {
         lua = { require("formatter.filetypes.lua").stylua },
+        c = { require("formatter.filetypes.c").clangformat },
     }
 
     if vim.fn.executable("autopep8") == 1 then
@@ -67,6 +67,7 @@ return {
         opts = {
             ensure_installed = {
                 "clangd",
+                "clang-format",
                 "python-lsp-server",
                 "cmake-language-server",
                 "lua-language-server",

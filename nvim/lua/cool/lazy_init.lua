@@ -1,5 +1,6 @@
 local M = {}
 
+local keymaps = require("cool.keymaps")
 local nvim_root_dir = require("cool.options").nvim_root_dir
 local plugins_path = nvim_root_dir .. "/lazy_plugins"
 local lazy_path = nvim_root_dir .. "/lazy/lazy.nvim"
@@ -38,6 +39,94 @@ local function bootstrap_lazy_nvim()
     end
 end
 
+DUMMY_MODULE = {}
+setmetatable(DUMMY_MODULE, {
+    __index = function(dummy_module)
+        return dummy_module
+    end,
+    __call = function(dummy_module)
+        return dummy_module
+    end,
+})
+
+local function get_keymaps_for_lazy(plugin_keymaps)
+    local result = {}
+
+    for _, keymap in pairs(plugin_keymaps) do
+        local flatted_keymaps
+        if keymap.keymaps then
+            flatted_keymaps = keymap.keymaps
+        else
+            flatted_keymaps = {keymap}
+        end
+
+        for _, inner_keymap in pairs(flatted_keymaps) do
+            table.insert(result, { inner_keymap[1], mode = inner_keymap.mode })
+        end
+    end
+    return result
+end
+
+local original_add
+local original_config
+
+local function get_plugin_keymaps_function(plugin_full_name)
+    local plugin_name = plugin_full_name:gmatch("[^/]+/(.+)")()
+    if plugin_name and keymaps[plugin_name] then
+        return keymaps[plugin_name]
+    end
+end
+
+local function plugin_add_patched(self, plugin, is_dep)
+    -- Skip the plugin if it doesn't have a name, it is a dependency or it has been already loaded
+    if not plugin[1] or is_dep or rawget(plugin, "_") then
+        return original_add(self, plugin, is_dep)
+    end
+
+    local keymaps_function = get_plugin_keymaps_function(plugin[1])
+
+    if keymaps_function then
+        setfenv(keymaps_function, vim.tbl_extend("force", getfenv(), {require = DUMMY_MODULE}))
+        local plugin_keymaps = keymaps_function()
+        setfenv(keymaps_function, vim.tbl_extend("force", getfenv(), {require = require}))
+
+        if not plugin.keys then
+            plugin.keys = get_keymaps_for_lazy(plugin_keymaps)
+        end
+
+        -- If config have a value, then the patched config function will be called
+        if not plugin.config then
+            plugin.config = "__keymaps__"
+        end
+    end
+
+    return original_add(self, plugin, is_dep)
+end
+
+local function loader_config_patched(plugin)
+    if plugin.config == "__keymaps__" then
+        plugin.config = nil
+    end
+    if plugin.config or plugin.opts then
+        original_config(plugin)
+    end
+
+    local keymaps_function = get_plugin_keymaps_function(plugin[1])
+    if keymaps_function then
+        require("legendary").keymaps(keymaps_function())
+    end
+end
+
+local function patch_lazy()
+    local Spec = require("lazy.core.plugin").Spec
+    original_add = Spec.add
+    Spec.add = plugin_add_patched
+
+    local loader = require("lazy.core.loader")
+    original_config = loader.config
+    loader.config = loader_config_patched
+end
+
 local function init_lazy()
     vim.opt.rtp:prepend(lazy_path)
 
@@ -45,8 +134,7 @@ local function init_lazy()
         return item .. "/nvim"
     end, vim.fn.split(vim.env.XDG_CONFIG_DIRS or "/etc/xdg", ":"))
 
-    -- Lazy need the mapleader setted, which is defined in keymaps module
-    require("cool.keymaps")
+    patch_lazy()
 
     require("lazy").setup("cool.plugins", {
         root = plugins_path,

@@ -1,5 +1,3 @@
-
-
 local function telescope_config()
     local actions = require("telescope.actions")
 
@@ -42,7 +40,6 @@ return {
     {
         "nvim-telescope/telescope.nvim",
         dependencies = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" },
-        event = "VeryLazy",
         -- Couldn't use the 'opts' field because some of the options requires using the 'actions' module
         config = telescope_config,
         ft = "dashboard",
@@ -52,7 +49,6 @@ return {
         dependencies = "nvim-telescope/telescope.nvim",
         config = telescope_fzf_native_config,
         build = "make",
-        event = "VeryLazy",
     },
     {
         "princejoogie/dir-telescope.nvim",

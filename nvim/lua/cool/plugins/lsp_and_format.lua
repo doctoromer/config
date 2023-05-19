@@ -57,7 +57,14 @@ return {
         "williamboman/mason.nvim",
         dependencies = {
             "williamboman/mason-lspconfig.nvim",
-            dependencies = { "folke/neodev.nvim", config = true, ft = "lua" },
+            dependencies = {
+                "folke/neodev.nvim",
+                config = true,
+                ft = "lua",
+                cond = function()
+                    return vim.bo.filetype == "lua"
+                end
+            },
         },
         config = mason_config,
     },

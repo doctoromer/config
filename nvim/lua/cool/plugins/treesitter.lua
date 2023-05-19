@@ -76,11 +76,11 @@ return {
     },
     { "HiPhish/nvim-ts-rainbow2", main = "nvim-treesitter.configs", opts = { rainbow = { enable = true } } },
     { "windwp/nvim-ts-autotag", dependencies = "nvim-treesitter/nvim-treesitter", config = true, event = "VeryLazy" },
-    { "David-Kunz/treesitter-unit", event = "VeryLazy" },
+    { "David-Kunz/treesitter-unit" },
     {
         "RRethy/nvim-treesitter-endwise",
         dependencies = "nvim-treesitter/nvim-treesitter",
-        event = "VeryLazy",
+        ft = { "python", "lua", "sh", "bash" },
         main = "nvim-treesitter.configs",
         opts = {
             endwise = { enable = true },
@@ -89,7 +89,6 @@ return {
     {
         "danymat/neogen",
         dependencies = "nvim-treesitter/nvim-treesitter",
-        event = "VeryLazy",
         opts = {
             snippet_engine = "luasnip",
             languages = {

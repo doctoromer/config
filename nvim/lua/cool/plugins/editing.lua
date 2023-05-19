@@ -2,6 +2,21 @@ local function pasta_config()
     vim.g.pasta_disabled_filetypes = {}
 end
 
+local function autolist_config()
+    local autolist = require("autolist")
+    autolist.setup()
+
+    autolist.create_mapping_hook("i", "<CR>", autolist.new)
+    autolist.create_mapping_hook("i", "<Tab>", autolist.indent)
+    autolist.create_mapping_hook("i", "<S-Tab>", autolist.indent, "<C-D>")
+    autolist.create_mapping_hook("n", "o", autolist.new)
+    autolist.create_mapping_hook("n", "O", autolist.new_before)
+    autolist.create_mapping_hook("n", ">>", autolist.indent)
+    autolist.create_mapping_hook("n", "<<", autolist.indent)
+    autolist.create_mapping_hook("n", "<C-r>", autolist.force_recalculate)
+    autolist.create_mapping_hook("n", "<leader>x", autolist.invert_entry, "")
+end
+
 return {
     "tpope/vim-repeat",
     { "sickill/vim-pasta", config = pasta_config },
@@ -12,7 +27,6 @@ return {
     "wellle/targets.vim",
     {
         "Wansmer/treesj",
-        event = "VeryLazy",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
         opts = {
             use_default_keymaps = false,
@@ -25,13 +39,9 @@ return {
         "terrortylor/nvim-comment",
         main = "nvim_comment",
         opts = { comment_empty = false },
-        keys = {
-            { "gc", mode = { "n", "o", "x" } },
-            "gcc",
-        },
     },
-    { "gaoDean/autolist.nvim", config = true, event = "InsertEnter" },
-    { "easymotion/vim-easymotion", event = "VeryLazy" },
-    { "michaeljsmith/vim-indent-object", event = "VeryLazy" },
-    { "Julian/vim-textobj-variable-segment", dependencies = "kana/vim-textobj-user", event = "VeryLazy" },
+    { "gaoDean/autolist.nvim", config = autolist_config, ft = { "markdown", "text" } },
+    { "easymotion/vim-easymotion" },
+    { "michaeljsmith/vim-indent-object" },
+    { "Julian/vim-textobj-variable-segment", dependencies = "kana/vim-textobj-user" },
 }

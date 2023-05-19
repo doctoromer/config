@@ -319,9 +319,22 @@ end
 M["treesj"] = function()
     return {
         {
-            itemgroup = "Miscellaneous",
+            itemgroup = "Editing",
+            description = "Edit text",
             keymaps = {
                 { "ga", require("treesj").toggle, description = "Spread and join arguments, Use inside parenthesis" },
+            },
+        },
+    }
+end
+
+M["nvim-comment"] = function()
+    return {
+        {
+            itemgroup = "Editing",
+            keymaps = {
+                { "gc", description = "Toggle comment action (Example: gcap)", modes = { "x", "n" } },
+                { "gcc", description = "Toggle comment for one line" },
             },
         },
     }
@@ -337,6 +350,33 @@ M["vim-easymotion"] = function()
                     "<Plug>(easymotion-prefix)",
                     description = "Prefix for movements (For example, <space>w)",
                 },
+            },
+        },
+    }
+end
+
+M["vim-indent-object"] = function()
+    local modes = { "v", "o" }
+    return {
+        {
+            itemgroup = "Editing",
+            keymaps = {
+                { "ai", description = "Line above and indent level text object", mode = modes },
+                { "ii", description = "Indent level and line below text object", mode = modes },
+                { "aI", description = "Lines above/below indent level text object", mode = modes },
+            },
+        },
+    }
+end
+
+M["vim-textobj-variable-segment"] = function()
+    local modes = { "o", "x" }
+    return {
+        {
+            itemgroup = "Editing",
+            keymaps = {
+                { "iv", description = "Word in symbol text object", mode = modes },
+                { "av", description = "Word in symbol including '_' text object", mode = modes },
             },
         },
     }

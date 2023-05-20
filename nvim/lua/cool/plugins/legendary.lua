@@ -9,12 +9,7 @@ return {
             legendary.setup({
                 include_builtin = false,
                 include_legendary_cmds = false,
-                extensions = {
-                    lazy = { keymaps = require("cool.keymaps") },
-                },
-                icons = {
-                    itemgroup = "➤ ",
-                },
+                icons = { itemgroup = "➤ " },
                 select_prompt = "⌘  Keymaps Explorer ⌘",
             })
 

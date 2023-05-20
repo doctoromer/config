@@ -49,22 +49,14 @@ setmetatable(DUMMY_MODULE, {
     end,
 })
 
-local function get_keymaps_for_lazy(plugin_keymaps)
-    local result = {}
-
+local function do_for_each_keymap(plugin_keymaps, keymap_function)
     for _, keymap in pairs(plugin_keymaps) do
-        local flatted_keymaps
-        if keymap.keymaps then
-            flatted_keymaps = keymap.keymaps
-        else
-            flatted_keymaps = {keymap}
-        end
+        local flatted_keymaps = keymap.keymaps and keymap.keymaps or { keymap }
 
         for _, inner_keymap in pairs(flatted_keymaps) do
-            table.insert(result, { inner_keymap[1], mode = inner_keymap.mode })
+            keymap_function(inner_keymap)
         end
     end
-    return result
 end
 
 local original_add
@@ -86,12 +78,15 @@ local function plugin_add_patched(self, plugin, is_dep)
     local keymaps_function = get_plugin_keymaps_function(plugin[1])
 
     if keymaps_function then
-        setfenv(keymaps_function, vim.tbl_extend("force", getfenv(), {require = DUMMY_MODULE}))
+        setfenv(keymaps_function, vim.tbl_extend("force", getfenv(), { require = DUMMY_MODULE }))
         local plugin_keymaps = keymaps_function()
-        setfenv(keymaps_function, vim.tbl_extend("force", getfenv(), {require = require}))
+        setfenv(keymaps_function, vim.tbl_extend("force", getfenv(), { require = require }))
 
         if not plugin.keys then
-            plugin.keys = get_keymaps_for_lazy(plugin_keymaps)
+            plugin.keys = {}
+            do_for_each_keymap(plugin_keymaps, function(keymap)
+                table.insert(plugin.keys, { keymap[1], mode = keymap.mode })
+            end)
         end
 
         -- If config have a value, then the patched config function will be called
@@ -107,13 +102,22 @@ local function loader_config_patched(plugin)
     if plugin.config == "__keymaps__" then
         plugin.config = nil
     end
+
     if plugin.config or plugin.opts then
         original_config(plugin)
     end
 
-    local keymaps_function = get_plugin_keymaps_function(plugin[1])
-    if keymaps_function then
-        require("legendary").keymaps(keymaps_function())
+    local keymap_function = get_plugin_keymaps_function(plugin[1])
+
+    if keymap_function then
+        local map_only_keymaps = {}
+
+        do_for_each_keymap(keymap_function(), function(keymap)
+            keymap.description = nil
+            table.insert(map_only_keymaps, keymap)
+        end)
+
+        require("legendary").keymaps(map_only_keymaps)
     end
 end
 
@@ -127,6 +131,32 @@ local function patch_lazy()
     loader.config = loader_config_patched
 end
 
+local function create_legendary_menus()
+    local result = {}
+    for _, keymap_function in pairs(keymaps) do
+        setfenv(keymap_function, vim.tbl_extend("force", getfenv(), { require = DUMMY_MODULE }))
+        local plugin_keymaps = keymap_function()
+        setfenv(keymap_function, vim.tbl_extend("force", getfenv(), { require = require }))
+        do_for_each_keymap(plugin_keymaps, function(keymap)
+            keymap[2] = nil
+        end)
+        for _, keymap_item in pairs(plugin_keymaps) do
+            table.insert(result, keymap_item)
+        end
+    end
+
+    vim.api.nvim_create_autocmd(
+        "User",
+        {
+            pattern = "LazyDone",
+            callback = function()
+                require("legendary").keymaps(result)
+            end,
+            once = true,
+        }
+    )
+end
+
 local function init_lazy()
     vim.opt.rtp:prepend(lazy_path)
 
@@ -135,6 +165,7 @@ local function init_lazy()
     end, vim.fn.split(vim.env.XDG_CONFIG_DIRS or "/etc/xdg", ":"))
 
     patch_lazy()
+    create_legendary_menus()
 
     require("lazy").setup("cool.plugins", {
         root = plugins_path,

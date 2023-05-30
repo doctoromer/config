@@ -3,23 +3,24 @@ local function treesitter_config()
     vim.opt.runtimepath:prepend(parsers_dir)
 
     local default_parser = {
-            "c",
-            "cpp",
-            "cmake",
-            "python",
-            "bash",
-            "html",
-            "java",
-            "json",
-            "lua",
-            "vim",
-            "regex",
-            "toml",
-            "vimdoc",
-            -- used also for lspsaga hover feature
-            "markdown",
-            "markdown_inline",
-        }
+        "c",
+        "cpp",
+        "cmake",
+        "python",
+        "bash",
+        "html",
+        "java",
+        "json",
+        "lua",
+        "vue",
+        "vim",
+        "regex",
+        "toml",
+        "vimdoc",
+        -- used also for lspsaga hover feature
+        "markdown",
+        "markdown_inline",
+    }
 
     require("nvim-treesitter.configs").setup({
         ensure_installed = vim.g.download_mode and default_parser or {},
@@ -75,7 +76,12 @@ return {
         },
     },
     { "HiPhish/nvim-ts-rainbow2", main = "nvim-treesitter.configs", opts = { rainbow = { enable = true } } },
-    { "windwp/nvim-ts-autotag", dependencies = "nvim-treesitter/nvim-treesitter", config = true, event = "VeryLazy" },
+    {
+        "windwp/nvim-ts-autotag",
+        dependencies = "nvim-treesitter/nvim-treesitter",
+        config = true,
+        ft = { "html", "javascript", "vue", "xml", "markdown" },
+    },
     { "David-Kunz/treesitter-unit" },
     {
         "RRethy/nvim-treesitter-endwise",

@@ -7,6 +7,14 @@ It contains 4 components:
 * miscellaneous configurations (Currently git and tmux)
 
 # Installation
+## In an offline network
+Unzip the zip that you received from me and run (Only ubuntu):
+```sh
+sudo ./ubuntu_install.sh
+```
+For other non-ubuntu distribution, read the script and apply to your system, It's easy.
+
+## In an online network (A.K.A the internet)
 If this is a fresh clone of this repo, first you need to download stuff.
 Before running the download script, Install some commands:
 ```sh
@@ -25,12 +33,12 @@ sudo ./ubuntu_install.sh
 
 # How it works
 ## install.py
-The most importent script is `./install.py`. It perfroms several actions:
+The most important script is `./install.py`. It performs several actions:
 * download - download all required files
 * install - installs everything
 * remove - removes everything
 * auto-remove - removes previous installations of this configuration
-* verify - verfies some stuff (not important)
+* verify - verifies some stuff (not important)
 
 ### download
 This command downloads the following files:
@@ -86,6 +94,22 @@ It does the following actions:
 * Create `.zshrc` in user's home directory
 
 This script is tested in ubuntu 18.
+
+# Q&A
+# I want to install only part of the config
+It's possible. Use the -p switch of the install.py script that is described above.
+If you want to install only the neovim configuration you can use the [CoolVim](https://gitlab.com/OmerSarig/coolvim) repo.
+
+# Why the monstrous installation script (install.py)
+This linux config is specifically designed to be used in offline (Air gapped) linux machines.
+For ease of installation and portability I chose to write this (really nice and documented!) script.
+If there is any better solution, I would like to hear it.
+
+# Why a system-wide installation?
+Two reasons:
+1. To configure all users. It's nice to have a configured zsh and vim while in root shell.
+2. To allow the user to have their own configuration files that won't be overridden between updates,
+   Like ~/.config/nvim, ~/.zshrc, etc.
 
 # Known issues
 * The download process is very fragile and often breaks

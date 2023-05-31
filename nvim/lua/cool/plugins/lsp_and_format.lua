@@ -3,6 +3,10 @@ local function mason_config()
     local lspconfig = require("lspconfig")
     local mason_lspconfig = require("mason-lspconfig")
 
+    -- The setup is done here instead of using 'opts' or 'config' lazy keys to prevent some kind of race condition.
+    -- Basically, sometimes for no good reason neodev doesn't work, and this fixes it.
+    require("neodev").setup({})
+
     require("mason").setup({
         install_root_dir = require("cool.options").nvim_root_dir .. "/mason",
         pip = { upgrade_pip = true },
@@ -57,17 +61,11 @@ return {
         "williamboman/mason.nvim",
         dependencies = {
             "williamboman/mason-lspconfig.nvim",
-            dependencies = {
-                "folke/neodev.nvim",
-                config = true,
-                ft = "lua",
-                cond = function()
-                    return vim.bo.filetype == "lua"
-                end
-            },
+            "folke/neodev.nvim",
         },
         config = mason_config,
     },
+    { "folke/neodev.nvim" },
     {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
         cmd = { "MasonToolsInstall", "MasonToolsUpdate" },

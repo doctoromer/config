@@ -36,7 +36,11 @@ local function plugin_add_patched(self, plugin, is_dep)
     local plugin_keymaps = get_plugin_keymaps_function(plugin[1], M.keymaps_with_dummy)
 
     if plugin_keymaps then
-        if not plugin.keys then
+        -- The no_lazy value in the keys field is used to allow using auto_keymaps module to map keys without
+        -- lazy loading the plugin.
+        if plugin.keys == "no_lazy" then
+            plugin.keys = nil
+        else
             plugin.keys = {}
             do_for_each_keymap(plugin_keymaps, function(keymap)
                 table.insert(plugin.keys, { keymap[1], mode = keymap.mode })
@@ -115,6 +119,10 @@ function M.setup(opts)
     M.keymaps_with_dummy = {}
 
     for plugin_name, keymap_function in pairs(M.keymaps_functions) do
+
+        -- Run a function while temporarily replacing the require function with dummy function that does nothing.
+        -- This is useful to use the keymaps without load the plugins themselves, because it cannot be done while
+        -- before calling require("lazy").setup.
         setfenv(keymap_function, vim.tbl_extend("force", getfenv(), { require = DUMMY_MODULE }))
         local plugin_keymaps = keymap_function()
         setfenv(keymap_function, vim.tbl_extend("force", getfenv(), { require = require }))

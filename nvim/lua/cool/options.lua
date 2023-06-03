@@ -19,7 +19,6 @@ g.clipboard = {
     cache_enabled = true,
 }
 
-o.hidden = true
 o.mouse = nil
 
 -- Window display

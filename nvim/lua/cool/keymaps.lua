@@ -479,6 +479,22 @@ M["other_keymaps"] = function()
                 { "zh", "zH", description = "Scroll Horizontally left" },
             },
         },
+        {
+            itemgroup = "Language",
+            keymaps = {
+                {
+                    "<leader>D",
+                    function()
+                        if vim.diagnostic.is_disabled(0) then
+                            vim.diagnostic.enable(0)
+                        else
+                            vim.diagnostic.disable(0)
+                        end
+                    end,
+                    description = "Toggle diagnostics display"
+                },
+            },
+        },
 
         -- Other
         { "dd", delete_special },

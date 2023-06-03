@@ -24,6 +24,10 @@ local function mason_config()
             -- Maybe add cmp_nvim_lsp capabilities?
             lspconfig.pylsp.setup({ init_options = { documentFormatting = false } })
         end,
+        clangd = function()
+            lspconfig.clangd.setup({ capabilities = capabilities })
+            vim.diagnostic.disable(0)
+        end
     })
 end
 

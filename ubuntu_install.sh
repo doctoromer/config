@@ -11,7 +11,7 @@ main ()
     apt update -qq
 
     echo
-    apt install -y -qq silversearcher-ag zsh git python3-pip
+    apt install -y -qq silversearcher-ag zsh git python3-pip libfuse2
     # Required for install.py
     pip3 install -q requests dploy
     # This packages collide with some of the binaries
@@ -25,12 +25,14 @@ main ()
 
     export HOME=$(sh -c "echo ~${SUDO_USER:-}")
     export ZSHRC=$HOME/.zshrc
+
     if [ -f $ZSHRC ]; then
         echo -e "Copy to $ZSHRC:\n"
         cat zshrc.example
     else
-        echo Created zshrc in $ZSHRC
         cp -n zshrc.example $ZSHRC
+        chown $SUDO_USER:$SUDO_USER $ZSHRC
+        echo Created zshrc in $ZSHRC
     fi
 }
 

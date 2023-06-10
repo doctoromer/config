@@ -1,6 +1,6 @@
 local M = {}
 
-local nvim_root_dir = require("cool.options").nvim_root_dir
+local nvim_root_dir = require("cool.utils").nvim_root_dir
 local plugins_path = nvim_root_dir .. "/lazy_plugins"
 local lazy_path = nvim_root_dir .. "/lazy/lazy.nvim"
 

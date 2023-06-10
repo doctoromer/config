@@ -8,7 +8,7 @@ local function mason_config()
     require("neodev").setup({})
 
     require("mason").setup({
-        install_root_dir = require("cool.options").nvim_root_dir .. "/mason",
+        install_root_dir = require("cool.utils").nvim_root_dir .. "/mason",
         pip = { upgrade_pip = true },
     })
 

@@ -178,7 +178,7 @@ M["telescope.nvim"] = function()
         return true
     end
 
-    local function create_multi_action(multi_action)
+    local function create_multi_actions(multi_action)
         return function()
             telescope[multi_action]({ attach_mappings = map_multi_actions })
         end
@@ -189,9 +189,9 @@ M["telescope.nvim"] = function()
             itemgroup = "Finders",
             description = "Stuff that helps you find other stuff",
             keymaps = {
-                { "<leader>f", create_multi_action("find_files"), description = "find a file" },
-                { "<leader>a", create_multi_action("live_grep"), description = "search inside all files recursively" },
-                { "<leader>H", create_multi_action("help_tags"), description = "Search help pages" },
+                { "<leader>f", create_multi_actions("find_files"), description = "find a file" },
+                { "<leader>a", create_multi_actions("live_grep"), description = "search inside all files recursively" },
+                { "<leader>H", create_multi_actions("help_tags"), description = "Search help pages" },
                 { "<leader>l", telescope.current_buffer_fuzzy_find, description = "search in current file's lines" },
             },
         },
@@ -301,16 +301,17 @@ end
 
 M["Navigator.nvim"] = function()
     local navigator = require("Navigator")
+    local modes = { "n", "i", "c" }
 
     return {
         {
             itemgroup = "Navigation",
             description = "Move around",
             keymaps = {
-                { "<M-h>", navigator.left, description = "Tmux left" },
-                { "<M-j>", navigator.down, description = "Tmux down" },
-                { "<M-k>", navigator.up, description = "Tmux up" },
-                { "<M-l>", navigator.right, description = "Tmux right" },
+                { "<M-h>", navigator.left, description = "Tmux left", modes = modes },
+                { "<M-j>", navigator.down, description = "Tmux down", modes = modes },
+                { "<M-k>", navigator.up, description = "Tmux up", modes = modes },
+                { "<M-l>", navigator.right, description = "Tmux right", modes = modes },
             },
         },
     }
@@ -491,7 +492,7 @@ M["other_keymaps"] = function()
                             vim.diagnostic.disable(0)
                         end
                     end,
-                    description = "Toggle diagnostics display"
+                    description = "Toggle diagnostics display",
                 },
             },
         },

@@ -187,7 +187,9 @@ def download_binaries():
 
 def download_vim_plugins():
     """ Download vim plugins and tools """
-    subprocess.check_call(["binaries/usr/bin/vim", "--cmd", 'lua vim.g.download_mode = true', "--headless"])
+    new_env_vars = dict(os.environ)
+    new_env_vars["DOWNLOAD_MODE"] = "true"
+    subprocess.check_call(["binaries/usr/bin/vim", "--headless"], env=new_env_vars)
 
 
 def download_zsh_plugins():

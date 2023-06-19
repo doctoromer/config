@@ -51,7 +51,7 @@
         "repo": "nelsonenzo/tmux-appimage",
         "asset_regex": "tmux.appimage$",
         "file_map": {
-            "tmux.appimage": "usr/bin/tmux-bin"
+            "tmux.appimage": "usr/bin/tmux"
         }
     }
 }

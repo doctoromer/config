@@ -1,5 +1,5 @@
 local function treesitter_config()
-    local parsers_dir = require("cool.utils").nvim_root_dir
+    local parsers_dir = require("cool.utils").download_dir
     vim.opt.runtimepath:prepend(parsers_dir)
 
     local default_parser = {

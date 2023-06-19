@@ -16,5 +16,6 @@ local function get_nvim_config_dir()
 end
 
 M.nvim_root_dir = get_nvim_config_dir()
+M.download_dir = get_nvim_config_dir() .. "/assets"
 
 return M

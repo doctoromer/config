@@ -1,6 +1,8 @@
 local M = {}
 
+local levels = vim.log.levels
 local utils = require("cool.utils")
+
 M.pytools_dir = utils.download_dir .. "/pytools"
 M.bin_dir = M.pytools_dir .. "/bin/"
 
@@ -86,6 +88,7 @@ end
 function M.ensure_pex()
     local cache_dir = vim.fn.stdpath("cache")
     local pex_path = cache_dir .. "/pex"
+
     if utils.is_path_exists(pex_path) then
         return cache_dir
     end
@@ -115,11 +118,17 @@ function M.run_pex(args)
 end
 
 function M.download_to_pex(package_name, command_name)
-    vim.notify("Downloading " .. command_name, vim.log.levels.INFO)
+    if command_name == nil then
+        command_name = package_name
+    end
+
     local pex_dir_path = M.pytools_dir .. "/packages/" .. command_name
 
     if not utils.is_path_exists(pex_dir_path) then
+        vim.notify("Downloading " .. command_name .. "\n", levels.INFO)
         M.run_pex({ package_name, "--layout", "packed", "-c", command_name, "-o", pex_dir_path })
+    else
+        vim.notify("Command " .. command_name .. " Already exists, not downloading" .. "\n", levels.INFO)
     end
 
     local script_path = M.bin_dir .. command_name
@@ -144,8 +153,8 @@ end
 
 function M.download_all()
     M.download_to_pex("python-lsp-server", "pylsp")
-    M.download_to_pex("cmake-language-server", "cmake-language-server")
-    M.download_to_pex("clang-format", "clang-format")
+    M.download_to_pex("cmake-language-server")
+    M.download_to_pex("clang-format")
 end
 
 function M.setup()

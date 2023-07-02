@@ -33,6 +33,7 @@ local function download_mason_tools()
     vim.api.nvim_create_autocmd("User", {
         pattern = "MasonToolsUpdateCompleted",
         callback = function()
+            require("cool.py_download").download_all()
             vim.notify("Everything downloaded sucessfully!\n", levels.INFO)
             vim.cmd.quit()
         end,

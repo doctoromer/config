@@ -86,7 +86,7 @@ return {
                 "clangd",
                 "lua-language-server",
                 "taplo",
-                "stylua",
+                { "stylua", version = "v0.17.0" },
             },
             auto_update = false,
             run_on_start = false,

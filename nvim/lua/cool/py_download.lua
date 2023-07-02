@@ -1,6 +1,8 @@
-M = {}
+local M = {}
 
 local utils = require("cool.utils")
+M.pytools_dir = utils.download_dir .. "/pytools"
+M.bin_dir = M.pytools_dir .. "/bin/"
 
 local function run_command(...)
     local job_id = vim.fn.jobstart(...)
@@ -114,18 +116,16 @@ end
 
 function M.download_to_pex(package_name, command_name)
     vim.notify("Downloading " .. command_name, vim.log.levels.INFO)
-    local pytools_dir = utils.download_dir .. "/pytools"
-    local pex_dir_path = pytools_dir .. "/packages/" .. command_name
+    local pex_dir_path = M.pytools_dir .. "/packages/" .. command_name
 
     if not utils.is_path_exists(pex_dir_path) then
         M.run_pex({ package_name, "--layout", "packed", "-c", command_name, "-o", pex_dir_path })
     end
 
-    local bin_dir = pytools_dir .. "/bin/"
-    local script_path = bin_dir .. command_name
+    local script_path = M.bin_dir .. command_name
 
     if not utils.is_path_exists(script_path) then
-        vim.fn.mkdir(bin_dir, "p")
+        vim.fn.mkdir(M.bin_dir, "p")
 
         local script_file = io.open(script_path, "w")
 
@@ -146,6 +146,10 @@ function M.download_all()
     M.download_to_pex("python-lsp-server", "pylsp")
     M.download_to_pex("cmake-language-server", "cmake-language-server")
     M.download_to_pex("clang-format", "clang-format")
+end
+
+function M.setup()
+    vim.env.PATH = M.bin_dir .. ":" .. vim.env.PATH
 end
 
 return M

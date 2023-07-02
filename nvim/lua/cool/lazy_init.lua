@@ -12,7 +12,7 @@ function M.setup(auto_install, download_dir)
     require("cool.auto_keymaps").setup({ keymaps = require("cool.keymaps") })
 
     require("lazy").setup("cool.plugins", {
-        root = download_dir .. "/lazy_plugins",
+        root = download_dir .. "/plugins",
         lockfile = lockfile_path,
         -- For some reason it notifies that file are deleted, when it is not true
         change_detection = { notify = false },

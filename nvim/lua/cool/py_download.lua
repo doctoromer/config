@@ -1,5 +1,7 @@
 M = {}
 
+local utils = require("cool.utils")
+
 local function run_command(...)
     local job_id = vim.fn.jobstart(...)
     local return_code = vim.fn.jobwait({ job_id })[1]
@@ -46,7 +48,11 @@ function M.find_pip()
     return found_executable
 end
 
-function M.find_python3()
+function M.find_python()
+    if M._found_python then
+        return M._found_python
+    end
+
     local pythons = { "python3" }
     for i = 5, 11 do
         table.insert(pythons, "python3." .. i)
@@ -70,6 +76,7 @@ function M.find_python3()
         }
     )
     if python then
+        M._found_python = python
         return python
     end
 end
@@ -77,7 +84,7 @@ end
 function M.ensure_pex()
     local cache_dir = vim.fn.stdpath("cache")
     local pex_path = cache_dir .. "/pex"
-    if require("cool.utils").is_path_exists(pex_path) then
+    if utils.is_path_exists(pex_path) then
         return cache_dir
     end
 
@@ -96,7 +103,7 @@ end
 
 function M.run_pex(args)
     local pex_path = M.ensure_pex()
-    local python3 = M.find_python3()
+    local python3 = M.find_python()
 
     local pex_command = { python3, "-m", "pex" }
     for _, arg in ipairs(args) do
@@ -105,8 +112,40 @@ function M.run_pex(args)
     run_command(pex_command, { env = { PYTHONPATH = pex_path } })
 end
 
-function M.download_to_pex(package_name, command_name, output_path)
-    M.run_pex({ package_name, "-e", command_name, "-o", output_path })
+function M.download_to_pex(package_name, command_name)
+    vim.notify("Downloading " .. command_name, vim.log.levels.INFO)
+    local pytools_dir = utils.download_dir .. "/pytools"
+    local pex_dir_path = pytools_dir .. "/packages/" .. command_name
+
+    if not utils.is_path_exists(pex_dir_path) then
+        M.run_pex({ package_name, "--layout", "packed", "-c", command_name, "-o", pex_dir_path })
+    end
+
+    local bin_dir = pytools_dir .. "/bin/"
+    local script_path = bin_dir .. command_name
+
+    if not utils.is_path_exists(script_path) then
+        vim.fn.mkdir(bin_dir, "p")
+
+        local script_file = io.open(script_path, "w")
+
+        if script_file then
+            script_file:write(
+                "#!/bin/sh" .. "\n" ..
+                M.find_python() .. ' $(dirname -- "$( readlink -f -- "$0"; )")/../packages/' .. command_name .. ";"
+            )
+
+            run_command({"chmod", "+x", script_path})
+
+            script_file:close()
+        end
+    end
+end
+
+function M.download_all()
+    M.download_to_pex("python-lsp-server", "pylsp")
+    M.download_to_pex("cmake-language-server", "cmake-language-server")
+    M.download_to_pex("clang-format", "clang-format")
 end
 
 return M

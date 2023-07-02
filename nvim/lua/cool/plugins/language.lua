@@ -84,9 +84,6 @@ return {
         opts = {
             ensure_installed = {
                 "clangd",
-                "clang-format",
-                "python-lsp-server",
-                "cmake-language-server",
                 "lua-language-server",
                 "taplo",
                 "stylua",

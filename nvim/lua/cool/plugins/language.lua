@@ -12,23 +12,31 @@ local function mason_config()
         pip = { upgrade_pip = true },
     })
 
+    local py_download = require("cool.py_download")
+    -- The setup prepend the bin directory of downloaded pex files to $PATH
+    -- This should be called after mason.setup because it also prepends to path
+    py_download.setup()
+
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
     mason_lspconfig.setup({})
 
+    local function setup_generic_server(server_name)
+        lspconfig[server_name].setup({ capabilities = capabilities })
+    end
+
     mason_lspconfig.setup_handlers({
-        function(server_name)
-            lspconfig[server_name].setup({ capabilities = capabilities })
-        end,
-        pylsp = function()
-            -- Maybe add cmp_nvim_lsp capabilities?
-            lspconfig.pylsp.setup({ init_options = { documentFormatting = false } })
-        end,
+        setup_generic_server,
         clangd = function()
-            lspconfig.clangd.setup({ capabilities = capabilities })
+            setup_generic_server("clangd")
             vim.diagnostic.disable(0)
-        end
+        end,
     })
+
+    local pex_lsp_servers = { "pylsp", "cmake" }
+    for _, server_name in ipairs(pex_lsp_servers) do
+        setup_generic_server(server_name)
+    end
 end
 
 local function lsp_config()

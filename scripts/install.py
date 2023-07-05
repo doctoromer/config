@@ -19,8 +19,6 @@ try:
 except ImportError:
     RichHandler = None
 
-import verify
-
 
 logger = logging.getLogger(__name__)
 
@@ -249,7 +247,6 @@ def auto_remove():
 
 def parse_args():
     subcommands = {
-        "verify": "Verify that essential programs are installed",
         "download": "Download required files",
         "install": "Create symlinks to the configuration",
         "remove": "Remove symlinks to the configuration",
@@ -317,8 +314,6 @@ def main():
         auto_remove()
     elif args.command == "download":
         download()
-    elif args.command == "verify":
-        verify.verify_environment()
     else:
         logger.error(f"Unknown command: {args.command}")
         return 1

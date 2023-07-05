@@ -29,12 +29,36 @@ local function bootstrap_lazy_nvim(lazy_path)
     end
 end
 
+local function download_treesitter_parsers()
+    vim.cmd.TSUpdateSync({
+        "c",
+        "cpp",
+        "cmake",
+        "python",
+        "bash",
+        "html",
+        "java",
+        "json",
+        "lua",
+        "vue",
+        "vim",
+        "regex",
+        "toml",
+        "vimdoc",
+        -- used also for lspsaga hover feature
+        "markdown",
+        "markdown_inline",
+    })
+end
+
 local function download_mason_tools()
     vim.api.nvim_create_autocmd("User", {
         pattern = "MasonToolsUpdateCompleted",
         callback = function()
             require("cool.py_download").download_all()
-            vim.notify("Everything downloaded sucessfully!\n", levels.INFO)
+            download_treesitter_parsers()
+
+            vim.notify("\nEverything downloaded sucessfully!\n", levels.INFO)
             vim.cmd.quit()
         end,
     })

@@ -2,29 +2,7 @@ local function treesitter_config()
     local parsers_dir = require("cool.utils").download_dir
     vim.opt.runtimepath:prepend(parsers_dir)
 
-    local default_parser = {
-        "c",
-        "cpp",
-        "cmake",
-        "python",
-        "bash",
-        "html",
-        "java",
-        "json",
-        "lua",
-        "vue",
-        "vim",
-        "regex",
-        "toml",
-        "vimdoc",
-        -- used also for lspsaga hover feature
-        "markdown",
-        "markdown_inline",
-    }
-
     require("nvim-treesitter.configs").setup({
-        ensure_installed = vim.g.download_mode and default_parser or {},
-        sync_install = true,
         auto_install = false,
         highlight = { enable = true },
         parser_install_dir = parsers_dir,
@@ -37,6 +15,9 @@ local function treesitter_config()
                 node_decremental = "<C-r>",
             },
         },
+        rainbow = {
+            enable = true
+        }
     })
 
     vim.wo.foldmethod = "expr"
@@ -75,7 +56,7 @@ return {
             },
         },
     },
-    { "HiPhish/nvim-ts-rainbow2", main = "nvim-treesitter.configs", opts = { rainbow = { enable = true } } },
+    { "HiPhish/nvim-ts-rainbow2" },
     {
         "windwp/nvim-ts-autotag",
         dependencies = "nvim-treesitter/nvim-treesitter",

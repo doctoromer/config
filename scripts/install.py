@@ -7,6 +7,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import tarfile
 import zipfile
 from pathlib import Path
@@ -290,6 +291,10 @@ def execute_dploy(action, packages):
 def main():
     args = parse_args()
     configure_logger(args.verbose)
+
+    if sys.version_info >= (3, 6):
+        logger.error("Python version should be atleast 3.6!")
+        return 1
 
     logger.debug(f"Executing {args.command} command")
 

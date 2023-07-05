@@ -27,10 +27,10 @@ local function get_plugin_keymaps_function(plugin_full_name, keymaps)
     end
 end
 
-local function plugin_add_patched(self, plugin, is_dep)
+local function plugin_add_patched(self, plugin, results, is_dep)
     -- Skip the plugin if it doesn't have a name, it is a dependency or it has been already loaded
     if not plugin[1] or is_dep or rawget(plugin, "_") then
-        return M.original_add(self, plugin, is_dep)
+        return M.original_add(self, plugin, results, is_dep)
     end
 
     local plugin_keymaps = get_plugin_keymaps_function(plugin[1], M.keymaps_with_dummy)

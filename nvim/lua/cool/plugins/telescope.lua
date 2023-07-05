@@ -6,6 +6,11 @@ local function telescope_config()
         ["<C-k>"] = actions.move_selection_previous,
         ["<ESC>"] = actions.close,
         ["<C-c>"] = actions.close,
+        ["<Tab>"] = function() end,
+        ["<S-Tab>"] = function() end,
+        ["<C-s>"] = actions.file_split,
+        ["<C-v>"] = actions.file_vsplit,
+        ["<C-t>"] = actions.file_tab,
     }
 
     require("telescope").setup({

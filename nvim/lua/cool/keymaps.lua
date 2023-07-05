@@ -133,65 +133,15 @@ end
 
 M["telescope.nvim"] = function()
     local telescope = require("telescope.builtin")
-    local actions = require("telescope.actions")
-    local action_state = require("telescope.actions.state")
-
-    local function multiopen(prompt_bufnr, open_cmd)
-        local picker = action_state.get_current_picker(prompt_bufnr)
-        local num_selections = #picker:get_multi_selection()
-
-        if not num_selections or num_selections <= 1 then
-            actions.add_selection(prompt_bufnr)
-        end
-        actions.send_selected_to_qflist(prompt_bufnr)
-
-        local results = vim.fn.getqflist()
-
-        for _, result in ipairs(results) do
-            local current_file = vim.fn.bufname()
-            local next_file = vim.fn.bufname(result.bufnr)
-
-            if current_file == "" then
-                vim.api.nvim_command("edit" .. " " .. next_file)
-            else
-                vim.api.nvim_command(open_cmd .. " " .. next_file)
-            end
-        end
-
-        vim.api.nvim_command("cd .")
-    end
-
-    local function multiopen_action(command)
-        return function(prompt_bufnr)
-            multiopen(prompt_bufnr, command)
-        end
-    end
-
-    local function map_multi_actions(_, map)
-        local modes = { "i", "n" }
-        map(modes, "<S-Tab>", actions.move_selection_next + actions.toggle_selection)
-        map(modes, "<Tab>", actions.toggle_selection + actions.move_selection_previous)
-        map(modes, "<C-s>", multiopen_action("split"))
-        map(modes, "<C-v>", multiopen_action("vsplit"))
-        map(modes, "<C-t>", multiopen_action("tabedit"))
-        map(modes, "<CR>", multiopen_action("tabedit"))
-        return true
-    end
-
-    local function create_multi_actions(multi_action)
-        return function()
-            telescope[multi_action]({ attach_mappings = map_multi_actions })
-        end
-    end
 
     return {
         {
             itemgroup = "Finders",
             description = "Stuff that helps you find other stuff",
             keymaps = {
-                { "<leader>f", create_multi_actions("find_files"), description = "find a file" },
-                { "<leader>a", create_multi_actions("live_grep"), description = "search inside all files recursively" },
-                { "<leader>H", create_multi_actions("help_tags"), description = "Search help pages" },
+                { "<leader>f", telescope.find_files, description = "find a file" },
+                { "<leader>a", telescope.live_grep, description = "search inside all files recursively" },
+                { "<leader>H", telescope.help_tags, description = "Search help pages" },
                 { "<leader>l", telescope.current_buffer_fuzzy_find, description = "search in current file's lines" },
             },
         },

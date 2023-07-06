@@ -1,5 +1,4 @@
 local function mason_config()
-    vim.g.python3_host_prog = vim.fn.exepath("python3.8")
     local lspconfig = require("lspconfig")
     local mason_lspconfig = require("mason-lspconfig")
 
@@ -13,7 +12,7 @@ local function mason_config()
     })
 
     local py_download = require("cool.py_download")
-    -- The setup prepend the bin directory of downloaded pex files to $PATH
+    -- The setup prepends the bin directory of downloaded pex files to $PATH
     -- This should be called after mason.setup because it also prepends to path
     py_download.setup()
 
@@ -28,8 +27,13 @@ local function mason_config()
     mason_lspconfig.setup_handlers({
         setup_generic_server,
         clangd = function()
-            setup_generic_server("clangd")
-            vim.diagnostic.disable(0)
+            lspconfig.clangd.setup({
+                capabilities = capabilities,
+                on_attach = function()
+                    -- Zero for current buffer only
+                    vim.diagnostic.disable(0)
+                end
+            })
         end,
     })
 
@@ -40,8 +44,8 @@ local function mason_config()
 end
 
 local function lsp_config()
-    vim.lsp.handlers["textDocument/publishDiagnostics"] =
-        vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false })
+    local no_virtual_text_handler = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false })
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = no_virtual_text_handler
 end
 
 local function formatter_config()

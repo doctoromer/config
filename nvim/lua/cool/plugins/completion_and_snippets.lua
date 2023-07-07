@@ -20,6 +20,20 @@ local function cmp_config()
 end
 
 local function luasnip_config()
+    local luasnip = require("luasnip")
+    local unlink_group = vim.api.nvim_create_augroup("UnlinkSnippetOnModeChange", { clear = true })
+
+    vim.api.nvim_create_autocmd("ModeChanged", {
+        group = unlink_group,
+        pattern = { "s:n", "i:*" },
+        desc = "Forget the current snippet when leaving the insert mode",
+        callback = function(event)
+            if luasnip.session and luasnip.session.current_nodes[event.buf] and not luasnip.session.jump_active then
+                luasnip.unlink_current()
+            end
+        end,
+    })
+
     local snippets_dir = require("cool.utils").nvim_root_dir .. "/snippets"
     require("luasnip.loaders.from_vscode").lazy_load({ paths = { snippets_dir } })
 end

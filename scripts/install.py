@@ -254,7 +254,8 @@ def parse_args():
         "auto-remove": "Remove previous installation of this config"
     }
     parser = argparse.ArgumentParser()
-    parser.add_argument("-v", action="store_true", default=False, dest="verbose")
+    parser.add_argument("-v", action="store_true", default=False, dest="verbose", help="Show more logs")
+
     subparsers_parser = parser.add_subparsers()
     subparsers = {}
     for subcommand, help_text in subcommands.items():
@@ -264,7 +265,12 @@ def parse_args():
     for command in ("install", "remove", "auto-remove"):
         subparsers[command].add_argument("--packages", "-p", default=None)
 
-    return parser.parse_args()
+    args = parser.parse_args()
+    if not hasattr(args, "command"):
+        parser.print_help()
+        return None
+    else:
+        return args
 
 
 def configure_logger(verbose):
@@ -290,9 +296,13 @@ def execute_dploy(action, packages):
 
 def main():
     args = parse_args()
+
+    if args is None:
+        return 1
+
     configure_logger(args.verbose)
 
-    if sys.version_info >= (3, 6):
+    if sys.version_info < (3, 6):
         logger.error("Python version should be atleast 3.6!")
         return 1
 

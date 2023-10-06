@@ -155,12 +155,11 @@ return {
     { "ntpeters/vim-better-whitespace", config = better_whitespace_config },
     {
         "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
         opts = {
-            char = full_char_seperator,
-            filetype_exclude = { "dashboard", "help" },
-            show_first_indent_level = false,
-            show_trailing_blankline_indent = false,
-            show_current_context = true,
+            indent = { char = full_char_seperator },
+            exclude = { filetypes = { "dashboard", "help" }},
+            scope = { enabled = false },
         },
     },
     { "lukas-reineke/virt-column.nvim", config = true },

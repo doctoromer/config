@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+SCRIPT_DIR=$(dirname $(realpath "$0"))
+
 main ()
 {
     if [ "$(id -u -n)" != "root" ]; then
@@ -10,18 +12,16 @@ main ()
     echo Updating apt sources...
     apt update -qq
 
-    echo
-    apt install -y -qq silversearcher-ag zsh git python3-pip libfuse2
+    echo Installing ag, zsh, git, and pip3
+    apt install -y -qqq silversearcher-ag zsh git python3-pip libfuse2
     # Required for install.py
-    pip3 install -q requests dploy
+    pip3 install -qqq dploy
     # This packages collide with some of the binaries
-    apt purge -y -qq vim vim-common vim-runtime vim-tiny tmux neovim
+    echo Removing vim, tmux and neovim \(new versions are packed with the config\)
+    apt purge -y -qqq vim vim-common vim-runtime vim-tiny tmux neovim
 
-    echo
-    python3 install.py auto-remove
-    python3 install.py install
-
-    echo
+    python3 $SCRIPT_DIR/install.py auto-remove
+    python3 $SCRIPT_DIR/install.py install
 
     export HOME=$(sh -c "echo ~${SUDO_USER:-}")
     export ZSHRC=$HOME/.zshrc

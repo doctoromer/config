@@ -18,7 +18,7 @@ def auto_remove():
     example_binary = Path("/usr/bin/vim")
     if example_binary.is_symlink():
         # We resolve the symlink to vim binary, then go up to the root of the config dir to find the install.py script
-        install_script_path = example_binary.resolve().parents[3] / "install.py"
+        install_script_path = example_binary.resolve().parents[3] / "scripts" / "install.py"
         logger.info(f"Executing remove script in: {install_script_path}")
         subprocess.check_call(["python3", install_script_path, "remove"])
     else:

@@ -10,7 +10,7 @@ It contains 4 components:
 ## In an offline network
 Unzip the zip that you received from me and run (Only ubuntu):
 ```sh
-sudo ./ubuntu_install.sh
+sudo scripts/ubuntu_install.sh
 ```
 For other non-ubuntu distribution, read the script and apply to your system, It's easy.
 
@@ -23,25 +23,24 @@ sudo apt install git unzip wget zsh
 
 Then, download the stuff:
 ```sh
-./install.py download
+scripts/download.py
 ```
 
 Then, on ubuntu computers execute:
 ```sh
-sudo ./ubuntu_install.sh
+sudo scripts/ubuntu_install.sh
 ```
 
 # How it works
 ## install.py
 The most important script is `./install.py`. It performs several actions:
-* download - download all required files
 * install - installs everything
 * remove - removes everything
 * auto-remove - removes previous installations of this configuration
 * verify - verifies some stuff (not important)
 
-### download
-This command downloads the following files:
+### download.py
+This script downloads the following files:
 * Git submodules of this repo
 	* packer.nvim - neovim's plugin manager
 	* zcomet - zsh's plugin manager
@@ -73,7 +72,7 @@ In general, the file `<package>/<path>` is symlinked to `/<path>`.
 
 The `install` command can be used to install individual packages:
 ```sh
-./install.py install -p neovim,misc
+scripts/install.py install -p neovim,misc
 ```
 
 ### remove
@@ -112,6 +111,5 @@ Two reasons:
    Like ~/.config/nvim, ~/.zshrc, etc.
 
 # Known issues
-* The download process is very fragile and often breaks
 * When staring tmux without a server running, it can take a few seconds
-* Other spooky and odd stuff
+* Other spooky stuff

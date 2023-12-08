@@ -144,6 +144,18 @@ local function better_whitespace_config()
     vim.g.better_whitespace_filetypes_blacklist = { "dashboard", "help", "markdown", "" }
 end
 
+local function indent_blankline_config()
+    require("ibl").setup(
+        {
+            indent = { char = full_char_seperator },
+            exclude = { filetypes = { "dashboard", "help" }},
+            scope = { enabled = false, show_start = false },
+        }
+    )
+    local hooks = require("ibl.hooks")
+    hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
+end
+
 return {
     { "navarasu/onedark.nvim", lazy = false, priority = 1000, config = onedark_config },
     { "nvim-lualine/lualine.nvim", config = lualine_config },
@@ -153,14 +165,6 @@ return {
     { "machakann/vim-highlightedyank", event = "TextYankPost" },
     { "asiryk/auto-hlsearch.nvim", config = true, keys = { "/", "?", "*", "#" } },
     { "ntpeters/vim-better-whitespace", config = better_whitespace_config },
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        main = "ibl",
-        opts = {
-            indent = { char = full_char_seperator },
-            exclude = { filetypes = { "dashboard", "help" }},
-            scope = { enabled = false },
-        },
-    },
+    { "lukas-reineke/indent-blankline.nvim", config = indent_blankline_config },
     { "lukas-reineke/virt-column.nvim", config = true },
 }

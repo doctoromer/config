@@ -55,7 +55,6 @@ local function download_mason_tools()
     vim.api.nvim_create_autocmd("User", {
         pattern = "MasonToolsUpdateCompleted",
         callback = function()
-            require("cool.py_download").download_all()
             download_treesitter_parsers()
 
             vim.notify("\nEverything downloaded sucessfully!\n", levels.INFO)

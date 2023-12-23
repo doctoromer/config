@@ -11,11 +11,6 @@ local function mason_config()
         pip = { upgrade_pip = true },
     })
 
-    local py_download = require("cool.py_download")
-    -- The setup prepends the bin directory of downloaded pex files to $PATH
-    -- This should be called after mason.setup because it also prepends to path
-    py_download.setup()
-
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
     mason_lspconfig.setup({})

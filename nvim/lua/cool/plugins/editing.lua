@@ -25,7 +25,7 @@ return {
         main = "nvim_comment",
         opts = { comment_empty = false },
     },
-    { "easymotion/vim-easymotion" },
+    { "smoka7/hop.nvim", opts = {} },
     { "michaeljsmith/vim-indent-object" },
     { "Julian/vim-textobj-variable-segment", dependencies = "kana/vim-textobj-user" },
 }

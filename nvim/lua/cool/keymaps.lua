@@ -291,18 +291,54 @@ M["nvim-comment"] = function()
     }
 end
 
-M["vim-easymotion"] = function()
+M["hop.nvim"] = function()
+    local hop = require("hop")
+    local direction = require("hop.hint").HintDirection
+
     return {
         {
             itemgroup = "Navigation",
             keymaps = {
+                { "<space>w", ":HopWordAC<CR>", description = "", modes = { "n", "v" } },
                 {
-                    "<Space>",
-                    "<Plug>(easymotion-prefix)",
-                    description = "Prefix for movements (For example, <space>w)",
+                    "<space>W",
+                    function() hop.hint_patterns({ direction = direction.AFTER_CURSOR }, '\\S\\+') end,
+                    description = "",
                 },
-            },
-        },
+                { "<space>b", ":HopWordBC<CR>", description = "", modes = { "n", "v" } },
+                {
+                    "<space>B",
+                    function() hop.hint_patterns({ direction = direction.BEFORE_CURSOR }, '\\S\\+') end,
+                    description = "",
+                },
+                { "<space>j", ":HopLineStartAC<CR>", description = "", modes = { "n", "v" } },
+                { "<space>k", ":HopLineStartBC<CR>", description = "", modes = { "n", "v" } },
+                {
+                    "<space>f",
+                    function() hop.hint_char1({ direction = direction.AFTER_CURSOR }) end,
+                    description = "",
+                    modes = { "n", "v" },
+                },
+                {
+                    "<space>F",
+                    function() hop.hint_char1({ direction = direction.BEFORE_CURSOR }) end,
+                    description = "",
+                    modes = { "n", "v" },
+                },
+                {
+                    "<space>t",
+                    function() hop.hint_char1({ direction = direction.AFTER_CURSOR, hint_offset = -1 }) end,
+                    description = "",
+                    modes = { "n", "v" },
+                },
+                {
+                    "<space>T",
+                    function() hop.hint_char1({ direction = direction.BEFORE_CURSOR, hint_offset = 1 }) end,
+                    description = "",
+                    modes = { "n", "v" },
+                },
+            }
+        }
     }
 end
 

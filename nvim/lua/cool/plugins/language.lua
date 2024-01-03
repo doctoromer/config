@@ -27,7 +27,7 @@ local function mason_config()
                 on_attach = function()
                     -- Zero for current buffer only
                     vim.diagnostic.disable(0)
-                end
+                end,
             })
         end,
     })
@@ -42,22 +42,17 @@ local function formatter_config()
     local formatters = {
         lua = { require("formatter.filetypes.lua").stylua },
         c = { require("formatter.filetypes.c").clangformat },
-    }
-
-    if vim.fn.executable("autopep8") == 1 then
-        formatters.python = {
+        rust = { require("formatter.filetypes.rust").rustfmt },
+        python = {
             function()
                 return {
                     exe = "autopep8",
-                    args = {
-                        "--in-place --max-line-length 120",
-                        vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),
-                    },
-                    stdin = false,
+                    args = { "--in-place", "--max-line-length 120", "-" },
+                    stdin = true,
                 }
             end,
-        }
-    end
+        },
+    }
 
     require("formatter").setup({ filetype = formatters })
 end

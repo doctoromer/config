@@ -31,11 +31,6 @@ local function mason_config()
             })
         end,
     })
-
-    local pex_lsp_servers = { "pylsp", "cmake" }
-    for _, server_name in ipairs(pex_lsp_servers) do
-        setup_generic_server(server_name)
-    end
 end
 
 local function lsp_config()

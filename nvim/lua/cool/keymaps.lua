@@ -375,14 +375,14 @@ local colorcolumn = nil
 M["other_keymaps"] = function()
     local toggle_copy_mode = function()
         if paste_mode then
-            vim.cmd("IndentBlanklineEnable")
+            vim.cmd("IBLEnable")
             if vim.o.colorcolumn ~= nil then
                 vim.o.colorcolumn = colorcolumn
             end
             vim.o.number = true
             vim.o.signcolumn = "yes"
         else
-            vim.cmd("IndentBlanklineDisable")
+            vim.cmd("IBLDisable")
             colorcolumn = vim.o.colorcolumn
             vim.o.colorcolumn = ""
             vim.o.number = false

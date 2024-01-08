@@ -487,6 +487,7 @@ M["other_keymaps"] = function()
         { "dd", delete_special },
         { ">", ">gv", mode = "v" },
         { "<", "<gv", mode = "v" },
+        {"<leader>-", "<cmd>ToggleWhitespace<CR>", description = "Show/Hide whitespaces at the end of lines" },
     }
 end
 

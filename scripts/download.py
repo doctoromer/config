@@ -177,6 +177,7 @@ def download_vim_plugins():
     """ Download vim plugins and tools """
     new_env_vars = dict(os.environ)
     new_env_vars["DOWNLOAD_MODE"] = "true"
+    new_env_vars["XDG_CONFIG_HOME"] = ROOT_DIR / "neovim/etc/xdg/"
     subprocess.check_call(
         ["binaries/usr/bin/vim", "--appimage-extract-and-run" if os.path.exists("/.dockerenv") else "", "--headless"],
         env=new_env_vars

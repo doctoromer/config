@@ -204,7 +204,7 @@ def update_zsh_plugins():
 
 def download():
     """ Download all dependencies """
-    required_commands = ["git", "zsh", "wget", "unzip"]
+    required_commands = ["git", "zsh"]
     missing_commands = [command for command in required_commands if shutil.which(command) is None]
     if len(missing_commands) > 0:
         logger.error(f"Please install the following commands: {', '.join(missing_commands)}")

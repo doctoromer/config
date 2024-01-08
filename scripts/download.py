@@ -11,8 +11,7 @@ import zipfile
 from pathlib import Path
 from urllib import request
 
-from utils import configure_logger, ROOT_DIR
-
+from utils import ROOT_DIR, configure_logger
 
 logger = logging.getLogger(__name__)
 

@@ -6,8 +6,7 @@ import sys
 from pathlib import Path
 
 import dploy
-
-from utils import configure_logger, ROOT_DIR
+from utils import ROOT_DIR, configure_logger
 
 logger = logging.getLogger(__name__)
 

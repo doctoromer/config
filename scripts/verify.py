@@ -26,8 +26,7 @@ FEATURES = {
     "zsh": (check_commands, "zsh"),
     "git": (check_commands, "git"),
     "unzip": (check_commands, "unzip"),
-    "wget": (check_commands, "unzip"),
-    "requests": (check_import, "requests"),
+    "wget": (check_commands, "wget"),
     "dploy": (check_import, "dploy")
 }
 

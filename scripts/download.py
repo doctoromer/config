@@ -9,8 +9,7 @@ import subprocess
 import tarfile
 import zipfile
 from pathlib import Path
-
-import requests
+from urllib import request
 
 from utils import configure_logger, ROOT_DIR
 
@@ -31,9 +30,8 @@ def ensure_dirs(path):
 
 
 def _get_from_release_endpoint(repo_name, api_path=""):
-    with requests.get(f"https://api.github.com/repos/{repo_name}/releases/{api_path}") as response:
-        response_data = response.json()
-        return response_data
+    response = request.urlopen(f"https://api.github.com/repos/{repo_name}/releases/{api_path}")
+    return json.load(response)
 
 
 def get_release(repo_name, asset_regex, api_path):
@@ -46,13 +44,13 @@ def get_release(repo_name, asset_regex, api_path):
     response_data = _get_from_release_endpoint(repo_name, api_path=api_path)
 
     if asset_regex == SOURCE_CODE_ASSET:
-        with requests.get(response_data["zipball_url"]) as response:
-            return SOURCE_CODE_ASSET, response.content
+        response = request.urlopen(response_data["zipball_url"]).read()
+        return SOURCE_CODE_ASSET, response
 
     for asset in response_data["assets"]:
         if re.match(asset_regex, asset["name"]):
-            with requests.get(asset["browser_download_url"]) as response:
-                return asset["name"], response.content
+            response = request.urlopen(asset["browser_download_url"]).read()
+            return asset["name"], response
     else:
         raise ValueError(f"No matching asset to regex {asset_regex}")
 

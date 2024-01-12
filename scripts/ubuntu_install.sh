@@ -17,8 +17,8 @@ main ()
     # Required for install.py
     pip3 install -qqq dploy
     # This packages collide with some of the binaries
-    echo Removing vim, tmux and neovim \(new versions are packed with the config\)
-    apt purge -y -qqq vim vim-common vim-runtime vim-tiny tmux neovim
+    echo Removing tmux and neovim \(new versions are packed with the config\)
+    apt purge -y -qqq tmux neovim
 
     python3 $SCRIPT_DIR/install.py auto-remove
     python3 $SCRIPT_DIR/install.py install

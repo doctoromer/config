@@ -28,7 +28,7 @@
         "repo": "neovim/neovim",
         "asset_regex": "nvim.appimage",
         "file_map": {
-            "nvim.appimage": "usr/bin/vim"
+            "nvim.appimage": "usr/bin/nvim"
         }
     },
     "diff-so-fancy": {

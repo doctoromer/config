@@ -176,7 +176,7 @@ def download_vim_plugins():
     new_env_vars["DOWNLOAD_MODE"] = "true"
     new_env_vars["XDG_CONFIG_HOME"] = ROOT_DIR / "neovim/etc/xdg/"
     subprocess.check_call(
-        ["binaries/usr/bin/vim", "--appimage-extract-and-run", "--headless"],
+        ["binaries/usr/bin/nvim", "--appimage-extract-and-run", "--headless"],
         env=new_env_vars
     )
 

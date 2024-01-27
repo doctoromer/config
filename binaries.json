@@ -53,5 +53,21 @@
         "file_map": {
             "tmux.appimage": "usr/bin/tmux"
         }
+    },
+    "rg": {
+        "repo": "BurntSushi/ripgrep",
+        "asset_regex": "ripgrep-.*-x86_64-unknown-linux.*.tar.gz",
+        "file_map": {
+            "[^/]*/rg": "usr/bin/rg",
+            "[^/]*/doc/rg.1": "usr/share/man/man1/rg.1"
+        }
+    },
+    "fd": {
+        "repo": "sharkdp/fd",
+        "asset_regex": "fd-.*-x86_64-unknown-linux-gnu.tar.gz",
+        "file_map": {
+            "[^/]*/fd": "usr/bin/fd",
+            "[^/]*/fd.1": "usr/share/man/man1/fd.1"
+        }
     }
 }

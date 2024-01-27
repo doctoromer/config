@@ -42,14 +42,14 @@
         "repo": "sharkdp/bat",
         "asset_regex": "bat-.*-x86_64-unknown-linux-musl\\.tar\\.gz",
         "file_map": {
-            "[^/]*/bat$": "usr/bin/bat",
+            "[^/]*/bat": "usr/bin/bat",
             "[^/]*/bat.1": "usr/share/man/man1/bat.1",
             "[^/]*/autocomplete/bat.zsh": "usr/local/share/zsh/site-functions/bat.zsh"
         }
     },
     "tmux": {
         "repo": "nelsonenzo/tmux-appimage",
-        "asset_regex": "tmux.appimage$",
+        "asset_regex": "tmux.appimage",
         "file_map": {
             "tmux.appimage": "usr/bin/tmux"
         }

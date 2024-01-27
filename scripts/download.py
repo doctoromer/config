@@ -47,7 +47,7 @@ def get_release(repo_name, asset_regex, api_path):
         return SOURCE_CODE_ASSET, response
 
     for asset in response_data["assets"]:
-        if re.match(asset_regex, asset["name"]):
+        if re.fullmatch(asset_regex, asset["name"]):
             response = request.urlopen(asset["browser_download_url"]).read()
             return asset["name"], response
     else:
@@ -65,7 +65,7 @@ def get_release_by_tag(repo_name, asset_regex, tag_name):
 def match_file_map_entry(base_dir, entry_name, file_map):
     """ Search an entry in the file map that matches the entry in the received archive """
     matches = [
-        match for match in (re.match(pattern, entry_name) for pattern in file_map)
+        match for match in (re.fullmatch(pattern, entry_name) for pattern in file_map)
         if match is not None
     ]
 

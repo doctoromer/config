@@ -20,7 +20,6 @@ M["nvim-lspconfig"] = function()
             description = "Smart langauge features",
             keymaps = {
                 { "<leader>gD", vim.lsp.buf.type_definition, description = "Goto type definition" },
-                -- { "<leader>ca", vim.lsp.buf.code_action, description = "Perform code action" },
                 { "gD", vim.lsp.buf.declaration, description = "Goto symbol decleration" },
                 { "gi", vim.lsp.buf.implementation, description = "Goto symbol implementation" },
             },
@@ -299,10 +298,16 @@ M["hop.nvim"] = function()
         {
             itemgroup = "Navigation",
             keymaps = {
+                { "<space><motion>", description = "Multijump motion, try it!" },
                 { "<space>w", ":HopWordAC<CR>", description = "", modes = { "n", "v" } },
                 {
                     "<space>W",
                     function() hop.hint_patterns({ direction = direction.AFTER_CURSOR }, '\\S\\+') end,
+                    description = "",
+                },
+                {
+                    "<space>E",
+                    function() hop.hint_patterns({ direction = direction.AFTER_CURSOR }, '\\S\\s') end,
                     description = "",
                 },
                 { "<space>b", ":HopWordBC<CR>", description = "", modes = { "n", "v" } },

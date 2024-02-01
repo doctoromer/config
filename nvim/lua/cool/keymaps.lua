@@ -283,7 +283,7 @@ M["nvim-comment"] = function()
         {
             itemgroup = "Editing",
             keymaps = {
-                { "gc", description = "Toggle comment action (Example: gcap)", modes = { "x", "n" } },
+                { "gc", description = "Toggle comment action (Example: gcap)", modes = { "x", "n", "v" } },
                 { "gcc", description = "Toggle comment for one line" },
             },
         },

@@ -257,10 +257,10 @@ M["Navigator.nvim"] = function()
             itemgroup = "Navigation",
             description = "Move around",
             keymaps = {
-                { "<M-h>", navigator.left, description = "Tmux left", modes = modes },
-                { "<M-j>", navigator.down, description = "Tmux down", modes = modes },
-                { "<M-k>", navigator.up, description = "Tmux up", modes = modes },
-                { "<M-l>", navigator.right, description = "Tmux right", modes = modes },
+                { "<M-h>", navigator.left, description = "Tmux left", mode = modes },
+                { "<M-j>", navigator.down, description = "Tmux down", mode = modes },
+                { "<M-k>", navigator.up, description = "Tmux up", mode = modes },
+                { "<M-l>", navigator.right, description = "Tmux right", mode = modes },
             },
         },
     }
@@ -283,7 +283,7 @@ M["nvim-comment"] = function()
         {
             itemgroup = "Editing",
             keymaps = {
-                { "gc", description = "Toggle comment action (Example: gcap)", modes = { "x", "n", "v" } },
+                { "gc", description = "Toggle comment action (Example: gcap)", mode = { "x", "n", "v" } },
                 { "gcc", description = "Toggle comment for one line" },
             },
         },
@@ -298,49 +298,38 @@ M["hop.nvim"] = function()
         {
             itemgroup = "Navigation",
             keymaps = {
-                { "<space><motion>", description = "Multijump motion, try it!" },
-                { "<space>w", ":HopWordAC<CR>", description = "", modes = { "n", "v" } },
+                { "<space><motion>" },
+                { "<space>w", ":HopWordAC<CR>" },
                 {
                     "<space>W",
                     function() hop.hint_patterns({ direction = direction.AFTER_CURSOR }, '\\S\\+') end,
-                    description = "",
                 },
                 {
                     "<space>E",
                     function() hop.hint_patterns({ direction = direction.AFTER_CURSOR }, '\\S\\s') end,
-                    description = "",
                 },
-                { "<space>b", ":HopWordBC<CR>", description = "", modes = { "n", "v" } },
+                { "<space>b", ":HopWordBC<CR>" },
                 {
                     "<space>B",
                     function() hop.hint_patterns({ direction = direction.BEFORE_CURSOR }, '\\S\\+') end,
-                    description = "",
                 },
-                { "<space>j", ":HopLineStartAC<CR>", description = "", modes = { "n", "v" } },
-                { "<space>k", ":HopLineStartBC<CR>", description = "", modes = { "n", "v" } },
+                { "<space>j", ":HopLineStartAC<CR>" },
+                { "<space>k", ":HopLineStartBC<CR>" },
                 {
                     "<space>f",
                     function() hop.hint_char1({ direction = direction.AFTER_CURSOR }) end,
-                    description = "",
-                    modes = { "n", "v" },
                 },
                 {
                     "<space>F",
                     function() hop.hint_char1({ direction = direction.BEFORE_CURSOR }) end,
-                    description = "",
-                    modes = { "n", "v" },
                 },
                 {
                     "<space>t",
                     function() hop.hint_char1({ direction = direction.AFTER_CURSOR, hint_offset = -1 }) end,
-                    description = "",
-                    modes = { "n", "v" },
                 },
                 {
                     "<space>T",
                     function() hop.hint_char1({ direction = direction.BEFORE_CURSOR, hint_offset = 1 }) end,
-                    description = "",
-                    modes = { "n", "v" },
                 },
             }
         }
@@ -462,6 +451,7 @@ M["other_keymaps"] = function()
 
                 { "[<space>", insert_spaces(true), description = "Add new lines before current line" },
                 { "]<space>", insert_spaces(false), description = "Add new lines after current line" },
+                {"<leader>-", "<cmd>ToggleWhitespace<CR>", description = "Show/Hide whitespaces at the end of lines" },
             },
         },
         {
@@ -492,7 +482,6 @@ M["other_keymaps"] = function()
         { "dd", delete_special },
         { ">", ">gv", mode = "v" },
         { "<", "<gv", mode = "v" },
-        {"<leader>-", "<cmd>ToggleWhitespace<CR>", description = "Show/Hide whitespaces at the end of lines" },
     }
 end
 

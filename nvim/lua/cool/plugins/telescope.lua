@@ -43,23 +43,6 @@ local function telescope_config()
 
     require("telescope").setup({
         defaults = {
-            vimgrep_arguments = {
-                "ag",
-                "--nocolor",
-                "--noheading",
-                "--filename",
-                "--numbers",
-                "--column",
-                "--smart-case",
-            },
-            extensions = {
-                fzf = {
-                    fuzzy = true,
-                    override_generic_sorter = true,
-                    override_file_sorter = true,
-                    case_mode = "smart_case",
-                },
-            },
             mappings = { i = default_keymaps, n = default_keymaps },
         },
     })

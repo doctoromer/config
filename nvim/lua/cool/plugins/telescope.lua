@@ -66,9 +66,5 @@ return {
         config = telescope_fzf_native_config,
         build = "make",
     },
-    {
-        "princejoogie/dir-telescope.nvim",
-        dependencies = { "nvim-telescope/telescope.nvim" },
-        config = true,
-    },
+    { "princejoogie/dir-telescope.nvim", config = true },
 }

@@ -15,9 +15,6 @@ local function treesitter_config()
                 node_decremental = "<C-r>",
             },
         },
-        rainbow = {
-            enable = true
-        }
     })
 
     vim.wo.foldmethod = "expr"
@@ -56,7 +53,7 @@ return {
             },
         },
     },
-    { "HiPhish/nvim-ts-rainbow2" },
+    { "HiPhish/rainbow-delimiters.nvim" },
     {
         "windwp/nvim-ts-autotag",
         dependencies = "nvim-treesitter/nvim-treesitter",

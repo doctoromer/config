@@ -7,7 +7,7 @@ return {
     { "sickill/vim-pasta", config = pasta_config },
     {
         "tpope/vim-surround",
-        keys = { "ds", "cs", "cS", "ys", "yS", "yss", "ySs", "ySS", "S", "gS", "<C-S>", "<C-G>s", "<C-G>S" },
+        keys = { "ds", "cs", "ys" },
     },
     "wellle/targets.vim",
     {

@@ -6,7 +6,8 @@ return {
     "tpope/vim-repeat",
     { "sickill/vim-pasta", config = pasta_config },
     {
-        "tpope/vim-surround",
+        "kylechui/nvim-surround",
+        config = true,
         keys = { "ds", "cs", "ys" },
     },
     "wellle/targets.vim",

@@ -19,7 +19,6 @@ M["nvim-lspconfig"] = function()
             itemgroup = "Language",
             description = "Smart langauge features",
             keymaps = {
-                { "<leader>gD", vim.lsp.buf.type_definition, description = "Goto type definition" },
                 { "gD", vim.lsp.buf.declaration, description = "Goto symbol decleration" },
                 { "gi", vim.lsp.buf.implementation, description = "Goto symbol implementation" },
             },
@@ -34,8 +33,9 @@ M["lspsaga.nvim"] = function()
         {
             itemgroup = "Language",
             keymaps = {
-                { "<leader>sf", "<cmd>Lspsaga lsp_finder<CR>", description = "Show symbol definition and references" },
-                { "<leader>sp", "<cmd>Lspsaga peek_definition<CR>", description = "Preview symbol definition" },
+                { "<leader>sf", "<cmd>Lspsaga finder<CR>", description = "Show symbol definition and references" },
+                { "<leader>gg", "<cmd>Lspsaga peek_definition<CR>", description = "Preview symbol definition" },
+                { "<leader>gd", "<cmd>Lspsaga goto_type_definition<CR>", description = "Goto type definition" },
                 { "K", "<cmd>Lspsaga hover_doc<CR>", description = "Show symbol hover information" },
                 { "gr", "<cmd>Lspsaga rename<CR>", description = "Rename symbol" },
                 {
@@ -360,6 +360,19 @@ M["vim-textobj-variable-segment"] = function()
                 { "av", description = "Word in symbol including '_' text object", mode = modes },
             },
         },
+    }
+end
+
+M["rustaceanvim"] = function()
+    return {
+        {
+            itemgroup = "Rust stuff",
+            keymaps = {
+                { "<leader>ex", "<cmd>RustLsp expandMacro<cr>", description = "Expand macro" },
+                { "<leader>ee", "<cmd>RustLsp explainError<cr>", description = "Explain Error" },
+                { "<leader>ed", "<cmd>RustLsp externalDocs<cr>", description = "Explain Error" },
+            }
+        }
     }
 end
 

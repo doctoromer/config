@@ -23,7 +23,6 @@ local function lualine_config()
                     symbols = { modified = " +", readonly = "", unnamed = "" },
                 },
             },
-            lualine_x = { "endcoding" },
             lualine_y = {
                 "fileformat",
                 {
@@ -159,6 +158,7 @@ end
 return {
     { "navarasu/onedark.nvim", lazy = false, priority = 1000, config = onedark_config },
     { "nvim-lualine/lualine.nvim", config = lualine_config },
+    { "j-hui/fidget.nvim", config = true },
     { "nanozuki/tabby.nvim", config = tabby_config },
     { "nvimdev/dashboard-nvim", config = dashboard_config },
     { "lewis6991/gitsigns.nvim", dependencies = "nvim-lua/plenary.nvim", config = true, keys = "no_lazy" },

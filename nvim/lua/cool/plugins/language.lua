@@ -30,6 +30,7 @@ local function mason_config()
                 end,
             })
         end,
+        rust_analyzer = function() end,
     })
 end
 

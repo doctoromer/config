@@ -1,4 +1,5 @@
 return {
+    { "stevearc/dressing.nvim", event = "VeryLazy" },
     {
         "mrjones2014/legendary.nvim",
         dependencies = { "stevearc/dressing.nvim", dependencies = "nvim-telescope/telescope.nvim" },

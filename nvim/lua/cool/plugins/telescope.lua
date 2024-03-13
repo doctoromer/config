@@ -46,25 +46,20 @@ local function telescope_config()
             mappings = { i = default_keymaps, n = default_keymaps },
         },
     })
-end
-
-local function telescope_fzf_native_config()
     require("telescope").load_extension("fzf")
 end
 
 return {
     {
         "nvim-telescope/telescope.nvim",
-        dependencies = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" },
+        dependencies = {
+            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+            "nvim-lua/popup.nvim",
+            "nvim-lua/plenary.nvim",
+        },
         -- Couldn't use the 'opts' field because some of the options requires using the 'actions' module
         config = telescope_config,
         ft = "dashboard",
-    },
-    {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        dependencies = "nvim-telescope/telescope.nvim",
-        config = telescope_fzf_native_config,
-        build = "make",
     },
     { "princejoogie/dir-telescope.nvim", config = true },
 }

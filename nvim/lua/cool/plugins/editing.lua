@@ -28,5 +28,6 @@ return {
     },
     { "smoka7/hop.nvim", opts = {} },
     { "michaeljsmith/vim-indent-object" },
+    { "kana/vim-textobj-user" },
     { "Julian/vim-textobj-variable-segment", dependencies = "kana/vim-textobj-user" },
 }

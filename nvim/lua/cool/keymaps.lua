@@ -13,28 +13,24 @@ M["legendary.nvim"] = function()
     }
 end
 
-M["nvim-lspconfig"] = function()
-    return {
-        {
-            itemgroup = "Language",
-            description = "Smart langauge features",
-            keymaps = {
-                { "gD", vim.lsp.buf.declaration, description = "Goto symbol decleration" },
-                { "gi", vim.lsp.buf.implementation, description = "Goto symbol implementation" },
-            },
-        },
-    }
-end
-
 M["lspsaga.nvim"] = function()
     local saga_diagnostic = require("lspsaga.diagnostic")
 
     return {
         {
             itemgroup = "Language",
+            description = "Smart langauge features",
             keymaps = {
                 { "<leader>sf", "<cmd>Lspsaga finder<CR>", description = "Show symbol definition and references" },
                 { "<leader>gg", "<cmd>Lspsaga peek_definition<CR>", description = "Preview symbol definition" },
+                {
+                    "<leader>gD",
+                    function()
+                        vim.cmd(":tab split")
+                        vim.cmd(":Lspsaga goto_type_definition")
+                    end,
+                    description = "Goto type definition in new tab",
+                },
                 { "<leader>gd", "<cmd>Lspsaga goto_type_definition<CR>", description = "Goto type definition" },
                 { "K", "<cmd>Lspsaga hover_doc<CR>", description = "Show symbol hover information" },
                 { "gr", "<cmd>Lspsaga rename<CR>", description = "Rename symbol" },
@@ -149,6 +145,14 @@ M["telescope.nvim"] = function()
             keymaps = {
                 { "gx", telescope.lsp_references, description = "Show symbol references" },
                 { "gd", telescope.lsp_definitions, description = "Goto symbol definition" },
+                {
+                    "gD",
+                    function()
+                        vim.cmd(":tab split")
+                        telescope.lsp_definitions()
+                    end,
+                    description = "Goto symbol definition in new tab",
+                },
                 { "gs", telescope.lsp_document_symbols, description = "Show symbols" },
             },
         },

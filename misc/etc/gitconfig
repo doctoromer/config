@@ -38,6 +38,7 @@
 [push]
 	followTags = true
 	default = current
+	autoSetupRemote = true
 [submodule]
 	recurse = true
 [diff]
@@ -49,3 +50,5 @@
 	trustExitCode = true
 [init]
 	defaultBranch = master
+[rerere]
+	enabled = true

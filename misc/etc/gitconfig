@@ -1,6 +1,6 @@
 [core]
 	pager = LESSCHARSET=utf-8 diff-so-fancy | less --tabs=4 -RFX
-	editor = vim
+	editor = nvim
 [color]
 	ui = true
 [color "diff-highlight"]
@@ -46,7 +46,7 @@
 [pull]
 	rebase = false
 [mergetool "diffconflicts"]
-	cmd = vim -c DiffConflicts \"$MERGED\"
+	cmd = nvim -c DiffConflicts \"$MERGED\"
 	trustExitCode = true
 [init]
 	defaultBranch = master

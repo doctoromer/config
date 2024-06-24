@@ -103,7 +103,7 @@ local function tabby_config()
         tabline_render,
         { tab_name = { name_fallback = tab_label_render }, buf_name = { mode = "unique" } }
     )
-    vim.o.showtabline = true
+    vim.o.showtabline = 2
 end
 
 local function dashboard_config()

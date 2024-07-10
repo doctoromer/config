@@ -388,6 +388,17 @@ M["rustaceanvim"] = function()
     }
 end
 
+M["aerial.nvim"] = function()
+    return {
+        {
+            itemgroup = "Language",
+            keymaps = {
+                { "<leader>o", "<cmd>AerialToggle!<cr>", description = "Toggle outline window" }
+            }
+        }
+    }
+end
+
 local paste_mode = false
 local colorcolumn = nil
 

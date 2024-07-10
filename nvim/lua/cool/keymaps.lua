@@ -80,6 +80,12 @@ M["treesitter-unit"] = function()
     }
 end
 
+M["nvim-treesitter-context"] = function()
+    return {
+        { "<leader>c", ":TSContextToggle<CR>" }
+    }
+end
+
 M["neogen"] = function()
     return {
         {

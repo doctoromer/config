@@ -30,7 +30,11 @@ return {
         end,
         config = treesitter_config,
     },
-    { "romgrk/nvim-treesitter-context", dependencies = "nvim-treesitter/nvim-treesitter", opts = { enable = true } },
+    {
+        "romgrk/nvim-treesitter-context",
+        dependencies = "nvim-treesitter/nvim-treesitter",
+        opts = { enable = false },
+    },
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
         dependencies = "nvim-treesitter/nvim-treesitter",

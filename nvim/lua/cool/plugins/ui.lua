@@ -63,7 +63,7 @@ local function tabby_config()
     -- Renders one tab label from tabby's tab object
     local function tab_render(tab)
         local hl = tab.is_current() and mode_theme[vim.fn.mode()] or inactive_theme
-        local modified = vim.api.nvim_buf_get_option(tab.current_win().buf().id, "modified") and " +" or ""
+        local modified = vim.api.nvim_get_option_value("modified", {buf = tab.current_win().buf().id}) and " +" or ""
         return {
             " ",
             tab.name(),

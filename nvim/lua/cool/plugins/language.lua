@@ -106,6 +106,7 @@ return {
                 incoming = "⬊ ",
                 outgoing = "⬉ ",
                 hover = "⭐ ",
+                title = false,
             },
         },
     },

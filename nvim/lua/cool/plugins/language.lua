@@ -113,7 +113,6 @@ return {
     { "mhartington/formatter.nvim", cmd = { "Format", "FormatWrite" }, config = formatter_config },
     {
         "mrcjkb/rustaceanvim",
-        -- version = "^4",
         dependencies = { "nvim-lua/plenary.nvim" },
         ft = { "rust" },
         config = function()

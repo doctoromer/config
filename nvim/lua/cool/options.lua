@@ -88,3 +88,13 @@ for _, command in pairs(misspelled_commands) do
         vim.cmd(string.lower(command))
     end, { bang = true })
 end
+
+-- Set systemverilog filetype and comment string
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+    pattern = { "*.v", "*.vh", "*.sv" },
+    callback = function()
+        vim.bo.commentstring = "// %s"
+        vim.bo.ft = "systemverilog"
+    end
+})
+

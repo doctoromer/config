@@ -19,7 +19,7 @@ g.clipboard = {
     cache_enabled = true,
 }
 
-o.mouse = nil
+o.mouse = ""
 
 -- Window display
 o.number = true

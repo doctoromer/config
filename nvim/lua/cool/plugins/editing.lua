@@ -30,4 +30,5 @@ return {
     { "michaeljsmith/vim-indent-object" },
     { "kana/vim-textobj-user" },
     { "Julian/vim-textobj-variable-segment", dependencies = "kana/vim-textobj-user" },
+    { "gregorias/coerce.nvim", config = true },
 }

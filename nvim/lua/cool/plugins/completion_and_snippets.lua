@@ -8,15 +8,27 @@ local function cmp_config()
             end,
         },
         sources = cmp.config.sources(
-            { { name = "luasnip" }, { name = "nvim_lsp" }, { name = "nvim_lsp_signature_help" } },
+            {
+                { name = "nvim_lsp" },
+                { name = "nvim_lsp_signature_help" },
+            },
+            { name = "luasnip" },
             { { name = "buffer" } },
             { { name = "path" } }
         ),
     })
 
-    cmp.setup.cmdline("/", { sources = { { name = "buffer" } } })
-    cmp.setup.cmdline("?", { sources = { { name = "buffer" } } })
-    cmp.setup.cmdline(":", { sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }) })
+    cmp.setup.cmdline(
+        { "/", "?" },
+        {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = { { name = "buffer" } },
+        }
+    )
+    cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
+    })
 end
 
 local function luasnip_config()
@@ -39,19 +51,34 @@ local function luasnip_config()
 end
 
 return {
+    { "L3MON4D3/LuaSnip", config = luasnip_config, event = "InsertEnter" },
+
+    { "hrsh7th/cmp-cmdline", event = "InsertEnter" },
+    { "hrsh7th/cmp-path", event = "InsertEnter" },
+    { "hrsh7th/cmp-buffer", event = "InsertEnter" },
+    { "hrsh7th/cmp-nvim-lsp", event = "InsertEnter", dependencies = "neovim/nvim-lspconfig" },
+    {
+        "hrsh7th/cmp-nvim-lsp-signature-help",
+        event = "InsertEnter",
+        dependencies = "neovim/nvim-lspconfig",
+    },
+    {
+        "saadparwaiz1/cmp_luasnip",
+        event = "InsertEnter",
+        dependencies = "L3MON4D3/LuaSnip",
+    },
+
     {
         "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
+        config = cmp_config,
         dependencies = {
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-path",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-nvim-lsp-signature-help",
-            "neovim/nvim-lspconfig",
-            { "saadparwaiz1/cmp_luasnip", dependencies = "L3MON4D3/LuaSnip" },
-        },
-        event = "InsertEnter",
-        config = cmp_config,
+            "saadparwaiz1/cmp_luasnip",
+        }
     },
-    { "L3MON4D3/LuaSnip", config = luasnip_config, event = "InsertEnter" },
 }

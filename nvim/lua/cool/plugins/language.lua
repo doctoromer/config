@@ -30,6 +30,20 @@ local function mason_config()
                 end,
             })
         end,
+        pylsp = function()
+            lspconfig.pylsp.setup({
+                capabilities = capabilities,
+                settings = {
+                    pylsp = {
+                        plugins = {
+                            pycodestyle = {
+                                maxLineLength = 120
+                            }
+                        }
+                    }
+                }
+            })
+        end,
         rust_analyzer = function() end,
     })
 end

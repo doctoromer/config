@@ -80,9 +80,9 @@ local function loader_config_patched(plugin)
 end
 
 local function patch_lazy_functions()
-    local Spec = require("lazy.core.plugin").Spec
-    M.original_add = Spec.add
-    Spec.add = plugin_add_patched
+    local meta = require("lazy.core.meta")
+    M.original_add = meta.add
+    meta.add = plugin_add_patched
 
     local loader = require("lazy.core.loader")
     M.original_config = loader.config

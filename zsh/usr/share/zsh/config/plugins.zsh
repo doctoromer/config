@@ -9,8 +9,6 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue,bold,underline"
 
 zcomet load ohmyzsh plugins/git
-zcomet load ohmyzsh plugins/ag
-zcomet load ohmyzsh plugins/git
 zcomet load ohmyzsh plugins/colored-man-pages
 zcomet load ohmyzsh plugins/command-not-found
 

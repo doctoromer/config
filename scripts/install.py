@@ -5,7 +5,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import dploy
 from utils import ROOT_DIR, configure_logger
 
 logger = logging.getLogger(__name__)
@@ -24,10 +23,14 @@ def auto_remove():
         logger.info("No previously installed config detected, exiting...")
 
 
-def execute_dploy(action, packages):
-    packages = [str(ROOT_DIR / package) for package in packages]
+def create_symlinks(action, packages, profile):
+    packages = sum((["-s", str(ROOT_DIR / package)] for package in packages), [])
     try:
-        getattr(dploy, action)(packages, "/")
+        sym_path = str(ROOT_DIR / "binaries/usr/bin/sym")
+        subprocess.check_call(
+            [sym_path, action, "--linkmap", "linkmap.toml", "--profile", profile],
+            env={"RUST_BACKTRACE": "1"}
+        )
     except PermissionError:
         logger.error("Please run again with root")
 
@@ -50,6 +53,7 @@ def parse_args():
 
     for command in ("install", "remove", "auto-remove"):
         subparsers[command].add_argument("--packages", "-p", default=None)
+        subparsers[command].add_argument("--profile", default="system")
 
     args = parser.parse_args()
     if not hasattr(args, "command"):
@@ -81,7 +85,9 @@ def main():
 
     if args.command == "install":
         try:
-            execute_dploy("stow", packages)
+            create_symlinks("link", packages, args.profile)
+            if args.profile == "local":
+                subprocess.check_call(["git", "config", "--global", "include.path", "~/.config/gitconfig"])
         except Exception as err:
             logger.error(err.args[0])
             return 1
@@ -89,7 +95,9 @@ def main():
             logger.info("Finish installation successfully")
             return 0
     elif args.command == "remove":
-        execute_dploy("unstow", packages)
+        create_symlinks("unlink", packages, args.profile)
+        if args.profile == "local":
+            subprocess.check_call(["git", "config", "--global", "--unset", "include.path"])
     elif args.command == "auto-remove":
         auto_remove()
     else:

@@ -3,4 +3,11 @@
 
 ### Uncomment this to enable command line vim keybindings
 # export CONFIG_ZSH_VI_MODE=true
-source /usr/share/zsh/config/init.zsh
+
+global_zsh_file=/usr/share/zsh/config/init.zsh
+local_zsh_file=~/.local/zsh/config
+if [ -f "$global_zsh_file" ]; then
+    source $global_zsh_file
+elif [ -f "$local_zsh_file" ]; then
+    source $local_zsh_file
+fi

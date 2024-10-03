@@ -30,5 +30,15 @@ zstyle ':completion:*' matcher-list '' '+m:{a-zA-Z}={A-Za-z}' '+r:|[.,_-]=* r:|=
 
 # Fzf
 export FZF_DEFAULT_COMMAND='ag -l --nocolor --nogroup --hidden -g "" --ignore ".git"'
-source /usr/local/share/zsh/site-functions/fzf-completion.zsh
-source /usr/local/share/zsh/site-functions/fzf-key-bindings.zsh
+
+global_dir=/usr/local/share/zsh/site-functions
+global_dir=~/.local/zsh/site-functions
+if [ -d "$global_dir" ]; then
+    source $global_dir/fzf-completion.zsh
+    source $global_dir/fzf-key-bindings.zsh
+elif [ -d "$local_dir" ]; then
+    source $local_dir/fzf-completion.zsh
+    source $local_dir/fzf-key-bindings.zsh
+fi
+
+export PATH=$PATH:~/.local/bin

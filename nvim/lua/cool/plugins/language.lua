@@ -37,11 +37,11 @@ local function mason_config()
                     pylsp = {
                         plugins = {
                             pycodestyle = {
-                                maxLineLength = 120
-                            }
-                        }
-                    }
-                }
+                                maxLineLength = 120,
+                            },
+                        },
+                    },
+                },
             })
         end,
         rust_analyzer = function() end,
@@ -139,8 +139,8 @@ return {
                 server = {
                     on_init = function(client, _)
                         client.server_capabilities.semanticTokensProvider = nil
-                    end
-                }
+                    end,
+                },
             }
         end,
     },

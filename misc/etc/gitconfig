@@ -28,7 +28,7 @@
 	out = "!git glog --branches --not --remotes=origin"
 	fresh = clean -f -d -X
 	fixup = commit --amend --no-edit
-	count = "!git log --oneline --branches | wc -l"
+	count = "!git log --oneline --branches --tags | wc -l"
 [merge]
 	tool = diffconflicts
 	conflictstyle = diff3

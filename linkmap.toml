@@ -7,7 +7,7 @@ misc = "/"
 [local]
 "binaries/usr/bin" = "~/.local/bin"
 "binaries/usr/local/share/zsh/site-functions" = "~/.local/zsh/site-functions"
-"binaries/usr/share/man/man1" = "~/.local/man"
+"binaries/usr/share/man/man1" = "~/.local/man/man1"
 "neovim/etc/xdg/nvim" = "~/.config/nvim"
 "misc/etc/gitconfig" = "~/.config/gitconfig"
 "misc/etc/tmux.conf" = "~/.tmux.conf"

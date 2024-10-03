@@ -42,3 +42,4 @@ elif [ -d "$local_dir" ]; then
 fi
 
 export PATH=$PATH:~/.local/bin
+export MANPATH=:~/.local/man

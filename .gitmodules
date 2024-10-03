@@ -8,5 +8,5 @@
 	path = misc/usr/share/tmux/dracula
 	url = https://github.com/dracula/tmux
 [submodule "coolvim"]
-	path = neovim/etc/xdg/nvim
+	path = nvim
 	url = https://gitlab.com/OmerSarig/coolvim.git

@@ -16,7 +16,7 @@ from utils import ROOT_DIR, configure_logger
 logger = logging.getLogger(__name__)
 
 SOURCE_CODE_ASSET = "SOURCE_CODE_ASSET.zip"
-BINARIES_DIR = "binaries"
+BINARIES_DIR = Path("binaries")
 
 with (ROOT_DIR / "binaries.json").open("r") as binaries_file:
     BINARIES = json.load(binaries_file)
@@ -62,7 +62,7 @@ def get_release_by_tag(repo_name, asset_regex, tag_name):
     return get_release(repo_name, asset_regex, f"tags/{tag_name}")
 
 
-def match_file_map_entry(base_dir, entry_name, file_map):
+def match_file_map_entry(base_path, entry_name, file_map):
     """ Search an entry in the file map that matches the entry in the received archive """
     matches = [
         match for match in (re.fullmatch(pattern, entry_name) for pattern in file_map)
@@ -73,20 +73,20 @@ def match_file_map_entry(base_dir, entry_name, file_map):
         return None
     elif len(matches) == 1:
         file_pattern = matches[0].re.pattern
-        output_path = base_dir / file_map[file_pattern]
+        output_path = base_path / file_map[file_pattern]
     else:
         raise ValueError("Too many matches in file map")
 
     return output_path
 
 
-def _extract_tarball(name, data, base_dir, file_map):
+def _extract_tarball(name, data, base_path, file_map):
     logger.debug(f"Extracting tar file: {name}")
 
     with tarfile.open(fileobj=io.BytesIO(data), mode="r:gz") as tar_file:
         for member in tar_file.getmembers():
 
-            output_path = match_file_map_entry(base_dir, member.path, file_map)
+            output_path = match_file_map_entry(base_path, member.path, file_map)
 
             if output_path is None or output_path.exists():
                 continue
@@ -98,7 +98,7 @@ def _extract_tarball(name, data, base_dir, file_map):
                 output_path.chmod(0o755)
 
 
-def _extract_zip(name, data, base_dir, file_map):
+def _extract_zip(name, data, base_path, file_map):
     logger.debug(f"Extracting zip file: {name}")
 
     with zipfile.ZipFile(io.BytesIO(data), mode="r") as zip_file:
@@ -109,7 +109,7 @@ def _extract_zip(name, data, base_dir, file_map):
             if name == SOURCE_CODE_ASSET:
                 entry_name = os.sep.join(Path(entry_name).parts[1:])
 
-            output_path = match_file_map_entry(base_dir, entry_name, file_map)
+            output_path = match_file_map_entry(base_path, entry_name, file_map)
             if output_path is None or output_path.exists():
                 continue
 
@@ -120,35 +120,45 @@ def _extract_zip(name, data, base_dir, file_map):
                 output_path.chmod(0o755)
 
 
-def write_or_extract_binaries(name, data, base_dir, file_map):
+def write_or_extract_binaries(name, data, base_path, file_map):
     """
-    Write or extract a binary named `name` that contains `data` to `base_dir` based on `file_map`.
+    Write or extract a binary named `name` that contains `data` to `base_path` based on `file_map`.
     Based on `name` it can extract tar.gz and zip files or just write plain non-archive file.
-    the `file_map` maps an entry in the archive to relative path in `base_dir`.
+    the `file_map` maps an entry in the archive to relative path in `base_path`.
     """
-    base_dir = Path(base_dir)
-
     if name.endswith(".tar.gz"):
-        _extract_tarball(name, data, base_dir, file_map)
+        _extract_tarball(name, data, base_path, file_map)
 
     elif name.endswith(".zip"):
-        _extract_zip(name, data, base_dir, file_map)
+        _extract_zip(name, data, base_path, file_map)
     else:
         logger.debug(f"Saving regular file: {name}")
-        output_path = base_dir / file_map[name]
+        output_path = base_path / file_map[name]
         ensure_dirs(output_path)
         with output_path.open("wb") as output_file:
             output_file.write(data)
             output_path.chmod(0o755)
 
 
-def is_download_required(binaries, base_dir, name):
+def is_download_required(binaries, base_path, name):
     """ Check if all the required files in `BINARIES` exist. """
-    base_dir = Path(base_dir)
     for path in binaries[name]["file_map"].values():
-        if not (base_dir / path).exists():
+        if not (base_path / path).exists():
             return True
     return False
+
+
+def download_sym():
+    """This is an ugly hack until this script gets a gitlab support or is being rewritten in rust."""
+    sym_path = Path(BINARIES_DIR) / "usr/bin/sym"
+    if not sym_path.exists():
+        response = request.urlopen("https://gitlab.com/api/v4/projects/OmerSarig%2Fsym/releases")
+        releases = json.load(response)
+        sym_url = releases[0]["assets"]["links"][0]["url"]
+        import ipdb;ipdb.set_trace()
+        sym_data = request.urlopen(sym_url).read()
+        with sym_path.open("wb") as sym_file:
+            sym_file.write(sym_data)
 
 
 def download_submodules():
@@ -157,7 +167,7 @@ def download_submodules():
 
 
 def download_binaries():
-    """ Download all binaries specified in `binaries` into `base_dir` """
+    """ Download all binaries specified in `binaries` into `base_path` """
     for name, binary in BINARIES.items():
         if is_download_required(BINARIES, BINARIES_DIR, name):
             logger.info(f"Downloading {name}")
@@ -208,6 +218,7 @@ def download():
         return
 
     download_functions = [
+        ("Sym", download_sym),
         ("Submodules", download_submodules),
         ("Binaries", download_binaries),
         ("Vim plugins", download_vim_plugins),

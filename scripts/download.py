@@ -155,7 +155,6 @@ def download_sym():
         response = request.urlopen("https://gitlab.com/api/v4/projects/OmerSarig%2Fsym/releases")
         releases = json.load(response)
         sym_url = releases[0]["assets"]["links"][0]["url"]
-        import ipdb;ipdb.set_trace()
         sym_data = request.urlopen(sym_url).read()
         with sym_path.open("wb") as sym_file:
             sym_file.write(sym_data)

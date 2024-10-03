@@ -97,7 +97,8 @@ def main():
     elif args.command == "remove":
         create_symlinks("unlink", packages, args.profile)
         if args.profile == "local":
-            subprocess.check_call(["git", "config", "--global", "--unset", "include.path"])
+            # We use run and not check_call because we don't care if it fails
+            subprocess.run(["git", "config", "--global", "--unset", "include.path"])
     elif args.command == "auto-remove":
         auto_remove()
     else:

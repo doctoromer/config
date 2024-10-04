@@ -15,13 +15,27 @@
             "man/man1/fzf.1": "usr/share/man/man1/fzf.1"
         }
     },
-    "exa": {
-        "repo": "ogham/exa",
-        "asset_regex": "exa.*linux.*x86_64.*",
+    "eza": {
+        "repo": "eza-community/eza",
+        "asset_regex": "eza_x86_64-unknown-linux-musl.zip",
         "file_map": {
-            "bin/exa": "usr/bin/exa",
-            "man/exa.1": "usr/share/man/man1/exa.1",
-            "completions/exa.zsh": "usr/local/share/zsh/site-functions/exa.zsh"
+            "eza": "usr/bin/eza"
+        }
+    },
+    "eza-man": {
+        "repo": "eza-community/eza",
+        "asset_regex": "man.*.tar.gz",
+        "file_map": {
+            "./target/man-[^/]*/eza.1": "usr/share/man/man1/eza.1",
+            "./target/man-[^/]*/eza_colors-explanation.5": "usr/share/man/man1/eza_colors-explanation.5",
+            "./target/man-[^/]*/eza_colors.5": "usr/share/man/man1/eza_colors.5"
+        }
+    },
+    "eza-completion": {
+        "repo": "eza-community/eza",
+        "asset_regex": "completions.*.tar.gz",
+        "file_map": {
+            "./target/completions-[^/]*/_eza": "usr/local/share/zsh/site-functions/eza.zsh"
         }
     },
     "vim": {

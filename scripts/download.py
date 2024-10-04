@@ -158,6 +158,7 @@ def download_sym():
         sym_data = request.urlopen(sym_url).read()
         with sym_path.open("wb") as sym_file:
             sym_file.write(sym_data)
+        sym_path.chmod(0o755)
 
 
 def download_submodules():

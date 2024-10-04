@@ -7,10 +7,10 @@ alias autorm='sudo apt -y autoremove'
 alias maintain='update && depend && upgrade && clean && autorm'
 
 alias cat=bat
-alias ls=exa
-alias la='exa -a'
-alias l='exa -F'
-alias tree="exa -T --color=always"
+alias ls=eza
+alias la='eza -a'
+alias l='eza -F'
+alias tree="eza -T --color=always"
 
 if [ -f /.dockerenv ]; then
     alias vim="nvim --appimage-extract-and-run"
@@ -21,7 +21,7 @@ else
 fi
 
 better_ll() {
-    exa -l --color=always $* | less -RFX
+    eza -l --color=always $* | less -RFX
 }
 alias ll=better_ll
 

@@ -1,9 +1,3 @@
 binaries
 __pycache__
-packer_compiled.lua
-zsh/usr/share/zsh/config/repos
-
-neovim/etc/xdg/nvim/lazy
-neovim/etc/xdg/nvim/lazy_plugins
-neovim/etc/xdg/nvim/mason
-neovim/etc/xdg/nvim/parser
+zsh/repos

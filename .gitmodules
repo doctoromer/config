@@ -5,7 +5,7 @@
 	path = zsh/usr/share/zsh/config/zcomet
 	url = https://github.com/agkozak/zcomet
 [submodule "dracula"]
-	path = misc/usr/share/tmux/dracula
+	path = misc/dracula
 	url = https://github.com/dracula/tmux
 [submodule "coolvim"]
 	path = nvim

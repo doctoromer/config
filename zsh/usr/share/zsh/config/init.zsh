@@ -32,7 +32,7 @@ zstyle ':completion:*' matcher-list '' '+m:{a-zA-Z}={A-Za-z}' '+r:|[.,_-]=* r:|=
 export FZF_DEFAULT_COMMAND='ag -l --nocolor --nogroup --hidden -g "" --ignore ".git"'
 
 global_dir=/usr/local/share/zsh/site-functions
-global_dir=~/.local/zsh/site-functions
+local_dir=~/.local/zsh/site-functions
 if [ -d "$global_dir" ]; then
     source $global_dir/fzf-completion.zsh
     source $global_dir/fzf-key-bindings.zsh

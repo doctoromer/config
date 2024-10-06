@@ -1,6 +1,7 @@
 [system]
 binaries = "/"
 nvim = "/etc/xdg/nvim"
+zsh = "/"
 "misc/gitconfig" = "/etc/gitconfig"
 "misc/tmux.conf" = "/etc/tmux.conf"
 "misc/dracula" = "/usr/share/tmux/dracula"

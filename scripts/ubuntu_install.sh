@@ -25,8 +25,8 @@ main ()
     echo Updating apt sources...
     apt update -qq
 
-    echo Installing zsh, git, and pip3
-    apt install -y -qqq zsh git python3-pip libfuse2
+    echo Installing zsh and git
+    apt install -y -qqq zsh git libfuse2
     if [ $profile != "system" ]; then
         # This packages collide with some of the binaries
         echo Removing tmux and neovim \(new versions are packed with the config\)
@@ -51,7 +51,7 @@ main ()
         echo -e "Copy to $ZSHRC:\n"
         cat zshrc.example
     else
-        cp -n zshrc.example $ZSHRC
+        cp --update=none zshrc.example $ZSHRC
         chown $SUDO_USER:$SUDO_USER $ZSHRC
         echo Created zshrc in $ZSHRC
     fi

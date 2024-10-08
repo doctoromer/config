@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 SOURCE_CODE_ASSET = "SOURCE_CODE_ASSET.zip"
 BINARIES_DIR = Path("binaries")
+ZSH_ROOT_DIR = ROOT_DIR / "zsh"
 
 with (ROOT_DIR / "binaries.json").open("r") as binaries_file:
     BINARIES = json.load(binaries_file)
@@ -156,6 +157,7 @@ def download_sym():
         releases = json.load(response)
         sym_url = releases[0]["assets"]["links"][0]["url"]
         sym_data = request.urlopen(sym_url).read()
+        ensure_dirs(sym_path)
         with sym_path.open("wb") as sym_file:
             sym_file.write(sym_data)
         sym_path.chmod(0o755)
@@ -193,7 +195,7 @@ def download_vim_plugins():
 
 def download_zsh_plugins():
     """ Download zsh plugins using zcomet """
-    zsh_init_path = ROOT_DIR / "zsh/usr/share/zsh/config/init.zsh"
+    zsh_init_path = ZSH_ROOT_DIR / "init.zsh"
     subprocess.check_call(["zsh", str(zsh_init_path)])
 
 
@@ -205,7 +207,7 @@ def fix_permissions():
 
 
 def update_zsh_plugins():
-    zsh_init_path = ROOT_DIR / "zsh/usr/share/zsh/config/plugins.zsh"
+    zsh_init_path = ZSH_ROOT_DIR / "plugins.zsh"
     subprocess.call(["zsh", "-c", f"source {zsh_init_path}", "-c", "zcomet update"])
 
 

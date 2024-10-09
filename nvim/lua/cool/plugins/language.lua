@@ -26,7 +26,7 @@ local function mason_config()
                 capabilities = capabilities,
                 on_attach = function()
                     -- Zero for current buffer only
-                    vim.diagnostic.disable(0)
+                    vim.diagnostic.enable(false, { bufnr = 0 })
                 end,
             })
         end,

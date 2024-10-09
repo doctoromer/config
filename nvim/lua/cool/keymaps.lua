@@ -492,11 +492,7 @@ M["other_keymaps"] = function()
                 {
                     "<leader>D",
                     function()
-                        if vim.diagnostic.is_disabled(0) then
-                            vim.diagnostic.enable(0)
-                        else
-                            vim.diagnostic.disable(0)
-                        end
+                        vim.diagnostic.enable(not vim.diagnostic.is_enabled(), { bufnr = 0 })
                     end,
                     description = "Toggle diagnostics display",
                 },

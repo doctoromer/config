@@ -227,6 +227,7 @@ M["gitsigns.nvim"] = function()
                     end,
                     description = "Git blame line",
                 },
+                { "<leader>hB", gitsigns.blame, description = "Git blame line" },
                 { "<leader>ht", gitsigns.toggle_current_line_blame, description = "Toggle current git line blame" },
                 { "<leader>hd", gitsigns.diffthis, description = "Show diff of current changes" },
                 {

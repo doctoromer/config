@@ -424,20 +424,6 @@ M["other_keymaps"] = function()
         paste_mode = not paste_mode
     end
 
-    local function delete_special()
-        local line_data = vim.api.nvim_win_get_cursor(0) -- returns {row, col}
-        local current_line = vim.api.nvim_buf_get_lines(0, line_data[1] - 1, line_data[1], false)
-        local delete_command = nil
-
-        if current_line[1] == "" then
-            delete_command = '"_dd'
-        else
-            delete_command = "dd"
-        end
-
-        vim.api.nvim_feedkeys(delete_command, "n", false)
-    end
-
     local function insert_spaces(is_before)
         return function()
             local current_line = vim.api.nvim_win_get_cursor(0)[1]
@@ -518,7 +504,6 @@ M["other_keymaps"] = function()
         },
 
         -- Other
-        { "dd", delete_special },
         { ">", ">gv", mode = "v" },
         { "<", "<gv", mode = "v" },
     }

@@ -394,7 +394,9 @@ M["aerial.nvim"] = function()
         {
             itemgroup = "Language",
             keymaps = {
-                { "<leader>o", "<cmd>AerialToggle!<cr>", description = "Toggle outline window" }
+                { "<leader>o", "<cmd>AerialToggle!<cr>", description = "Toggle outline window" },
+                { "[[", "<cmd>AerialPrev<cr>", description = "Jump to previous symbol" },
+                { "]]", "<cmd>AerialNext<cr>", description = "Jump to next symbol" },
             }
         }
     }

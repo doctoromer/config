@@ -144,14 +144,5 @@ return {
             }
         end,
     },
-    {
-        "stevearc/aerial.nvim",
-        opts = {
-            on_attach = function(bufnr)
-                vim.keymap.set("n", "[[", "<cmd>AerialPrev<CR>", { buffer = bufnr })
-                vim.keymap.set("n", "]]", "<cmd>AerialNext<CR>", { buffer = bufnr })
-            end,
-        },
-        dependencies = { "nvim-treesitter/nvim-treesitter" },
-    },
+    { "stevearc/aerial.nvim", config = true, dependencies = { "nvim-treesitter/nvim-treesitter" } },
 }

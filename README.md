@@ -18,7 +18,7 @@ For other non-ubuntu distribution, read the script and apply to your system, It'
 If this is a fresh clone of this repo, first you need to download stuff.
 Before running the download script, Install some commands:
 ```sh
-sudo apt install git unzip wget zsh
+sudo apt install git unzip wget zsh gcc make
 ```
 
 Then, download the stuff:

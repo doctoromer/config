@@ -25,8 +25,8 @@ main ()
     echo Updating apt sources...
     apt update -qq
 
-    echo Installing zsh and git
-    apt install -y -qqq zsh git libfuse2
+    echo Installing zsh, git, libfuse2, xclip
+    apt install -y -qqq zsh git libfuse2, xclip
     if [ $profile != "system" ]; then
         # This packages collide with some of the binaries
         echo Removing tmux and neovim \(new versions are packed with the config\)

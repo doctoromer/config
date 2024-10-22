@@ -1,10 +1,10 @@
 # Omer's Cool Config
-This is a complete and comprehensive solution for easy linux machine configuration.
-It contains 4 components:
-* vim configuration (Actually neovim)
-* zsh configuration
+This is my personal linux config. It is suitable for installation in air gapped networks.
+
+It contains:
+* Neovim config
+* zsh, git and tmux configs
 * common binaries
-* miscellaneous configurations (Currently git and tmux)
 
 # Installation
 ## In an offline network
@@ -12,9 +12,9 @@ Unzip the zip that you received from me and run (Only ubuntu):
 ```sh
 sudo scripts/ubuntu_install.sh
 ```
-For other non-ubuntu distribution, read the script and apply to your system, It's easy.
+For other non-ubuntu distribution, read the script and apply to your system.
 
-## In an online network (A.K.A the internet)
+## In an internet-connected machine:
 If this is a fresh clone of this repo, first you need to download stuff.
 Before running the download script, Install some commands:
 ```sh
@@ -28,8 +28,10 @@ scripts/download.py
 
 Then, on ubuntu computers execute:
 ```sh
-sudo scripts/ubuntu_install.sh
+sudo scripts/ubuntu_install.sh <local/global>
 ```
+Local installation will install the files in your home directory and doesn't require root.
+Global installation will install the configuration system-wide.
 
 # How it works
 ## install.py
@@ -92,7 +94,7 @@ It does the following actions:
 * Execute`install.py`
 * Create `.zshrc` in user's home directory
 
-This script is tested in ubuntu 18.
+This script is tested in ubuntu 18-24.
 
 # Q&A
 # I want to install only part of the config
@@ -100,16 +102,9 @@ It's possible. Use the -p switch of the install.py script that is described abov
 If you want to install only the neovim configuration you can use the [CoolVim](https://gitlab.com/OmerSarig/coolvim) repo.
 
 # Why the monstrous installation script (install.py)
-This linux config is specifically designed to be used in offline (Air gapped) linux machines.
-For ease of installation and portability I chose to write this (really nice and documented!) script.
-If there is any better solution, I would like to hear it.
-
-# Why a system-wide installation?
-Two reasons:
-1. To configure all users. It's nice to have a configured zsh and vim while in root shell.
-2. To allow the user to have their own configuration files that won't be overridden between updates,
-   Like ~/.config/nvim, ~/.zshrc, etc.
+A lot of stuff is not designed for air gapped installation.
 
 # Known issues
-* When staring tmux without a server running, it can take a few seconds
+* When starting tmux without a server running, it can take a few seconds
+* Python-based language servers of the neovim config doesn't work if copied between machines.
 * Other spooky stuff

@@ -45,6 +45,7 @@ local function download_treesitter_parsers()
         "regex",
         "toml",
         "vimdoc",
+        "rust",
         -- used also for lspsaga hover feature
         "markdown",
         "markdown_inline",

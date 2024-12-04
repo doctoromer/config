@@ -1,6 +1,3 @@
-[submodule "packer.nvim"]
-	path = neovim/etc/xdg/nvim/pack/packer/start/packer.nvim
-	url = https://github.com/wbthomason/packer.nvim
 [submodule "zcomet"]
 	path = zsh/zcomet
 	url = https://github.com/agkozak/zcomet

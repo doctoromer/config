@@ -277,6 +277,18 @@ M["Navigator.nvim"] = function()
     }
 end
 
+M["color-converter.nvim"] = function()
+    return {
+        {
+            itemgroup = "Miscellaneous",
+            description = "Other stuff",
+            keymaps = {
+                { "<leader>C", "<Plug>ColorConvertCycle", description = "Cycle between colors" },
+            },
+        },
+    }
+end
+
 M["treesj"] = function()
     return {
         {

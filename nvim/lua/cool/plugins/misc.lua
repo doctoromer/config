@@ -4,4 +4,5 @@ return {
     { "Vimjas/vim-python-pep8-indent", ft = "python" },
     { "numToStr/Navigator.nvim", config = true },
     { "ouuan/nvim-bigfile", config = true },
+    { "NTBBloodbath/color-converter.nvim", config = function() end },
 }

@@ -58,6 +58,8 @@ local function formatter_config()
         lua = { require("formatter.filetypes.lua").stylua },
         c = { require("formatter.filetypes.c").clangformat },
         rust = { require("formatter.filetypes.rust").rustfmt },
+        javascript = { require("formatter.filetypes.javascript").biome },
+        javascriptreact = { require("formatter.filetypes.javascript").biome },
         python = {
             function()
                 return {

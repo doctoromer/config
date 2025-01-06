@@ -394,8 +394,6 @@ M["rustaceanvim"] = function()
                 { "<leader>ex", "<cmd>RustLsp expandMacro<cr>", description = "Expand macro" },
                 { "<leader>ee", "<cmd>RustLsp explainError<cr>", description = "Explain Error" },
                 { "<leader>ed", "<cmd>RustLsp externalDocs<cr>", description = "Explain Error" },
-                { "<C-k>", "<cmd>RustLsp moveItem up<cr>", description = "Move item up" },
-                { "<C-j>", "<cmd>RustLsp moveItem down<cr>", description = "Move item down" },
             }
         }
     }

@@ -29,6 +29,7 @@
 	fresh = clean -f -d -X
 	fixup = commit --amend --no-edit
 	count = "!git log --oneline --branches --tags | wc -l"
+	egotrip = "!git log --format='%aN' | sort | uniq -c | sort -nr"
 [merge]
 	tool = diffconflicts
 	conflictstyle = diff3

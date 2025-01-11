@@ -20,20 +20,21 @@ local function do_for_each_keymap(plugin_keymaps, keymap_function)
     end
 end
 
-local function get_plugin_keymaps_function(plugin_full_name, keymaps)
-    local plugin_name = plugin_full_name:gmatch("[^/]+/(.+)")()
+local function get_plugin_keymaps_function(plugin, keymaps)
+    local plugin_full_name = plugin[1] or plugin.url
+    local plugin_name = plugin_full_name:gmatch("/([^/]+)$")()
     if plugin_name and keymaps[plugin_name] then
         return keymaps[plugin_name]
     end
 end
 
-local function plugin_add_patched(self, plugin, results, is_dep)
+local function plugin_add_patched(self, plugin)
     -- Skip the plugin if it doesn't have a name, it is a dependency or it has been already loaded
-    if not plugin[1] or is_dep or rawget(plugin, "_") then
-        return M.original_add(self, plugin, results, is_dep)
+    if not plugin[1] or rawget(plugin, "_") then
+        return M.original_add(self, plugin)
     end
 
-    local plugin_keymaps = get_plugin_keymaps_function(plugin[1], M.keymaps_with_dummy)
+    local plugin_keymaps = get_plugin_keymaps_function(plugin, M.keymaps_with_dummy)
 
     if plugin_keymaps then
         -- The no_lazy value in the keys field is used to allow using auto_keymaps module to map keys without
@@ -53,7 +54,7 @@ local function plugin_add_patched(self, plugin, results, is_dep)
         end
     end
 
-    return M.original_add(self, plugin, is_dep)
+    return M.original_add(self, plugin)
 end
 
 local function loader_config_patched(plugin)
@@ -65,7 +66,7 @@ local function loader_config_patched(plugin)
         M.original_config(plugin)
     end
 
-    local keymap_function = get_plugin_keymaps_function(plugin[1], M.keymaps_functions)
+    local keymap_function = get_plugin_keymaps_function(plugin, M.keymaps_functions)
 
     if keymap_function then
         local map_only_keymaps = {}

@@ -7,31 +7,22 @@ It contains:
 * common binaries
 
 # Installation
+## In an internet-connected machine:
+```sh
+apt install -y git python3 make gcc zsh make
+./scripts/download.py
+sudo scripts/ubuntu_install.sh <local/system>
+```
+
+Local installation will install the files in your home directory and doesn't require root.
+Global installation will install the configuration system-wide.
+This is untested on other distros, although it should work.
+
 ## In an offline network
 Unzip the zip that you received from me and run (Only ubuntu):
 ```sh
-sudo scripts/ubuntu_install.sh
+sudo scripts/ubuntu_install.sh <local/system>
 ```
-For other non-ubuntu distribution, read the script and apply to your system.
-
-## In an internet-connected machine:
-If this is a fresh clone of this repo, first you need to download stuff.
-Before running the download script, Install some commands:
-```sh
-sudo apt install git unzip wget zsh gcc make
-```
-
-Then, download the stuff:
-```sh
-scripts/download.py
-```
-
-Then, on ubuntu computers execute:
-```sh
-sudo scripts/ubuntu_install.sh <local/global>
-```
-Local installation will install the files in your home directory and doesn't require root.
-Global installation will install the configuration system-wide.
 
 # How it works
 ## install.py

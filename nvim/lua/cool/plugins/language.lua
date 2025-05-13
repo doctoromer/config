@@ -85,20 +85,6 @@ return {
     },
     { "folke/neodev.nvim" },
     {
-        "WhoIsSethDaniel/mason-tool-installer.nvim",
-        cmd = { "MasonToolsInstall", "MasonToolsUpdate" },
-        opts = {
-            ensure_installed = {
-                "clangd",
-                "lua-language-server",
-                "taplo",
-                { "stylua", version = "v0.17.0" },
-            },
-            auto_update = false,
-            run_on_start = false,
-        },
-    },
-    {
         "neovim/nvim-lspconfig",
         dependencies = { "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp" },
         config = lsp_config,

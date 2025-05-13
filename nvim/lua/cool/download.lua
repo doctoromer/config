@@ -52,26 +52,16 @@ local function download_treesitter_parsers()
     })
 end
 
-local function download_mason_tools()
+local function download_plugins()
+    vim.notify("Updating plugins...", levels.INFO)
     vim.api.nvim_create_autocmd("User", {
-        pattern = "MasonToolsUpdateCompleted",
+        pattern = "LazyDone",
         callback = function()
             download_treesitter_parsers()
 
             vim.notify("\nEverything downloaded sucessfully!\n", levels.INFO)
             vim.cmd.quit()
         end,
-    })
-
-    vim.notify("Updating mason tools...", levels.INFO)
-    vim.cmd.MasonToolsUpdate()
-end
-
-local function download_plugins()
-    vim.notify("Updating plugins...", levels.INFO)
-    vim.api.nvim_create_autocmd("User", {
-        pattern = "LazyDone",
-        callback = download_mason_tools,
         once = true,
     })
 end

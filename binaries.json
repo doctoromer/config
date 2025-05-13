@@ -40,9 +40,9 @@
     },
     "vim": {
         "repo": "neovim/neovim",
-        "asset_regex": "nvim.appimage",
+        "asset_regex": "nvim-linux-x86_64.appimage",
         "file_map": {
-            "nvim.appimage": "usr/bin/nvim"
+            "nvim-linux-x86_64.appimage": "usr/bin/nvim"
         }
     },
     "diff-so-fancy": {

@@ -7,24 +7,16 @@ local function cmp_config()
                 require("luasnip").lsp_expand(args.body)
             end,
         },
-        sources = cmp.config.sources(
-            {
-                { name = "nvim_lsp" },
-                { name = "nvim_lsp_signature_help" },
-            },
-            { name = "luasnip" },
-            { { name = "buffer" } },
-            { { name = "path" } }
-        ),
+        sources = cmp.config.sources({
+            { name = "nvim_lsp" },
+            { name = "nvim_lsp_signature_help" },
+        }, { name = "luasnip" }, { { name = "buffer" } }, { { name = "path" } }),
     })
 
-    cmp.setup.cmdline(
-        { "/", "?" },
-        {
-            mapping = cmp.mapping.preset.cmdline(),
-            sources = { { name = "buffer" } },
-        }
-    )
+    cmp.setup.cmdline({ "/", "?" }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = { { name = "buffer" } },
+    })
     cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
@@ -79,6 +71,6 @@ return {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-nvim-lsp-signature-help",
             "saadparwaiz1/cmp_luasnip",
-        }
+        },
     },
 }

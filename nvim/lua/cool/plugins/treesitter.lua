@@ -6,6 +6,7 @@ local function treesitter_config()
         auto_install = false,
         highlight = { enable = true },
         parser_install_dir = parsers_dir,
+        indent = true,
         incremental_selection = {
             enable = true,
             keymaps = {

@@ -53,7 +53,7 @@ return {
     {
         "nvim-telescope/telescope.nvim",
         dependencies = {
-            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+            "nvim-telescope/telescope-fzf-native.nvim",
             "nvim-lua/popup.nvim",
             "nvim-lua/plenary.nvim",
         },
@@ -61,5 +61,6 @@ return {
         config = telescope_config,
         ft = "dashboard",
     },
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     { "princejoogie/dir-telescope.nvim", config = true },
 }

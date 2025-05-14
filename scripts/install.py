@@ -28,8 +28,7 @@ def create_symlinks(action, packages, profile):
     try:
         sym_path = str(ROOT_DIR / "binaries/usr/bin/sym")
         subprocess.check_call(
-            [sym_path, action, "--linkmap", "linkmap.toml", "--profile", profile],
-            env={"RUST_BACKTRACE": "1"}
+            [sym_path, action, "--linkmap", "linkmap.toml", "--profile", profile], env={"RUST_BACKTRACE": "1"}
         )
     except PermissionError:
         logger.error("Please run again with root")
@@ -40,7 +39,7 @@ def parse_args():
         "download": "Download required files",
         "install": "Create symlinks to the configuration",
         "remove": "Remove symlinks to the configuration",
-        "auto-remove": "Remove previous installation of this config"
+        "auto-remove": "Remove previous installation of this config",
     }
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", action="store_true", default=False, dest="verbose", help="Show more logs")

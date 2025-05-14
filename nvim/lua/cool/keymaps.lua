@@ -399,19 +399,6 @@ M["rustaceanvim"] = function()
     }
 end
 
-M["aerial.nvim"] = function()
-    return {
-        {
-            itemgroup = "Language",
-            keymaps = {
-                { "<leader>o", "<cmd>AerialToggle!<cr>", description = "Toggle outline window" },
-                { "[[", "<cmd>AerialPrev<cr>", description = "Jump to previous symbol" },
-                { "]]", "<cmd>AerialNext<cr>", description = "Jump to next symbol" },
-            }
-        }
-    }
-end
-
 local paste_mode = false
 local colorcolumn = nil
 

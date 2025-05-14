@@ -133,5 +133,4 @@ return {
             }
         end,
     },
-    { "stevearc/aerial.nvim", config = true, dependencies = { "nvim-treesitter/nvim-treesitter" } },
 }

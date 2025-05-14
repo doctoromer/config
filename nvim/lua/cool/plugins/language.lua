@@ -61,13 +61,16 @@ local function formatter_config()
         javascript = { require("formatter.filetypes.javascript").biome },
         javascriptreact = { require("formatter.filetypes.javascript").biome },
         python = {
-            function()
-                return {
-                    exe = "autopep8",
-                    args = { "--in-place", "--max-line-length 120", "-" },
-                    stdin = true,
-                }
-            end,
+            {
+                exe = "ruff",
+                args = {
+                    "format",
+                    "-q",
+                    "--line-length=120",
+                    "-",
+                },
+                stdin = true,
+            },
         },
     }
 

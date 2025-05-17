@@ -65,8 +65,10 @@ In general, the file `<package>/<path>` is symlinked to `/<path>`.
 
 The `install` command can be used to install individual packages:
 ```sh
-scripts/install.py install -p neovim,misc
+scripts/install.py install -p nvim,misc
 ```
+
+Available packages: misc, nvim, zsh, binaries
 
 ### remove
 The remove command does the exact opposite of the install command - It removes the symlinks from the system.

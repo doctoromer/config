@@ -9,7 +9,7 @@ from utils import ROOT_DIR, configure_logger
 
 logger = logging.getLogger(__name__)
 
-PACKAGES = ["misc", "neovim", "zsh", "binaries"]
+PACKAGES = ["misc", "nvim", "zsh", "binaries"]
 
 
 def auto_remove():
@@ -24,19 +24,30 @@ def auto_remove():
 
 
 def create_symlinks(action, packages, profile):
-    packages = sum((["-s", str(ROOT_DIR / package)] for package in packages), [])
+    if packages is not None:
+        for package in packages:
+            if package not in PACKAGES:
+                raise ValueError(f"Invalid packages: {packages}")
+        packages = "|".join(packages)
+
     try:
         sym_path = str(ROOT_DIR / "binaries/usr/bin/sym")
-        subprocess.check_call(
-            [sym_path, action, "--linkmap", "linkmap.toml", "--profile", profile], env={"RUST_BACKTRACE": "1"}
+        args = [sym_path, action, "--linkmap", "linkmap.toml"]
+        if packages is not None:
+            args.extend(["--regex", packages])
+        args.extend(
+            [
+                "--profile",
+                profile,
+            ]
         )
+        subprocess.check_call(args, env={"RUST_BACKTRACE": "1"})
     except PermissionError:
         logger.error("Please run again with root")
 
 
 def parse_args():
     subcommands = {
-        "download": "Download required files",
         "install": "Create symlinks to the configuration",
         "remove": "Remove symlinks to the configuration",
         "auto-remove": "Remove previous installation of this config",
@@ -51,7 +62,9 @@ def parse_args():
         subparsers[subcommand].set_defaults(command=subcommand)
 
     for command in ("install", "remove", "auto-remove"):
-        subparsers[command].add_argument("--packages", "-p", default=None)
+        subparsers[command].add_argument(
+            "--packages", "-p", default=None, help=f"Install subset of the config. Available packages: {PACKAGES}"
+        )
         subparsers[command].add_argument("--profile", default="system")
 
     args = parser.parse_args()
@@ -77,10 +90,10 @@ def main():
     logger.debug(f"Executing {args.command} command")
 
     if args.command in ("install", "remove"):
-        if args.packages is None:
-            packages = PACKAGES
-        else:
+        if args.packages is not None:
             packages = args.packages.split(",")
+        else:
+            packages = None
 
     if args.command == "install":
         try:

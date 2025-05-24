@@ -48,12 +48,8 @@ return {
     { "hrsh7th/cmp-cmdline", event = "InsertEnter" },
     { "hrsh7th/cmp-path", event = "InsertEnter" },
     { "hrsh7th/cmp-buffer", event = "InsertEnter" },
-    { "hrsh7th/cmp-nvim-lsp", event = "InsertEnter", dependencies = "neovim/nvim-lspconfig" },
-    {
-        "hrsh7th/cmp-nvim-lsp-signature-help",
-        event = "InsertEnter",
-        dependencies = "neovim/nvim-lspconfig",
-    },
+    { "hrsh7th/cmp-nvim-lsp", event = "InsertEnter" },
+    { "hrsh7th/cmp-nvim-lsp-signature-help", event = "InsertEnter" },
     {
         "saadparwaiz1/cmp_luasnip",
         event = "InsertEnter",

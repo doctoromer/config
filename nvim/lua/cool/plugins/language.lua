@@ -1,6 +1,7 @@
 local function mason_config()
-    local lspconfig = require("lspconfig")
-    local mason_lspconfig = require("mason-lspconfig")
+    vim.lsp.config("*", {
+        capabilities = vim.lsp.protocol.make_client_capabilities(),
+    })
 
     -- The setup is done here instead of using 'opts' or 'config' lazy keys to prevent some kind of race condition.
     -- Basically, sometimes for no good reason neodev doesn't work, and this fixes it.
@@ -10,47 +11,6 @@ local function mason_config()
         install_root_dir = require("cool.utils").download_dir .. "/mason",
         pip = { upgrade_pip = true },
     })
-
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-    mason_lspconfig.setup({})
-
-    local function setup_generic_server(server_name)
-        lspconfig[server_name].setup({ capabilities = capabilities })
-    end
-
-    mason_lspconfig.setup_handlers({
-        setup_generic_server,
-        clangd = function()
-            lspconfig.clangd.setup({
-                capabilities = capabilities,
-                on_attach = function()
-                    -- Zero for current buffer only
-                    vim.diagnostic.enable(false, { bufnr = 0 })
-                end,
-            })
-        end,
-        pylsp = function()
-            lspconfig.pylsp.setup({
-                capabilities = capabilities,
-                settings = {
-                    pylsp = {
-                        plugins = {
-                            pycodestyle = {
-                                maxLineLength = 120,
-                            },
-                        },
-                    },
-                },
-            })
-        end,
-        rust_analyzer = function() end,
-    })
-end
-
-local function lsp_config()
-    local no_virtual_text_handler = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false })
-    vim.lsp.handlers["textDocument/publishDiagnostics"] = no_virtual_text_handler
 end
 
 local function formatter_config()
@@ -79,22 +39,26 @@ end
 
 return {
     {
-        "williamboman/mason.nvim",
-        dependencies = {
-            "williamboman/mason-lspconfig.nvim",
-            "folke/neodev.nvim",
-        },
+        "mason-org/mason.nvim",
+        dependencies = { "folke/neodev.nvim" },
         config = mason_config,
+    },
+    {
+        "mason-org/mason-lspconfig.nvim",
+        dependencies = {
+            "mason-org/mason.nvim",
+            "neovim/nvim-lspconfig",
+        },
+        opts = {},
     },
     { "folke/neodev.nvim" },
     {
         "neovim/nvim-lspconfig",
-        dependencies = { "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp" },
-        config = lsp_config,
+        dependencies = { "hrsh7th/cmp-nvim-lsp" },
+        opt = {},
     },
     {
         "nvimdev/lspsaga.nvim",
-        dependencies = "neovim/nvim-lspconfig",
         event = "LspAttach",
         opts = {
             scroll_preview = {

@@ -132,6 +132,14 @@ M["nvim-cmp"] = function()
     }
 end
 
+M["codecompanion.nvim"] = function()
+    return {
+        { "<leader>A", ":CodeCampanion<CR>", mode = { "n", "v" } },
+        -- { "<leader>ir", avante.refresh, mode = "v" },
+        -- { "<leader>ie", avante.edit, mode = { "n", "v" } },
+    }
+end
+
 M["telescope.nvim"] = function()
     local telescope = require("telescope.builtin")
 

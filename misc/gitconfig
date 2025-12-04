@@ -24,6 +24,7 @@
 	df = diff
 	glog = log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(cyan)<%an>%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative
 	crnt = rev-parse --abbrev-ref HEAD
+    br = branch
 	in = "!git fetch origin && git log $(git crnt)..origin/$(git crnt)"
 	out = "!git glog --branches --not --remotes=origin"
 	fresh = clean -f -d -X

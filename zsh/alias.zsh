@@ -12,13 +12,8 @@ alias la='eza -a'
 alias l='eza -F'
 alias tree="eza -T --color=always"
 
-if [ -f /.dockerenv ]; then
-    alias vim="nvim --appimage-extract-and-run"
-    alias tmux="tmux --appimage-extract-and-run -u2"
-else
-    alias vim=nvim
-    alias tmux="tmux -u2"
-fi
+alias vim="nvim --appimage-extract-and-run"
+alias tmux="tmux --appimage-extract-and-run -u2"
 
 better_ll() {
     eza -l --color=always $* | less -RFX

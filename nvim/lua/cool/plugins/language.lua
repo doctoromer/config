@@ -15,8 +15,9 @@ vim.g.rustaceanvim = {
 }
 
 local function mason_config()
+    local capabilities = require("blink.cmp").get_lsp_capabilities()
     vim.lsp.config("*", {
-        capabilities = vim.lsp.protocol.make_client_capabilities(),
+        capabilities = capabilities,
     })
 
     -- The setup is done here instead of using 'opts' or 'config' lazy keys to prevent some kind of race condition.
@@ -76,7 +77,7 @@ return {
     { "folke/neodev.nvim" },
     {
         "neovim/nvim-lspconfig",
-        dependencies = { "hrsh7th/cmp-nvim-lsp" },
+        dependencies = { "saghen/blink.cmp" },
         opt = {},
     },
     {

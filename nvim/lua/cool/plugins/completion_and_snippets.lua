@@ -1,26 +1,68 @@
-local function cmp_config()
-    local cmp = require("cmp")
+local function blink_config()
+    return {
+        keymap = {
+            preset = "none",
 
-    cmp.setup({
-        snippet = {
-            expand = function(args)
-                require("luasnip").lsp_expand(args.body)
-            end,
+            ["<C-space>"] = { "snippet_forward", "fallback" },
+            -- { "show", "show_documentation", "hide_documentation" },
+            -- ["<C-e>"] = { "hide", "fallback" },
+            ["<CR>"] = { "accept", "fallback" },
+
+            ["<Tab>"] = { "select_next", "fallback" },
+            ["<S-Tab>"] = { "select_prev", "fallback" },
+
+            ["<C-k>"] = { "scroll_documentation_up", "fallback" },
+            ["<C-j>"] = { "scroll_documentation_down", "fallback" },
         },
-        sources = cmp.config.sources({
-            { name = "nvim_lsp" },
-            { name = "nvim_lsp_signature_help" },
-        }, { name = "luasnip" }, { { name = "buffer" } }, { { name = "path" } }),
-    })
+        appearance = {
+            kind_icons = {
+                Text = "📝",
+                Method = "🎯",
+                Function = "⚙️",
+                Constructor = "🔨",
 
-    cmp.setup.cmdline({ "/", "?" }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = { { name = "buffer" } },
-    })
-    cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
-    })
+                Field = "🏷️",
+                Variable = "📊",
+                Property = "🔧",
+
+                Class = "🎓",
+                Interface = "🔌",
+                Struct = "🧱",
+                Module = "📦",
+
+                Unit = "📏",
+                Value = "💎",
+                Enum = "📋",
+                EnumMember = "🔹",
+
+                Keyword = "🔑",
+                Constant = "🔒",
+
+                Snippet = "✂️",
+                Color = "🎨",
+                File = "📄",
+                Reference = "🔗",
+                Folder = "📁",
+                Event = "⚡",
+                Operator = "➕",
+                TypeParameter = "🔤",
+            },
+        },
+        sources = {
+            default = { "lsp", "path", "snippets", "buffer" },
+        },
+        completion = {
+            menu = { border = "rounded" },
+            documentation = {
+                auto_show = true,
+                window = { border = "rounded" },
+            },
+        },
+        signature = { enabled = true, window = { border = "rounded" } },
+        snippets = {
+            preset = "luasnip",
+        },
+    }
 end
 
 local function luasnip_config()
@@ -45,29 +87,16 @@ end
 return {
     { "L3MON4D3/LuaSnip", config = luasnip_config, event = "InsertEnter" },
 
-    { "hrsh7th/cmp-cmdline", event = "InsertEnter" },
-    { "hrsh7th/cmp-path", event = "InsertEnter" },
-    { "hrsh7th/cmp-buffer", event = "InsertEnter" },
-    { "hrsh7th/cmp-nvim-lsp", event = "InsertEnter" },
-    { "hrsh7th/cmp-nvim-lsp-signature-help", event = "InsertEnter" },
     {
-        "saadparwaiz1/cmp_luasnip",
+        "saghen/blink.cmp",
+        version = "1.*",
         event = "InsertEnter",
-        dependencies = "L3MON4D3/LuaSnip",
-    },
-
-    {
-        "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
-        config = cmp_config,
         dependencies = {
-            "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-path",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-nvim-lsp-signature-help",
-            "saadparwaiz1/cmp_luasnip",
+            "rafamadriz/friendly-snippets",
+            "L3MON4D3/LuaSnip",
         },
+        opts = blink_config,
+        opts_extend = { "sources.default" },
     },
     {
         "olimorris/codecompanion.nvim",

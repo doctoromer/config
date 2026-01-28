@@ -1,3 +1,19 @@
+vim.g.rustaceanvim = {
+    tools = {
+        hover_actions = {
+            auto_focus = true,
+        },
+        ra_multiplex = {
+            enable = true,
+        },
+    },
+    server = {
+        on_attach = function(client, _)
+            client.server_capabilities.semanticTokensProvider = nil
+        end,
+    },
+}
+
 local function mason_config()
     vim.lsp.config("*", {
         capabilities = vim.lsp.protocol.make_client_capabilities(),
@@ -17,7 +33,13 @@ local function formatter_config()
     local formatters = {
         lua = { require("formatter.filetypes.lua").stylua },
         c = { require("formatter.filetypes.c").clangformat },
-        rust = { require("formatter.filetypes.rust").rustfmt },
+        rust = {
+            {
+                exe = "rustfmt",
+                args = { "--edition 2024" },
+                stdin = true,
+            },
+        },
         javascript = { require("formatter.filetypes.javascript").biome },
         javascriptreact = { require("formatter.filetypes.javascript").biome },
         python = {
@@ -84,20 +106,10 @@ return {
     {
         "mrcjkb/rustaceanvim",
         dependencies = { "nvim-lua/plenary.nvim" },
+        keys = "no_lazy",
+        version = "^6",
+        lazy = false,
         ft = { "rust" },
-        config = function()
-            vim.g.rustaceanvim = {
-                tools = {
-                    hover_actions = {
-                        auto_focus = true,
-                    },
-                },
-                server = {
-                    on_init = function(client, _)
-                        client.server_capabilities.semanticTokensProvider = nil
-                    end,
-                },
-            }
-        end,
+        config = function() end,
     },
 }

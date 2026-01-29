@@ -21,11 +21,6 @@ return {
         },
     },
     { "altermo/ultimate-autopair.nvim", event = "InsertEnter", config = true },
-    {
-        "terrortylor/nvim-comment",
-        main = "nvim_comment",
-        opts = { comment_empty = false },
-    },
     { "smoka7/hop.nvim", opts = {} },
     { "michaeljsmith/vim-indent-object" },
     { "kana/vim-textobj-user" },

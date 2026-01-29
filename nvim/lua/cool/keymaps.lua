@@ -272,18 +272,6 @@ M["treesj"] = function()
     }
 end
 
-M["nvim-comment"] = function()
-    return {
-        {
-            itemgroup = "Editing",
-            keymaps = {
-                { "gc", description = "Toggle comment action (Example: gcap)", mode = { "x", "n", "v" } },
-                { "gcc", description = "Toggle comment for one line" },
-            },
-        },
-    }
-end
-
 M["hop.nvim"] = function()
     local hop = require("hop")
     local direction = require("hop.hint").HintDirection

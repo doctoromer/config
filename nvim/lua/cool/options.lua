@@ -25,7 +25,7 @@ o.mouse = ""
 o.number = true
 o.signcolumn = "yes"
 o.colorcolumn = "120"
-o.completeopt = "menu,menuone,noselect"
+o.completeopt = "menu,menuone,noselect,fuzzy"
 o.display = "lastline"
 o.laststatus = 3
 
@@ -97,4 +97,24 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
         vim.bo.ft = "systemverilog"
     end
 })
+
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true,
+})
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+    vim.lsp.handlers.hover, {
+        border = "rounded"
+    }
+)
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+    vim.lsp.handlers.signature_help, {
+        border = "rounded"
+    }
+)
 

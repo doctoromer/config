@@ -98,22 +98,4 @@ return {
         opts = blink_config,
         opts_extend = { "sources.default" },
     },
-    {
-        "olimorris/codecompanion.nvim",
-        opts = {
-            strategies = {
-                chat = {
-                    adapter = "openai",
-                },
-                inline = {
-                    adapter = "openai",
-                },
-            },
-        },
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-        },
-        keys = "no_lazy",
-    },
 }

@@ -97,12 +97,6 @@ M["neogen"] = function()
     }
 end
 
-M["codecompanion.nvim"] = function()
-    return {
-        { "<leader>A", ":CodeCompanion<CR>", mode = { "n", "v" } },
-    }
-end
-
 M["telescope.nvim"] = function()
     local telescope = require("telescope.builtin")
 

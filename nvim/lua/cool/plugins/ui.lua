@@ -73,18 +73,11 @@ local function tabby_config()
         }
     end
 
-    -- Renders one dindow label from tabby's window object
-    local function window_render(window)
-        local hl = window.is_current() and mode_theme[vim.fn.mode()] or inactive_theme
-        return { " ", window.buf_name(), " ", hl = hl }
-    end
-
     -- Renders the entire tabline from tabby's line object
     local function tabline_render(line)
         return {
             line.tabs().foreach(tab_render),
             line.spacer(),
-            line.wins_in_tab(line.api.get_current_tab()).foreach(window_render),
             hl = "TabLineFill",
         }
     end

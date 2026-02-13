@@ -54,7 +54,6 @@ return {
         "nvim-telescope/telescope.nvim",
         dependencies = {
             "nvim-telescope/telescope-fzf-native.nvim",
-            "nvim-lua/popup.nvim",
             "nvim-lua/plenary.nvim",
         },
         -- Couldn't use the 'opts' field because some of the options requires using the 'actions' module

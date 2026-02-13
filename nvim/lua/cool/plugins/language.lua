@@ -20,10 +20,6 @@ local function mason_config()
         capabilities = capabilities,
     })
 
-    -- The setup is done here instead of using 'opts' or 'config' lazy keys to prevent some kind of race condition.
-    -- Basically, sometimes for no good reason neodev doesn't work, and this fixes it.
-    require("neodev").setup({})
-
     require("mason").setup({
         install_root_dir = require("cool.utils").download_dir .. "/mason",
         pip = { upgrade_pip = true },
@@ -63,7 +59,6 @@ end
 return {
     {
         "mason-org/mason.nvim",
-        dependencies = { "folke/neodev.nvim" },
         config = mason_config,
     },
     {
@@ -74,7 +69,6 @@ return {
         },
         opts = {},
     },
-    { "folke/neodev.nvim" },
     {
         "neovim/nvim-lspconfig",
         dependencies = { "saghen/blink.cmp" },

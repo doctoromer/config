@@ -155,7 +155,6 @@ return {
     { "nanozuki/tabby.nvim", config = tabby_config },
     { "nvimdev/dashboard-nvim", config = dashboard_config },
     { "lewis6991/gitsigns.nvim", dependencies = "nvim-lua/plenary.nvim", config = true, event = "VeryLazy", keys = "no_lazy" },
-    { "machakann/vim-highlightedyank", event = "TextYankPost" },
     { "asiryk/auto-hlsearch.nvim", config = true, keys = { "/", "?", "*", "#" } },
     { "ntpeters/vim-better-whitespace", config = better_whitespace_config },
     { "lukas-reineke/indent-blankline.nvim", config = indent_blankline_config, event = "VeryLazy" },

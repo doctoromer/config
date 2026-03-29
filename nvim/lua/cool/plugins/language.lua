@@ -11,6 +11,13 @@ vim.g.rustaceanvim = {
         on_attach = function(client, _)
             client.server_capabilities.semanticTokensProvider = nil
         end,
+        -- default_settings = {
+        --     ["rust-analyzer"] = {
+        --         procMacro = {
+        --             enable = false
+        --         }
+        --     }
+        -- }
     },
 }
 

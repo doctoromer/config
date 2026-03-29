@@ -45,11 +45,11 @@
             "nvim-linux-x86_64.appimage": "usr/bin/nvim"
         }
     },
-    "diff-so-fancy": {
-        "repo": "so-fancy/diff-so-fancy",
-        "asset_regex": "diff-so-fancy",
+    "delta": {
+        "repo": "dandavison/delta",
+        "asset_regex": "delta-.*-x86_64-unknown-linux-gnu\\.tar\\.gz",
         "file_map": {
-            "diff-so-fancy": "usr/bin/diff-so-fancy"
+            "[^/]*/delta": "usr/bin/delta"
         }
     },
     "bat": {

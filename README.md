@@ -78,7 +78,7 @@ Like the `install` command, it can use the `-p` switch for partial install.
 The ubuntu install script is used for automated installation in ubuntu systems,
 It does the following actions:
 * Install some package:
-	* silversearcher-ag - better grep, for convenience
+	* rg - better faster grep
 	* zsh - The shell. Configured by the install.py script
 	* git - You need it
 	* pip3 - Used to install dploy

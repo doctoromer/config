@@ -22,7 +22,6 @@ def check_import(import_name):
 
 
 FEATURES = {
-    "ag": (check_commands, "ag"),
     "zsh": (check_commands, "zsh"),
     "git": (check_commands, "git"),
     "unzip": (check_commands, "unzip"),

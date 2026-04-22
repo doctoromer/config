@@ -4,6 +4,3 @@
 [submodule "dracula"]
 	path = misc/dracula
 	url = https://github.com/dracula/tmux
-[submodule "coolvim"]
-	path = nvim
-	url = https://gitlab.com/OmerSarig/coolvim.git

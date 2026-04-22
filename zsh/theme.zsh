@@ -33,23 +33,15 @@ zstyle ':vcs_info:*' enable git
 
 # check-for-changes can be really slow.
 # you should disable it, if you work with large repositories
-zstyle ':vcs_info:*:prompt:*' check-for-changes true
-
 # set formats
 # %b - branchname
-# %u - unstagedstr (see below)
-# %c - stagedstr (see below)
 # %a - action (e.g. rebase-i)
 # %R - repository path
 # %S - path in the repository
 PR_RST="%f"
-FMT_BRANCH="(%{$turquoise%}%b %u%c${PR_RST})"
+FMT_BRANCH="(%{$turquoise%}%b${PR_RST})"
 FMT_ACTION="(%{$limegreen%}%a${PR_RST})"
-FMT_UNSTAGED="%F{yellow}*"
-FMT_STAGED="%{$limegreen%}+"
 
-zstyle ':vcs_info:*:prompt:*' unstagedstr   "${FMT_UNSTAGED}"
-zstyle ':vcs_info:*:prompt:*' stagedstr     "${FMT_STAGED}"
 zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}"
 zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
 zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
@@ -73,12 +65,22 @@ add-zsh-hook chpwd kyoshi_chpwd
 
 function kyoshi_precmd {
     if [[ -n "$PR_GIT_UPDATE" ]] ; then
-        # check for untracked files or updated submodules, since vcs_info doesn't
+        local markers=""
+
+        if ! git diff --quiet 2> /dev/null; then
+            markers="${markers}%F{yellow}*"
+        fi
+        if ! git diff --cached --quiet 2> /dev/null; then
+            markers="${markers}%{$limegreen%}+"
+        fi
         if git ls-files --other --exclude-standard 2> /dev/null | grep -q "."; then
-            PR_GIT_UPDATE=1
-            FMT_BRANCH="(%{$turquoise%}%b %u%c%{$hotpink%}?${PR_RST})"
+            markers="${markers}%{$hotpink%}?"
+        fi
+
+        if [[ -n "$markers" ]]; then
+            FMT_BRANCH="(%{$turquoise%}%b ${markers}${PR_RST})"
         else
-            FMT_BRANCH="(%{$turquoise%}%b %u%c${PR_RST})"
+            FMT_BRANCH="(%{$turquoise%}%b${PR_RST})"
         fi
 
         # This sets the $vcs_info_msg_0_ part of the PROMPT

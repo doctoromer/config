@@ -1,4 +1,5 @@
 use std::path::PathBuf;
+use std::process::Command;
 
 use argh::FromArgs;
 use tracing::Level;
@@ -48,11 +49,24 @@ fn check_prerequisites() -> Result<(), Vec<&'static str>> {
     }
 }
 
+fn download_submodules() {
+    tracing::info!("Downloading submodules");
+    let status = Command::new("git")
+        .args(["submodule", "update", "--init"])
+        .status()
+        .expect("Failed to run git");
+    if !status.success() {
+        tracing::error!("git submodule update --init failed");
+    }
+}
+
 fn download(_root_dir: &PathBuf) {
     if let Err(missing) = check_prerequisites() {
         tracing::error!("Please install the following commands: {}", missing.join(", "));
         return;
     }
+
+    download_submodules();
 }
 
 fn main() {

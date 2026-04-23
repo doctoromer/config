@@ -5,6 +5,8 @@ use argh::FromArgs;
 use tracing::Level;
 use tracing_subscriber::EnvFilter;
 
+const BINARIES_DIR: &str = "binaries";
+
 #[derive(FromArgs)]
 #[argh(subcommand)]
 enum Commands {
@@ -65,14 +67,32 @@ fn download_binaries() {
     todo!();
 }
 
-fn download(_root_dir: &PathBuf) {
+fn download_vim_plugins(root_dir: &PathBuf) {
+    tracing::info!("Downloading vim plugins");
+    let nvim_path = root_dir.join(BINARIES_DIR).join("usr/bin/nvim");
+    let status = Command::new(nvim_path)
+        .args(["--appimage-extract-and-run", "--headless"])
+        .env("DOWNLOAD_MODE", "true")
+        .env("XDG_CONFIG_HOME", root_dir)
+        .status()
+        .expect("Failed to run nvim");
+    if !status.success() {
+        tracing::error!("nvim --headless failed");
+    }
+}
+
+fn download(root_dir: &PathBuf) {
     if let Err(missing) = check_prerequisites() {
-        tracing::error!("Please install the following commands: {}", missing.join(", "));
+        tracing::error!(
+            "Please install the following commands: {}",
+            missing.join(", ")
+        );
         return;
     }
 
     download_submodules();
     download_binaries();
+    download_vim_plugins(root_dir);
 }
 
 fn main() {

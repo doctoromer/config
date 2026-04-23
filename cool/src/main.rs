@@ -6,6 +6,7 @@ use tracing::Level;
 use tracing_subscriber::EnvFilter;
 
 const BINARIES_DIR: &str = "binaries";
+const ZSH_DIR: &str = "zsh";
 
 #[derive(FromArgs)]
 #[argh(subcommand)]
@@ -81,6 +82,21 @@ fn download_vim_plugins(root_dir: &PathBuf) {
     }
 }
 
+fn update_zsh_plugins(root_dir: &PathBuf) {
+    tracing::info!("Updating zsh plugins");
+    let plugins_path = root_dir.join(ZSH_DIR).join("plugins.zsh");
+    let status = Command::new("zsh")
+        .arg("-c")
+        .arg(format!("source {}", plugins_path.display()))
+        .arg("-c")
+        .arg("zcomet update")
+        .status()
+        .expect("Failed to run zsh");
+    if !status.success() {
+        tracing::error!("zcomet update failed");
+    }
+}
+
 fn download(root_dir: &PathBuf) {
     if let Err(missing) = check_prerequisites() {
         tracing::error!(
@@ -93,6 +109,7 @@ fn download(root_dir: &PathBuf) {
     download_submodules();
     download_binaries();
     download_vim_plugins(root_dir);
+    update_zsh_plugins(root_dir);
 }
 
 fn main() {

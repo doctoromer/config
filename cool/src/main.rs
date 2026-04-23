@@ -35,8 +35,24 @@ fn configure_logger(verbose: bool) {
         .init();
 }
 
+fn check_prerequisites() -> Result<(), Vec<&'static str>> {
+    let required = ["git", "zsh"];
+    let missing: Vec<_> = required
+        .into_iter()
+        .filter(|cmd| which::which(cmd).is_err())
+        .collect();
+    if missing.is_empty() {
+        Ok(())
+    } else {
+        Err(missing)
+    }
+}
+
 fn download(_root_dir: &PathBuf) {
-    todo!("Download command not yet implemented");
+    if let Err(missing) = check_prerequisites() {
+        tracing::error!("Please install the following commands: {}", missing.join(", "));
+        return;
+    }
 }
 
 fn main() {

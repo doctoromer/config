@@ -97,6 +97,22 @@ fn update_zsh_plugins(root_dir: &PathBuf) {
     }
 }
 
+fn fix_permissions(root_dir: &PathBuf) {
+    if let Some(real_user) = std::env::var_os("SUDO_USER") {
+        let nvim_share = PathBuf::from(format!("/home/{}/.local/share/nvim", real_user.to_string_lossy()));
+        let status = Command::new("chown")
+            .args(["-f", "-R"])
+            .arg(&real_user)
+            .arg(root_dir)
+            .arg(nvim_share)
+            .status()
+            .expect("Failed to run chown");
+        if !status.success() {
+            tracing::error!("chown failed");
+        }
+    }
+}
+
 fn download(root_dir: &PathBuf) {
     if let Err(missing) = check_prerequisites() {
         tracing::error!(
@@ -110,6 +126,7 @@ fn download(root_dir: &PathBuf) {
     download_binaries();
     download_vim_plugins(root_dir);
     update_zsh_plugins(root_dir);
+    fix_permissions(root_dir);
 }
 
 fn main() {

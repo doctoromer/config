@@ -60,6 +60,11 @@ fn download_submodules() {
     }
 }
 
+fn download_binaries() {
+    tracing::info!("Downloading binaries");
+    todo!();
+}
+
 fn download(_root_dir: &PathBuf) {
     if let Err(missing) = check_prerequisites() {
         tracing::error!("Please install the following commands: {}", missing.join(", "));
@@ -67,6 +72,7 @@ fn download(_root_dir: &PathBuf) {
     }
 
     download_submodules();
+    download_binaries();
 }
 
 fn main() {

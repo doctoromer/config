@@ -14,8 +14,6 @@ M["legendary.nvim"] = function()
 end
 
 M["lspsaga.nvim"] = function()
-    local saga_diagnostic = require("lspsaga.diagnostic")
-
     return {
         {
             itemgroup = "Language",
@@ -37,14 +35,32 @@ M["lspsaga.nvim"] = function()
                 {
                     "]d",
                     function()
-                        saga_diagnostic:goto_next()
+                        vim.diagnostic.jump({
+                            count = 1,
+                            on_jump = function(diagnostic)
+                                if diagnostic then
+                                    vim.schedule(function()
+                                        vim.cmd(":Lspsaga code_action")
+                                    end)
+                                end
+                            end,
+                        })
                     end,
                     description = "Goto previous diagnostic",
                 },
                 {
                     "[d",
                     function()
-                        saga_diagnostic:goto_prev()
+                        vim.diagnostic.jump({
+                            count = -1,
+                            on_jump = function(diagnostic)
+                                if diagnostic then
+                                    vim.schedule(function()
+                                        vim.cmd(":Lspsaga code_action")
+                                    end)
+                                end
+                            end,
+                        })
                     end,
                     description = "Goto next diagnostic",
                 },

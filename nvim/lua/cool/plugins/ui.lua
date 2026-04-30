@@ -63,7 +63,7 @@ local function tabby_config()
     -- Renders one tab label from tabby's tab object
     local function tab_render(tab)
         local hl = tab.is_current() and mode_theme[vim.fn.mode()] or inactive_theme
-        local modified = vim.api.nvim_get_option_value("modified", {buf = tab.current_win().buf().id}) and " +" or ""
+        local modified = vim.api.nvim_get_option_value("modified", { buf = tab.current_win().buf().id }) and " +" or ""
         return {
             " ",
             tab.name(),
@@ -137,13 +137,11 @@ local function better_whitespace_config()
 end
 
 local function indent_blankline_config()
-    require("ibl").setup(
-        {
-            indent = { char = full_char_seperator },
-            exclude = { filetypes = { "dashboard", "help" }},
-            scope = { enabled = false, show_start = false },
-        }
-    )
+    require("ibl").setup({
+        indent = { char = full_char_seperator },
+        exclude = { filetypes = { "dashboard", "help" } },
+        scope = { enabled = false, show_start = false },
+    })
     local hooks = require("ibl.hooks")
     hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
 end
@@ -154,7 +152,13 @@ return {
     { "j-hui/fidget.nvim", config = true },
     { "nanozuki/tabby.nvim", config = tabby_config },
     { "nvimdev/dashboard-nvim", config = dashboard_config },
-    { "lewis6991/gitsigns.nvim", dependencies = "nvim-lua/plenary.nvim", config = true, event = "VeryLazy", keys = "no_lazy" },
+    {
+        "lewis6991/gitsigns.nvim",
+        dependencies = "nvim-lua/plenary.nvim",
+        config = true,
+        event = "VeryLazy",
+        keys = "no_lazy",
+    },
     { "asiryk/auto-hlsearch.nvim", config = true, keys = { "/", "?", "*", "#" } },
     { "ntpeters/vim-better-whitespace", config = better_whitespace_config },
     { "lukas-reineke/indent-blankline.nvim", config = indent_blankline_config, event = "VeryLazy" },

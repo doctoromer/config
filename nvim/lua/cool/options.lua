@@ -95,15 +95,14 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     callback = function()
         vim.bo.commentstring = "// %s"
         vim.bo.ft = "systemverilog"
-    end
+    end,
 })
 
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
     callback = function()
-        vim.hl.on_yank({ higroup = 'IncSearch', timeout = 500 })
-    end
+        vim.hl.on_yank({ higroup = "IncSearch", timeout = 500 })
+    end,
 })
-
 
 vim.diagnostic.config({
     virtual_text = true,

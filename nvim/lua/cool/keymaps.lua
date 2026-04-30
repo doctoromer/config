@@ -98,7 +98,7 @@ end
 
 M["nvim-treesitter-context"] = function()
     return {
-        { "<leader>c", ":TSContextToggle<CR>" }
+        { "<leader>c", ":TSContextToggle<CR>" },
     }
 end
 
@@ -294,37 +294,51 @@ M["hop.nvim"] = function()
                 { "<space>w", ":HopWordAC<CR>" },
                 {
                     "<space>W",
-                    function() hop.hint_patterns({ direction = direction.AFTER_CURSOR }, '\\S\\+') end,
+                    function()
+                        hop.hint_patterns({ direction = direction.AFTER_CURSOR }, "\\S\\+")
+                    end,
                 },
                 {
                     "<space>E",
-                    function() hop.hint_patterns({ direction = direction.AFTER_CURSOR }, '\\S\\s') end,
+                    function()
+                        hop.hint_patterns({ direction = direction.AFTER_CURSOR }, "\\S\\s")
+                    end,
                 },
                 { "<space>b", ":HopWordBC<CR>" },
                 {
                     "<space>B",
-                    function() hop.hint_patterns({ direction = direction.BEFORE_CURSOR }, '\\S\\+') end,
+                    function()
+                        hop.hint_patterns({ direction = direction.BEFORE_CURSOR }, "\\S\\+")
+                    end,
                 },
                 { "<space>j", ":HopLineStartAC<CR>" },
                 { "<space>k", ":HopLineStartBC<CR>" },
                 {
                     "<space>f",
-                    function() hop.hint_char1({ direction = direction.AFTER_CURSOR }) end,
+                    function()
+                        hop.hint_char1({ direction = direction.AFTER_CURSOR })
+                    end,
                 },
                 {
                     "<space>F",
-                    function() hop.hint_char1({ direction = direction.BEFORE_CURSOR }) end,
+                    function()
+                        hop.hint_char1({ direction = direction.BEFORE_CURSOR })
+                    end,
                 },
                 {
                     "<space>t",
-                    function() hop.hint_char1({ direction = direction.AFTER_CURSOR, hint_offset = -1 }) end,
+                    function()
+                        hop.hint_char1({ direction = direction.AFTER_CURSOR, hint_offset = -1 })
+                    end,
                 },
                 {
                     "<space>T",
-                    function() hop.hint_char1({ direction = direction.BEFORE_CURSOR, hint_offset = 1 }) end,
+                    function()
+                        hop.hint_char1({ direction = direction.BEFORE_CURSOR, hint_offset = 1 })
+                    end,
                 },
-            }
-        }
+            },
+        },
     }
 end
 
@@ -363,8 +377,8 @@ M["rustaceanvim"] = function()
                 { "<leader>ex", "<cmd>RustLsp expandMacro<cr>", description = "Expand macro" },
                 { "<leader>ee", "<cmd>RustLsp explainError<cr>", description = "Explain Error" },
                 { "<leader>ed", "<cmd>RustLsp externalDocs<cr>", description = "Explain Error" },
-            }
-        }
+            },
+        },
     }
 end
 
@@ -442,7 +456,7 @@ M["other_keymaps"] = function()
 
                 { "[<space>", insert_spaces(true), description = "Add new lines before current line" },
                 { "]<space>", insert_spaces(false), description = "Add new lines after current line" },
-                {"<leader>-", "<cmd>ToggleWhitespace<CR>", description = "Show/Hide whitespaces at the end of lines" },
+                { "<leader>-", "<cmd>ToggleWhitespace<CR>", description = "Show/Hide whitespaces at the end of lines" },
             },
         },
         {

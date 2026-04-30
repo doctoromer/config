@@ -103,16 +103,13 @@ local function create_legendary_menus()
         end
     end
 
-    vim.api.nvim_create_autocmd(
-        "User",
-        {
-            pattern = "LazyDone",
-            callback = function()
-                require("legendary").keymaps(result)
-            end,
-            once = true,
-        }
-    )
+    vim.api.nvim_create_autocmd("User", {
+        pattern = "LazyDone",
+        callback = function()
+            require("legendary").keymaps(result)
+        end,
+        once = true,
+    })
 end
 
 function M.setup(opts)
@@ -120,7 +117,6 @@ function M.setup(opts)
     M.keymaps_with_dummy = {}
 
     for plugin_name, keymap_function in pairs(M.keymaps_functions) do
-
         -- Run a function while temporarily replacing the require function with dummy function that does nothing.
         -- This is useful to use the keymaps without load the plugins themselves, because it cannot be done while
         -- before calling require("lazy").setup.
@@ -136,4 +132,3 @@ function M.setup(opts)
 end
 
 return M
-

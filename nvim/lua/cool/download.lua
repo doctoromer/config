@@ -3,6 +3,27 @@ M = {}
 local levels = vim.log.levels
 local is_path_exists = require("cool.utils").is_path_exists
 
+local treesitter_parsers = {
+    "c",
+    "cpp",
+    "cmake",
+    "python",
+    "bash",
+    "html",
+    "java",
+    "json",
+    "lua",
+    "vue",
+    "vim",
+    "regex",
+    "toml",
+    "vimdoc",
+    "rust",
+    -- used also for lspsaga hover feature
+    "markdown",
+    "markdown_inline",
+}
+
 local function bootstrap_lazy_nvim(lazy_path)
     if is_path_exists(lazy_path) then
         vim.notify("Lazy plugin manager already exists, not downloading", levels.INFO)
@@ -30,26 +51,9 @@ local function bootstrap_lazy_nvim(lazy_path)
 end
 
 local function download_treesitter_parsers()
-    vim.cmd.TSUpdateSync({
-        "c",
-        "cpp",
-        "cmake",
-        "python",
-        "bash",
-        "html",
-        "java",
-        "json",
-        "lua",
-        "vue",
-        "vim",
-        "regex",
-        "toml",
-        "vimdoc",
-        "rust",
-        -- used also for lspsaga hover feature
-        "markdown",
-        "markdown_inline",
-    })
+    require("lazy").load({ plugins = { "nvim-treesitter" } })
+    local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
+    ts_update(treesitter_parsers)
 end
 
 local function download_plugins()

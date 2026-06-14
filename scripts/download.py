@@ -155,7 +155,25 @@ def download_sym():
     if not sym_path.exists():
         response = request.urlopen("https://gitlab.com/api/v4/projects/OmerSarig%2Fsym/releases")
         releases = json.load(response)
-        sym_url = releases[0]["assets"]["links"][0]["url"]
+        sym_releases = []
+        for release in releases:
+            match = re.fullmatch(r"sym-v(\d+(?:\.\d+)*)", release["tag_name"])
+            if match is not None:
+                version = tuple(int(part) for part in match.group(1).split("."))
+                sym_releases.append((version, release))
+        if not sym_releases:
+            raise ValueError("No sym release found")
+
+        latest_sym_release = max(sym_releases, key=lambda item: item[0])[1]
+        sym_url = None
+        for link in latest_sym_release["assets"]["links"]:
+            if link["name"] == "sym":
+                sym_url = link["url"]
+                break
+
+        if sym_url is None:
+            raise ValueError("No sym release asset found")
+
         sym_data = request.urlopen(sym_url).read()
         ensure_dirs(sym_path)
         with sym_path.open("wb") as sym_file:

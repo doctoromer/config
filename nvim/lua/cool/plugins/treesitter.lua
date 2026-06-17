@@ -2,24 +2,35 @@ local function treesitter_config()
     local parsers_dir = require("cool.utils").download_dir
     vim.opt.runtimepath:prepend(parsers_dir)
 
-    require("nvim-treesitter.configs").setup({
-        auto_install = false,
-        highlight = { enable = true },
-        parser_install_dir = parsers_dir,
-        indent = true,
-        incremental_selection = {
-            enable = true,
-            keymaps = {
-                init_selection = "<C-n>",
-                node_incremental = "<C-n>",
-                scope_incremental = "<C-s>",
-                node_decremental = "<C-r>",
-            },
-        },
+    require("nvim-treesitter.config").setup({
+        install_dir = parsers_dir,
     })
 
     vim.wo.foldmethod = "expr"
     vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+end
+
+local function textobjects_setup()
+    local select = require("nvim-treesitter-textobjects.select")
+    local mode = { "x", "o" }
+    vim.keymap.set(mode, "af", function()
+        select.select_textobject("@function.outer", "textobjects")
+    end)
+    vim.keymap.set(mode, "if", function()
+        select.select_textobject("@function.inner", "textobjects")
+    end)
+    vim.keymap.set(mode, "ac", function()
+        select.select_textobject("@class.outer", "textobjects")
+    end)
+    vim.keymap.set(mode, "ic", function()
+        select.select_textobject("@class.inner", "textobjects")
+    end)
+    vim.keymap.set(mode, "al", function()
+        select.select_textobject("@loop.outer", "textobjects")
+    end)
+    vim.keymap.set(mode, "il", function()
+        select.select_textobject("@loop.inner", "textobjects")
+    end)
 end
 
 return {
@@ -29,7 +40,7 @@ return {
             local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
             ts_update()
         end,
-        branch = "master",
+        branch = "main",
         config = treesitter_config,
     },
     {
@@ -40,24 +51,17 @@ return {
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
         dependencies = "nvim-treesitter/nvim-treesitter",
-        event = "VeryLazy",
-        main = "nvim-treesitter.configs",
+        main = "nvim-treesitter-textobjects",
         opts = {
-            textobjects = {
-                select = {
-                    enable = true,
-                    lookahead = true,
-                    keymaps = {
-                        af = "@function.outer",
-                        ["if"] = "@function.inner",
-                        ac = "@class.outer",
-                        ic = "@class.inner",
-                        il = "@loop.inner",
-                        al = "@loop.outer",
-                    },
-                },
+            select = {
+                enable = true,
+                lookahead = true,
             },
         },
+        config = function(_, opts)
+            require("nvim-treesitter-textobjects").setup(opts)
+            textobjects_setup()
+        end,
     },
     { "HiPhish/rainbow-delimiters.nvim" },
     {
@@ -69,12 +73,7 @@ return {
     { "David-Kunz/treesitter-unit" },
     {
         "RRethy/nvim-treesitter-endwise",
-        dependencies = "nvim-treesitter/nvim-treesitter",
         ft = { "python", "lua", "sh", "bash" },
-        main = "nvim-treesitter.configs",
-        opts = {
-            endwise = { enable = true },
-        },
     },
     {
         "danymat/neogen",

@@ -6,6 +6,7 @@ alias clean='sudo apt -y autoclean'
 alias autorm='sudo apt -y autoremove'
 alias maintain='update && depend && upgrade && clean && autorm'
 
+alias g=git
 alias cat=bat
 alias ls=eza
 alias la='eza -a'

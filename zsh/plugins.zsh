@@ -16,9 +16,21 @@ zcomet load zsh-users/zsh-history-substring-search
 
 export HISTORY_SUBSTRING_SEARCH_PREFIXED=true
 
-# $terminfo doesn't work for some reason for up and down keys
-bindkey "^[[A" history-substring-search-up
-bindkey "^[[B" history-substring-search-down
+zmodload zsh/terminfo
+
+history_keymaps=(emacs viins vicmd)
+history_up_keys=("${terminfo[kcuu1]}" "^[[A" "^[OA")
+history_down_keys=("${terminfo[kcud1]}" "^[[B" "^[OB")
+
+for keymap in $history_keymaps; do
+    bindkey -M "$keymap" >/dev/null 2>&1 || continue
+    for key in $history_up_keys; do
+        [[ -n "$key" ]] && bindkey -M "$keymap" "$key" history-substring-search-up
+    done
+    for key in $history_down_keys; do
+        [[ -n "$key" ]] && bindkey -M "$keymap" "$key" history-substring-search-down
+    done
+done
 
 if [[ "$CONFIG_ZSH_VI_MODE" = true ]]; then
     export EDITOR="vim"

@@ -1,9 +1,17 @@
 local function treesitter_config()
     local parsers_dir = require("cool.utils").download_dir
+    local queries_dir = require("nvim-treesitter.install").get_package_path("runtime")
     vim.opt.runtimepath:prepend(parsers_dir)
+    vim.opt.runtimepath:prepend(queries_dir)
 
     require("nvim-treesitter.config").setup({
         install_dir = parsers_dir,
+    })
+
+    vim.api.nvim_create_autocmd("FileType", {
+        callback = function()
+            pcall(vim.treesitter.start)
+        end,
     })
 
     vim.wo.foldmethod = "expr"

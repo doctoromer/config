@@ -33,8 +33,6 @@
 	followTags = true
 	default = current
 	autoSetupRemote = true
-[submodule]
-	recurse = true
 [diff]
 	ignoreSubmodules = dirty
 [pull]

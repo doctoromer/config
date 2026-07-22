@@ -33,13 +33,20 @@ export FZF_DEFAULT_COMMAND='ag -l --nocolor --nogroup --hidden -g "" --ignore ".
 
 global_dir=/usr/local/share/zsh/site-functions
 local_dir=~/.local/zsh/site-functions
-if [ -d "$global_dir" ]; then
-    source $global_dir/fzf-completion.zsh
-    source $global_dir/fzf-key-bindings.zsh
-elif [ -d "$local_dir" ]; then
-    source $local_dir/fzf-completion.zsh
-    source $local_dir/fzf-key-bindings.zsh
-fi
+
+fn source_file() {
+    file_name=$1
+    global_path=$global_dir/$file_name
+    local_path=$local_dir/$file_name
+    if [ -f "$global_path" ]; then
+        source $global_path
+    elif [ -f "$local_path" ]; then
+        source $local_path
+    fi
+}
+
+source_file fzf-completion.zsh
+source_file fzf-key-bindings.zsh
 
 export PATH=$PATH:~/.local/bin
 export MANPATH=:~/.local/man

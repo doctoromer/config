@@ -52,8 +52,7 @@ end
 
 local function download_treesitter_parsers()
     require("lazy").load({ plugins = { "nvim-treesitter" } })
-    local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
-    ts_update(treesitter_parsers)
+    require("nvim-treesitter").install(treesitter_parsers):wait(300000)
 end
 
 local function download_plugins()

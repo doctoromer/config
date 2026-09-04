@@ -1,3 +1,5 @@
+use std::path::Path;
+use anyhow::{Context, Result};
 use std::path::PathBuf;
 use std::process::Command;
 
@@ -28,8 +30,12 @@ struct Cli {
     command: Commands,
 }
 
-fn root_dir() -> PathBuf {
-    std::env::current_dir().expect("Failed to determine current directory")
+fn root_dir() -> Result<PathBuf> {
+    Ok(gix::discover(".")?
+        .path()
+        .parent()
+        .context("No parent available")?
+        .to_owned())
 }
 
 fn configure_logger(verbose: bool) {
@@ -65,12 +71,13 @@ fn download_submodules() {
 
 fn download_binaries() {
     tracing::info!("Downloading binaries");
-    todo!();
+    // todo!();
 }
 
 fn download_vim_plugins(root_dir: &PathBuf) {
     tracing::info!("Downloading vim plugins");
     let nvim_path = root_dir.join(BINARIES_DIR).join("usr/bin/nvim");
+    println!("nvim: {}", nvim_path.display());
     let status = Command::new(nvim_path)
         .args(["--appimage-extract-and-run", "--headless"])
         .env("DOWNLOAD_MODE", "true")
@@ -82,7 +89,7 @@ fn download_vim_plugins(root_dir: &PathBuf) {
     }
 }
 
-fn update_zsh_plugins(root_dir: &PathBuf) {
+fn update_zsh_plugins(root_dir: &Path) {
     tracing::info!("Updating zsh plugins");
     let plugins_path = root_dir.join(ZSH_DIR).join("plugins.zsh");
     let status = Command::new("zsh")
@@ -99,7 +106,10 @@ fn update_zsh_plugins(root_dir: &PathBuf) {
 
 fn fix_permissions(root_dir: &PathBuf) {
     if let Some(real_user) = std::env::var_os("SUDO_USER") {
-        let nvim_share = PathBuf::from(format!("/home/{}/.local/share/nvim", real_user.to_string_lossy()));
+        let nvim_share = PathBuf::from(format!(
+            "/home/{}/.local/share/nvim",
+            real_user.to_string_lossy()
+        ));
         let status = Command::new("chown")
             .args(["-f", "-R"])
             .arg(&real_user)
@@ -113,13 +123,13 @@ fn fix_permissions(root_dir: &PathBuf) {
     }
 }
 
-fn download(root_dir: &PathBuf) {
+fn download(root_dir: &PathBuf) -> Result<()> {
     if let Err(missing) = check_prerequisites() {
         tracing::error!(
             "Please install the following commands: {}",
             missing.join(", ")
         );
-        return;
+        return Ok(());
     }
 
     download_submodules();
@@ -127,12 +137,14 @@ fn download(root_dir: &PathBuf) {
     download_vim_plugins(root_dir);
     update_zsh_plugins(root_dir);
     fix_permissions(root_dir);
+    Ok(())
 }
 
-fn main() {
+fn main() -> Result<()> {
     let cli: Cli = argh::from_env();
     configure_logger(cli.verbose);
-    let root_dir = root_dir();
+    let root_dir = root_dir()?;
+    tracing::info!("Running from: {}", root_dir.display());
 
     match cli.command {
         Commands::Download(_) => download(&root_dir),

@@ -9,16 +9,51 @@ use tracing_subscriber::EnvFilter;
 
 const BINARIES_DIR: &str = "binaries";
 const ZSH_DIR: &str = "zsh";
+const PACKAGES: [&str; 4] = ["misc", "nvim", "zsh", "binaries"];
 
 #[derive(FromArgs)]
 #[argh(subcommand)]
 enum Commands {
     Download(DownloadArgs),
+    Install(InstallArgs),
+    Remove(RemoveArgs),
 }
 
 #[derive(FromArgs)]
 #[argh(subcommand, name = "download", description = "download dependencies")]
 struct DownloadArgs {}
+
+#[derive(FromArgs)]
+#[argh(
+    subcommand,
+    name = "install",
+    description = "install the configuration"
+)]
+struct InstallArgs {
+    #[argh(option, short = 'p', description = "comma-separated packages")]
+    packages: Option<String>,
+
+    #[argh(
+        option,
+        default = "String::from(\"system\")",
+        description = "linkmap profile"
+    )]
+    profile: String,
+}
+
+#[derive(FromArgs)]
+#[argh(subcommand, name = "remove", description = "remove the configuration")]
+struct RemoveArgs {
+    #[argh(option, short = 'p', description = "comma-separated packages")]
+    packages: Option<String>,
+
+    #[argh(
+        option,
+        default = "String::from(\"system\")",
+        description = "linkmap profile"
+    )]
+    profile: String,
+}
 
 #[derive(FromArgs)]
 #[argh(description = "cool config manager")]
@@ -166,6 +201,82 @@ fn download(root_dir: &PathBuf) -> Result<()> {
     Ok(())
 }
 
+fn package_regex(packages: Option<&str>) -> Result<Option<String>> {
+    let Some(packages) = packages else {
+        return Ok(None);
+    };
+    let packages: Vec<_> = packages.split(',').collect();
+    if packages.is_empty() || packages.iter().any(|package| !PACKAGES.contains(package)) {
+        bail!("Invalid packages: {}", packages.join(","));
+    }
+    Ok(Some(packages.join("|")))
+}
+
+fn validate_profile(profile: &str) -> Result<()> {
+    if matches!(profile, "local" | "system") {
+        Ok(())
+    } else {
+        bail!("Invalid profile: {profile}")
+    }
+}
+
+fn run(command: &mut Command) -> Result<()> {
+    let description = format!("{command:?}");
+    let status = command
+        .status()
+        .with_context(|| format!("Failed to execute {description}"))?;
+    if status.success() {
+        Ok(())
+    } else {
+        bail!("{description} exited with {status}")
+    }
+}
+
+fn configure_links(
+    root_dir: &Path,
+    action: &str,
+    packages: Option<&str>,
+    profile: &str,
+) -> Result<()> {
+    validate_profile(profile)?;
+    let mut command = Command::new(root_dir.join(BINARIES_DIR).join("usr/bin/sym"));
+    command
+        .current_dir(root_dir)
+        .arg(action)
+        .arg("--linkmap")
+        .arg(root_dir.join("linkmap.toml"))
+        .arg("--profile")
+        .arg(profile)
+        .env("RUST_BACKTRACE", "1");
+    if let Some(regex) = package_regex(packages)? {
+        command.arg("--regex").arg(regex);
+    }
+    run(&mut command)
+}
+
+fn install(root_dir: &Path, args: InstallArgs) -> Result<()> {
+    configure_links(root_dir, "link", args.packages.as_deref(), &args.profile)?;
+    if args.profile == "local" {
+        run(Command::new("git").args([
+            "config",
+            "--global",
+            "include.path",
+            "~/.config/gitconfig",
+        ]))?;
+    }
+    Ok(())
+}
+
+fn remove(root_dir: &Path, args: RemoveArgs) -> Result<()> {
+    configure_links(root_dir, "unlink", args.packages.as_deref(), &args.profile)?;
+    if args.profile == "local" {
+        let _ = Command::new("git")
+            .args(["config", "--global", "--unset", "include.path"])
+            .status();
+    }
+    Ok(())
+}
+
 fn main() -> Result<()> {
     let cli: Cli = argh::from_env();
     configure_logger(cli.verbose);
@@ -174,6 +285,8 @@ fn main() -> Result<()> {
 
     match cli.command {
         Commands::Download(_) => download(&root_dir),
+        Commands::Install(args) => install(&root_dir, args),
+        Commands::Remove(args) => remove(&root_dir, args),
     }
 }
 
@@ -194,5 +307,14 @@ mod tests {
         assert_eq!(find_root(&descendant), Some(root.clone()));
 
         fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn builds_package_regex() {
+        assert_eq!(
+            package_regex(Some("nvim,misc")).unwrap(),
+            Some("nvim|misc".to_owned())
+        );
+        assert!(package_regex(Some("unknown")).is_err());
     }
 }

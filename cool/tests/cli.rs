@@ -1,10 +1,11 @@
 use std::fs;
-use std::os::unix::fs::PermissionsExt;
+use std::os::unix::fs::{PermissionsExt, symlink};
 use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::sync::atomic::{AtomicU64, Ordering};
 
 static NEXT_TEMP_DIR: AtomicU64 = AtomicU64::new(0);
+const SYM_SCRIPT: &str = "#!/bin/sh\n[ \"$2\" = --linkmap ] && [ \"$4\" = --profile ] && [ \"$5\" = local ] || exit 2\ncase $1 in\nlink) ln -s \"$SYM_SOURCE\" \"$SYM_TARGET\";;\nunlink) rm \"$SYM_TARGET\";;\n*) exit 2;;\nesac\n";
 
 struct TempDir(PathBuf);
 
@@ -62,23 +63,30 @@ fn cool_command(
 fn installs_and_removes_from_extracted_bundle() {
     let temp = TempDir::new();
     let bundle = temp.path().join("bundle");
+    let previous_bundle = temp.path().join("previous");
     let home = temp.path().join("home");
     let source = bundle.join("package");
+    let previous_source = previous_bundle.join("package");
     let target = home.join("installed");
     let work_dir = temp.path().join("work");
     fs::create_dir_all(&source).unwrap();
-    fs::create_dir_all(&home).unwrap();
+    fs::create_dir_all(&previous_source).unwrap();
+    fs::create_dir_all(home.join(".local/bin")).unwrap();
     fs::create_dir_all(&work_dir).unwrap();
     fs::write(bundle.join("binaries.json"), "{}").unwrap();
     fs::write(bundle.join("linkmap.toml"), "[local]\n").unwrap();
+    fs::write(previous_bundle.join("binaries.json"), "{}").unwrap();
+    fs::write(previous_bundle.join("linkmap.toml"), "[local]\n").unwrap();
     fs::write(source.join("config"), "content").unwrap();
+    fs::write(previous_source.join("config"), "old content").unwrap();
 
     let cool = bundle.join("bin/cool");
+    let previous_sym = previous_bundle.join("binaries/usr/bin/sym");
     copy_executable(env!("CARGO_BIN_EXE_cool"), &cool);
-    write_executable(
-        bundle.join("binaries/usr/bin/sym"),
-        "#!/bin/sh\n[ \"$2\" = --linkmap ] && [ \"$4\" = --profile ] && [ \"$5\" = local ] || exit 2\ncase $1 in\nlink) ln -s \"$SYM_SOURCE\" \"$SYM_TARGET\";;\nunlink) rm \"$SYM_TARGET\";;\n*) exit 2;;\nesac\n",
-    );
+    write_executable(bundle.join("binaries/usr/bin/sym"), SYM_SCRIPT);
+    write_executable(&previous_sym, SYM_SCRIPT);
+    symlink(previous_sym, home.join(".local/bin/sym")).unwrap();
+    symlink(&previous_source, &target).unwrap();
 
     let status = cool_command(&cool, &work_dir, &home, &source, &target)
         .args(["install", "--profile", "local"])

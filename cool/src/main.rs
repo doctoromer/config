@@ -160,7 +160,55 @@ fn configure_links(
     run(&mut command)
 }
 
+fn installed_syms(profile: &str) -> Result<Vec<PathBuf>> {
+    match profile {
+        "system" => Ok(vec![
+            PathBuf::from("/usr/bin/sym"),
+            PathBuf::from("/usr/local/bin/sym"),
+        ]),
+        "local" => Ok(vec![
+            PathBuf::from(std::env::var_os("HOME").context("HOME is not set")?)
+                .join(".local/bin/sym"),
+        ]),
+        _ => bail!("Invalid profile: {profile}"),
+    }
+}
+
+fn remove_previous_installation(
+    root_dir: &Path,
+    packages: Option<&str>,
+    profile: &str,
+) -> Result<()> {
+    let current_root = root_dir.canonicalize()?;
+    for installed_sym in installed_syms(profile)? {
+        let Ok(metadata) = std::fs::symlink_metadata(&installed_sym) else {
+            continue;
+        };
+        if !metadata.file_type().is_symlink() {
+            continue;
+        }
+
+        let previous_sym = installed_sym
+            .canonicalize()
+            .with_context(|| format!("Failed to resolve {}", installed_sym.display()))?;
+        let Some(previous_root) = find_root(&previous_sym) else {
+            continue;
+        };
+        if previous_root == current_root {
+            return Ok(());
+        }
+
+        tracing::info!(
+            "Removing previous installation from {}",
+            previous_root.display()
+        );
+        return configure_links(&previous_root, "unlink", packages, profile);
+    }
+    Ok(())
+}
+
 fn install(root_dir: &Path, args: InstallArgs) -> Result<()> {
+    remove_previous_installation(root_dir, args.packages.as_deref(), &args.profile)?;
     configure_links(root_dir, "link", args.packages.as_deref(), &args.profile)?;
     if args.profile == "local" {
         run(Command::new("git").args([

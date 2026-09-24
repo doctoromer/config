@@ -6,7 +6,7 @@ end
 
 local function get_nvim_config_dir()
     local config_dirs = vim.fn.stdpath("config_dirs")
-    table.insert(config_dirs, vim.fn.stdpath("config"))
+    table.insert(config_dirs, 1, vim.fn.stdpath("config"))
 
     for _, dir in ipairs(config_dirs) do
         if M.is_path_exists(dir .. "/lua/cool") then

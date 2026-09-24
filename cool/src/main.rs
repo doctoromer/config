@@ -7,8 +7,9 @@ use argh::FromArgs;
 use tracing::Level;
 use tracing_subscriber::EnvFilter;
 
+mod download;
+
 const BINARIES_DIR: &str = "binaries";
-const ZSH_DIR: &str = "zsh";
 const PACKAGES: [&str; 4] = ["misc", "nvim", "zsh", "binaries"];
 
 #[derive(FromArgs)]
@@ -106,101 +107,6 @@ fn configure_logger(verbose: bool) {
         .init();
 }
 
-fn check_prerequisites() -> Result<(), Vec<&'static str>> {
-    let required = ["git", "zsh"];
-    let missing: Vec<_> = required
-        .into_iter()
-        .filter(|cmd| which::which(cmd).is_err())
-        .collect();
-    if missing.is_empty() {
-        Ok(())
-    } else {
-        Err(missing)
-    }
-}
-
-fn download_submodules() {
-    tracing::info!("Downloading submodules");
-    let status = Command::new("git")
-        .args(["submodule", "update", "--init"])
-        .status()
-        .expect("Failed to run git");
-    if !status.success() {
-        tracing::error!("git submodule update --init failed");
-    }
-}
-
-fn download_binaries() {
-    tracing::info!("Downloading binaries");
-    // todo!();
-}
-
-fn download_vim_plugins(root_dir: &PathBuf) {
-    tracing::info!("Downloading vim plugins");
-    let nvim_path = root_dir.join(BINARIES_DIR).join("usr/bin/nvim");
-    println!("nvim: {}", nvim_path.display());
-    let status = Command::new(nvim_path)
-        .args(["--appimage-extract-and-run", "--headless"])
-        .env("DOWNLOAD_MODE", "true")
-        .env("XDG_CONFIG_HOME", root_dir)
-        .status()
-        .expect("Failed to run nvim");
-    if !status.success() {
-        tracing::error!("nvim --headless failed");
-    }
-}
-
-fn update_zsh_plugins(root_dir: &Path) {
-    tracing::info!("Updating zsh plugins");
-    let plugins_path = root_dir.join(ZSH_DIR).join("plugins.zsh");
-    let status = Command::new("zsh")
-        .arg("-c")
-        .arg(format!("source {}", plugins_path.display()))
-        .arg("-c")
-        .arg("zcomet update")
-        .status()
-        .expect("Failed to run zsh");
-    if !status.success() {
-        tracing::error!("zcomet update failed");
-    }
-}
-
-fn fix_permissions(root_dir: &PathBuf) {
-    if let Some(real_user) = std::env::var_os("SUDO_USER") {
-        let nvim_share = PathBuf::from(format!(
-            "/home/{}/.local/share/nvim",
-            real_user.to_string_lossy()
-        ));
-        let status = Command::new("chown")
-            .args(["-f", "-R"])
-            .arg(&real_user)
-            .arg(root_dir)
-            .arg(nvim_share)
-            .status()
-            .expect("Failed to run chown");
-        if !status.success() {
-            tracing::error!("chown failed");
-        }
-    }
-}
-
-fn download(root_dir: &PathBuf) -> Result<()> {
-    if let Err(missing) = check_prerequisites() {
-        tracing::error!(
-            "Please install the following commands: {}",
-            missing.join(", ")
-        );
-        return Ok(());
-    }
-
-    download_submodules();
-    download_binaries();
-    download_vim_plugins(root_dir);
-    update_zsh_plugins(root_dir);
-    fix_permissions(root_dir);
-    Ok(())
-}
-
 fn package_regex(packages: Option<&str>) -> Result<Option<String>> {
     let Some(packages) = packages else {
         return Ok(None);
@@ -284,7 +190,7 @@ fn main() -> Result<()> {
     tracing::info!("Running from: {}", root_dir.display());
 
     match cli.command {
-        Commands::Download(_) => download(&root_dir),
+        Commands::Download(_) => download::download(&root_dir),
         Commands::Install(args) => install(&root_dir, args),
         Commands::Remove(args) => remove(&root_dir, args),
     }

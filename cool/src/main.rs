@@ -1,7 +1,7 @@
-use std::path::Path;
-use anyhow::{Context, Result};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::Command;
+
+use anyhow::{Context, Result, bail};
 
 use argh::FromArgs;
 use tracing::Level;
@@ -26,16 +26,42 @@ struct Cli {
     #[argh(switch, short = 'v', description = "verbose output")]
     verbose: bool,
 
+    #[argh(option, description = "config root directory")]
+    root: Option<PathBuf>,
+
     #[argh(subcommand)]
     command: Commands,
 }
 
-fn root_dir() -> Result<PathBuf> {
-    Ok(gix::discover(".")?
-        .path()
-        .parent()
-        .context("No parent available")?
-        .to_owned())
+fn is_root(path: &Path) -> bool {
+    path.join("binaries.json").is_file() && path.join("linkmap.toml").is_file()
+}
+
+fn find_root(path: &Path) -> Option<PathBuf> {
+    path.ancestors()
+        .find(|path| is_root(path))
+        .map(Path::to_owned)
+}
+
+fn root_dir(explicit_root: Option<PathBuf>) -> Result<PathBuf> {
+    if let Some(root) = explicit_root {
+        if is_root(&root) {
+            return Ok(root);
+        }
+        bail!("{} is not a config root", root.display());
+    }
+
+    let current_dir = std::env::current_dir().context("Failed to determine current directory")?;
+    if let Some(root) = find_root(&current_dir) {
+        return Ok(root);
+    }
+
+    let executable = std::env::current_exe().context("Failed to determine executable path")?;
+    if let Some(root) = executable.parent().and_then(find_root) {
+        return Ok(root);
+    }
+
+    bail!("Could not find the config root; pass it with --root")
 }
 
 fn configure_logger(verbose: bool) {
@@ -143,10 +169,30 @@ fn download(root_dir: &PathBuf) -> Result<()> {
 fn main() -> Result<()> {
     let cli: Cli = argh::from_env();
     configure_logger(cli.verbose);
-    let root_dir = root_dir()?;
+    let root_dir = root_dir(cli.root)?;
     tracing::info!("Running from: {}", root_dir.display());
 
     match cli.command {
         Commands::Download(_) => download(&root_dir),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::fs;
+
+    use super::*;
+
+    #[test]
+    fn finds_root_from_descendant() {
+        let root = std::env::temp_dir().join(format!("cool-root-{}", std::process::id()));
+        let descendant = root.join("a/b");
+        fs::create_dir_all(&descendant).unwrap();
+        fs::write(root.join("binaries.json"), "{}").unwrap();
+        fs::write(root.join("linkmap.toml"), "").unwrap();
+
+        assert_eq!(find_root(&descendant), Some(root.clone()));
+
+        fs::remove_dir_all(root).unwrap();
     }
 }

@@ -1,0 +1,40 @@
+name: Release cool
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-unknown-linux-musl
+      - name: Install musl tools
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
+      - name: Test
+        run: cargo test --locked --manifest-path cool/Cargo.toml
+      - name: Build
+        run: cargo build --locked --release --target x86_64-unknown-linux-musl --manifest-path cool/Cargo.toml
+      - name: Package
+        run: |
+          cp cool/target/x86_64-unknown-linux-musl/release/cool cool-linux-x86_64
+          sha256sum cool-linux-x86_64 > cool-linux-x86_64.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cool-linux-x86_64
+          path: |
+            cool-linux-x86_64
+            cool-linux-x86_64.sha256
+      - name: Publish release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" cool-linux-x86_64 cool-linux-x86_64.sha256 --generate-notes --verify-tag

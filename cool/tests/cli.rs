@@ -42,6 +42,14 @@ fn write_executable(path: impl AsRef<Path>, contents: &str) {
     fs::set_permissions(path, fs::Permissions::from_mode(0o755)).unwrap();
 }
 
+fn test_path(bin: &Path) -> std::ffi::OsString {
+    let mut paths = vec![bin.to_owned()];
+    paths.extend(std::env::split_paths(
+        &std::env::var_os("PATH").unwrap_or_default(),
+    ));
+    std::env::join_paths(paths).unwrap()
+}
+
 fn cool_command(
     cool: &Path,
     work_dir: &Path,
@@ -165,4 +173,104 @@ fn downloads_from_a_complete_offline_bundle() {
     assert!(commands.contains("git submodule update --init"));
     assert!(commands.contains("nvim --appimage-extract-and-run --headless"));
     assert!(commands.contains("zsh -c"));
+}
+
+#[test]
+fn bootstraps_a_verified_release() {
+    let temp = TempDir::new();
+    let bundle = temp.path().join("bundle");
+    let fake_bin = temp.path().join("bin");
+    let asset = temp.path().join("cool-linux-x86_64");
+    let checksum = temp.path().join("cool-linux-x86_64.sha256");
+    fs::create_dir_all(bundle.join("scripts")).unwrap();
+    fs::write(&asset, "release binary").unwrap();
+    let hash = Command::new("sha256sum").arg(&asset).output().unwrap();
+    let hash = String::from_utf8(hash.stdout).unwrap();
+    fs::write(
+        &checksum,
+        format!(
+            "{}  cool-linux-x86_64\n",
+            hash.split_whitespace().next().unwrap()
+        ),
+    )
+    .unwrap();
+    copy_executable(
+        Path::new(env!("CARGO_MANIFEST_DIR")).join("../scripts/bootstrap.sh"),
+        bundle.join("scripts/bootstrap.sh"),
+    );
+    write_executable(
+        fake_bin.join("curl"),
+        "#!/bin/sh\nwhile [ $# -gt 0 ]; do\ncase $1 in\n--output) output=$2; shift 2;;\nhttp*) url=$1; shift;;\n*) shift;;\nesac\ndone\ncase $url in\n*.sha256) cp \"$BOOTSTRAP_CHECKSUM\" \"$output\";;\n*) cp \"$BOOTSTRAP_ASSET\" \"$output\";;\nesac\n",
+    );
+
+    let status = Command::new(bundle.join("scripts/bootstrap.sh"))
+        .env("PATH", test_path(&fake_bin))
+        .env("BOOTSTRAP_ASSET", &asset)
+        .env("BOOTSTRAP_CHECKSUM", &checksum)
+        .status()
+        .unwrap();
+    assert!(status.success());
+    let installed = bundle.join("binaries/usr/bin/cool");
+    assert_eq!(fs::read_to_string(installed).unwrap(), "release binary");
+}
+
+#[test]
+fn runs_the_local_ubuntu_installation() {
+    let temp = TempDir::new();
+    let bundle = temp.path().join("bundle");
+    let home = temp.path().join("home");
+    let fake_bin = temp.path().join("bin");
+    let command_log = temp.path().join("commands.log");
+    fs::create_dir_all(bundle.join("scripts")).unwrap();
+    fs::create_dir_all(&home).unwrap();
+    fs::copy(
+        Path::new(env!("CARGO_MANIFEST_DIR")).join("../scripts/ubuntu_install.sh"),
+        bundle.join("scripts/ubuntu_install.sh"),
+    )
+    .unwrap();
+    fs::copy(
+        Path::new(env!("CARGO_MANIFEST_DIR")).join("../zshrc.example"),
+        bundle.join("zshrc.example"),
+    )
+    .unwrap();
+    write_executable(
+        bundle.join("binaries/usr/bin/cool"),
+        "#!/bin/sh\nprintf 'cool %s\\n' \"$*\" >> \"$COMMAND_LOG\"\n",
+    );
+    write_executable(fake_bin.join("id"), "#!/bin/sh\nprintf '0\\n'\n");
+    write_executable(
+        fake_bin.join("getent"),
+        "#!/bin/sh\nprintf 'tester:x:1000:1000::%s:/bin/sh\\n' \"$TEST_HOME\"\n",
+    );
+    write_executable(
+        fake_bin.join("apt"),
+        "#!/bin/sh\nprintf 'apt %s\\n' \"$*\" >> \"$COMMAND_LOG\"\n",
+    );
+    write_executable(
+        fake_bin.join("runuser"),
+        "#!/bin/sh\nprintf 'runuser %s\\n' \"$*\" >> \"$COMMAND_LOG\"\nwhile [ \"$1\" != -- ]; do shift; done\nshift\n\"$@\"\n",
+    );
+    write_executable(
+        fake_bin.join("chown"),
+        "#!/bin/sh\nprintf 'chown %s\\n' \"$*\" >> \"$COMMAND_LOG\"\n",
+    );
+
+    let status = Command::new(bundle.join("scripts/ubuntu_install.sh"))
+        .arg("local")
+        .env("PATH", test_path(&fake_bin))
+        .env("SUDO_USER", "tester")
+        .env("TEST_HOME", &home)
+        .env("COMMAND_LOG", &command_log)
+        .status()
+        .unwrap();
+    assert!(status.success());
+    assert_eq!(
+        fs::read_to_string(home.join(".zshrc")).unwrap(),
+        fs::read_to_string(bundle.join("zshrc.example")).unwrap()
+    );
+    let commands = fs::read_to_string(command_log).unwrap();
+    assert!(commands.contains("apt update -qq"));
+    assert!(commands.contains("apt purge -y -qqq tmux neovim"));
+    assert!(commands.contains("cool --root"));
+    assert!(commands.contains("install --profile local"));
 }

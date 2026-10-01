@@ -2,7 +2,7 @@
 set -eu
 
 ROOT_DIR=$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)
-RELEASE_URL=https://github.com/doctoromer/config/releases/latest/download
+RELEASE_URL=https://github.com/doctoromer/config/releases/download/cool-latest
 ASSET=cool-linux-x86_64
 OUTPUT="$ROOT_DIR/binaries/usr/bin/cool"
 

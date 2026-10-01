@@ -1,103 +1,112 @@
 # Omer's Cool Config
-This is my personal linux config. It is suitable for installation in air gapped networks.
 
-It contains:
-* Neovim config
-* zsh, git and tmux configs
-* common binaries
+Personal Linux configuration for Neovim, Zsh, Git, tmux, and common command-line tools. Dependencies can be collected on a connected machine and moved as an offline bundle.
 
-# Installation
-## In an internet-connected machine:
+The prebuilt installer currently supports x86-64 Linux.
+
+## Connected installation
+
+Install the bootstrap prerequisites:
+
 ```sh
-apt install -y git python3 make gcc zsh make
-./scripts/download.py
-sudo scripts/ubuntu_install.sh <local/system>
+sudo apt install git zsh curl build-essential
 ```
 
-Local installation will install the files in your home directory and doesn't require root.
-Global installation will install the configuration system-wide.
-This is untested on other distros, although it should work.
+Clone and prepare the repository:
 
-## In an offline network
-Unzip the zip that you received from me and run (Only ubuntu):
 ```sh
-sudo scripts/ubuntu_install.sh <local/system>
+git clone https://github.com/doctoromer/config.git
+cd config
+scripts/bootstrap.sh
+binaries/usr/bin/cool download
 ```
 
-# How it works
-## install.py
-The most important script is `./install.py`. It performs several actions:
-* install - installs everything
-* remove - removes everything
-* auto-remove - removes previous installations of this configuration
-* verify - verifies some stuff (not important)
+Then use the Ubuntu wrapper:
 
-### download.py
-This script downloads the following files:
-* Git submodules of this repo
-	* packer.nvim - neovim's plugin manager
-	* zcomet - zsh's plugin manager
-	* dracula - tmux theme
-* Required binaries
-	* fzf - for cool CLI search and other fun things
-	* exa - better ls. ls, ll and l are aliased to this
-	* vim - but actually neovim. This is the more powerful sibling of vim
-	* diff-so-fancy - makes git diff look so fancy
-	* bat - better cat
-	* tmux - latest version of tmux
-* neovim plugins
-	* LSP servers - the mason plugin is used to automatically download them
-* zsh plugins
-
-### install
-This command does the actual installation of all the files.
-It doesn't copy any files to the user's system, but instead it creates symlinks.
-This have some advantages:
-* The installation is instant
-* It is easy to know if a file is part of the configuration
-* If a file is edited outside the repo, the changes are reflected inside the repo
-	* This is useful because the changes can be easily committed in git
-
-There are 4 directories that contain partial filesystem hierarchy: neovim, zsh, binaries, misc.
-The install command uses the dploy package to symlink the files.
-For example, the file `binaries/usr/bin/vim` is symlinked to `/usr/bin/vim`.
-In general, the file `<package>/<path>` is symlinked to `/<path>`.
-
-The `install` command can be used to install individual packages:
 ```sh
-scripts/install.py install -p nvim,misc
+sudo scripts/ubuntu_install.sh local
 ```
 
-Available packages: misc, nvim, zsh, binaries
+Use `system` instead of `local` to install system-wide. The wrapper installs required Ubuntu packages and creates `.zshrc` when it does not exist.
 
-### remove
-The remove command does the exact opposite of the install command - It removes the symlinks from the system.
-Like the `install` command, it can use the `-p` switch for partial install.
+## Offline installation
 
-## ubuntu_install.sh
-The ubuntu install script is used for automated installation in ubuntu systems,
-It does the following actions:
-* Install some package:
-	* rg - better faster grep
-	* zsh - The shell. Configured by the install.py script
-	* git - You need it
-	* pip3 - Used to install dploy
-	* dploy - Used in the `install.py` script
-* Remove vim and tmux if they are installed
-* Execute`install.py`
-* Create `.zshrc` in user's home directory
+A prepared bundle must contain:
 
-This script is tested in ubuntu 18-24.
+- `binaries/`, including `binaries/usr/bin/cool`
+- `nvim/assets/`
+- `zsh/repos/`
+- Initialized Git submodules
 
-# Q&A
-# I want to install only part of the config
-It's possible. Use the -p switch of the install.py script that is described above.
-If you want to install only the neovim configuration you can use the [CoolVim](https://gitlab.com/OmerSarig/coolvim) repo.
+Install directly without network access:
 
-# Why the monstrous installation script (install.py)
-A lot of stuff is not designed for air gapped installation.
+```sh
+binaries/usr/bin/cool --root "$PWD" install --profile local
+```
 
-# Known issues
-* When starting tmux without a server running, it can take a few seconds
-* Python-based language servers of the neovim config doesn't work if copied between machines.
-* Other spooky stuff
+For a system-wide installation:
+
+```sh
+sudo binaries/usr/bin/cool --root "$PWD" install --profile system
+```
+
+The Ubuntu wrapper also runs `apt`, so use it offline only when its configured package sources are available.
+
+## Building an offline bundle
+
+On a connected machine, run the bootstrap and download commands, then archive the populated repository:
+
+```sh
+scripts/bootstrap.sh
+binaries/usr/bin/cool download
+tar --exclude=.git --exclude=cool/target -czf cool-config.tar.gz .
+```
+
+## The `cool` command
+
+`cool` locates the repository from `--root`, the current directory, or its own location under the bundle.
+
+### Download dependencies
+
+```sh
+binaries/usr/bin/cool download
+```
+
+This downloads release binaries, initializes submodules, installs Neovim plugins and tree-sitter parsers, and downloads Zsh plugins.
+
+### Install configuration
+
+```sh
+binaries/usr/bin/cool install --profile local
+```
+
+Available profiles are `local` and `system`. Install only selected packages with a comma-separated list:
+
+```sh
+binaries/usr/bin/cool install --profile local --packages nvim,misc
+```
+
+Available packages are `misc`, `nvim`, `zsh`, and `binaries`.
+
+When installing from a new bundle directory, `cool` detects and removes links created by the previous bundle before creating new links.
+
+### Remove configuration
+
+```sh
+binaries/usr/bin/cool remove --profile local
+```
+
+Use the same profile and optional package selection used during installation.
+
+## Repository layout
+
+- `cool/`: Rust installer source
+- `binaries.json`: downloadable binary definitions
+- `linkmap.toml`: local and system symlink mappings
+- `nvim/`: Neovim configuration
+- `zsh/`: Zsh configuration
+- `misc/`: Git and tmux configuration
+- `scripts/bootstrap.sh`: downloads and verifies the latest prebuilt installer
+- `scripts/ubuntu_install.sh`: Ubuntu package and installation wrapper
+
+Configuration files are linked rather than copied, so edits made through installed paths are reflected in the repository.

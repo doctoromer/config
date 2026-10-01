@@ -4,3 +4,6 @@
 [submodule "dracula"]
 	path = misc/dracula
 	url = https://github.com/dracula/tmux
+[submodule "misc/tmux-assistant-resurrect"]
+	path = misc/tmux-assistant-resurrect
+	url = https://github.com/timvw/tmux-assistant-resurrect
